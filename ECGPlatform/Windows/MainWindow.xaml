@@ -1,0 +1,86 @@
+﻿<Window
+    x:Class="ECGPlatform.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:ECGPlatform"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winex="https://github.com/yariker/WindowExtras.Wpf"
+    Title="ECG Platform"
+    Width="1600"
+    Height="1000"
+    MinWidth="1000"
+    MinHeight="600"
+    d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
+    Background="Transparent"
+    Loaded="Window_Loaded"
+    RenderTransformOrigin="0.5,0.5"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            CaptionHeight="{Binding CaptionHeight}"
+            GlassFrameThickness="0"
+            ResizeBorderThickness="{Binding ResizeBorderThickness}" />
+    </WindowChrome.WindowChrome>
+
+    <Window.RenderTransform>
+        <TransformGroup>
+            <ScaleTransform />
+            <RotateTransform />
+        </TransformGroup>
+    </Window.RenderTransform>
+
+
+    <!--  background  -->
+
+    <Grid Background="{DynamicResource BrushWhite}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{Binding AmendedCaptionHeight, Mode=OneWay}" d:Height="38" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  title  -->
+        <Grid Background="{DynamicResource BrushGray90}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="12" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button
+                    Height="{Binding AmendedCaptionHeight, Mode=OneWay}"
+                    Command="{Binding MinimizeCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                    Style="{StaticResource WindowControlButton}"
+                    Tag="{StaticResource MinimizeIcon}" />
+                <Button
+                    Height="{Binding AmendedCaptionHeight, Mode=OneWay}"
+                    Command="{Binding MaximizeCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                    Style="{StaticResource WindowControlButton}"
+                    Tag="{StaticResource MaximizeIcon}" />
+                <Button
+                    Height="{Binding AmendedCaptionHeight, Mode=OneWay}"
+                    Command="{Binding CloseCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                    Style="{StaticResource WindowControlCloseButton}"
+                    Tag="{StaticResource CloseIcon}" />
+            </StackPanel>
+        </Grid>
+
+
+        <TextBlock
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            d:Text="Hello"
+            FontFamily="{StaticResource ChillRoundGothicNormal}"
+            FontSize="100"
+            Text="{Binding Message}" />
+    </Grid>
+</Window>

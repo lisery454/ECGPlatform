@@ -1,0 +1,48 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Color x:Key="ColorPrimary">#ff317c83</Color>
+	<Color x:Key="ColorPrimary90">#e5317c83</Color>
+	<Color x:Key="ColorPrimary80">#cc317c83</Color>
+	<Color x:Key="ColorPrimary70">#b2317c83</Color>
+	<Color x:Key="ColorPrimary60">#99317c83</Color>
+	<Color x:Key="ColorPrimary50">#5f317c83</Color>
+	<Color x:Key="ColorPrimary40">#66317c83</Color>
+	<Color x:Key="ColorPrimary30">#4c317c83</Color>
+	<Color x:Key="ColorPrimary20">#33317c83</Color>
+	<Color x:Key="ColorPrimary10">#19317c83</Color>
+
+	<Color x:Key="ColorError">#ffe81123</Color>
+	<Color x:Key="ColorOnError">#fffffefe</Color>
+
+	<Color x:Key="ColorBlack">#ff000000</Color>
+	<Color x:Key="ColorBlack90">#e5000000</Color>
+	<Color x:Key="ColorBlack80">#cc000000</Color>
+	<Color x:Key="ColorBlack70">#b2000000</Color>
+	<Color x:Key="ColorBlack60">#99000000</Color>
+	<Color x:Key="ColorBlack50">#5f000000</Color>
+	<Color x:Key="ColorBlack40">#66000000</Color>
+	<Color x:Key="ColorBlack30">#4c000000</Color>
+	<Color x:Key="ColorBlack20">#33000000</Color>
+	<Color x:Key="ColorBlack10">#19000000</Color>
+
+	<Color x:Key="ColorWhite">#ffffffff</Color>
+	<Color x:Key="ColorWhite90">#e5ffffff</Color>
+	<Color x:Key="ColorWhite80">#ccffffff</Color>
+	<Color x:Key="ColorWhite70">#b2ffffff</Color>
+	<Color x:Key="ColorWhite60">#99ffffff</Color>
+	<Color x:Key="ColorWhite50">#5fffffff</Color>
+	<Color x:Key="ColorWhite40">#66ffffff</Color>
+	<Color x:Key="ColorWhite30">#4cffffff</Color>
+	<Color x:Key="ColorWhite20">#33ffffff</Color>
+	<Color x:Key="ColorWhite10">#19ffffff</Color>
+
+	<Color x:Key="ColorGray90">#ffe5e5e5</Color>
+	<Color x:Key="ColorGray80">#ffcccccc</Color>
+	<Color x:Key="ColorGray70">#ffb2b2b2</Color>
+	<Color x:Key="ColorGray60">#ff999999</Color>
+	<Color x:Key="ColorGray50">#ff5f5f5f</Color>
+	<Color x:Key="ColorGray40">#ff666666</Color>
+	<Color x:Key="ColorGray30">#ff4c4c4c</Color>
+	<Color x:Key="ColorGray20">#ff333333</Color>
+	<Color x:Key="ColorGray10">#ff191919</Color>
+
+</ResourceDictionary>

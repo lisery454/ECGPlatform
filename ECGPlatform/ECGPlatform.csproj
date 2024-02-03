@@ -1,0 +1,99 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\Images\heart-rate.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controls\**" />
+    <Compile Remove="Pages\**" />
+    <EmbeddedResource Remove="Controls\**" />
+    <EmbeddedResource Remove="Pages\**" />
+    <None Remove="Controls\**" />
+    <None Remove="Pages\**" />
+    <Page Remove="Controls\**" />
+    <Page Remove="Pages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Fonts\ChillRoundGothic_Bold.ttf" />
+    <None Remove="Resources\Fonts\ChillRoundGothic_ExtraLight.ttf" />
+    <None Remove="Resources\Fonts\ChillRoundGothic_Heavy.ttf" />
+    <None Remove="Resources\Fonts\ChillRoundGothic_Light.ttf" />
+    <None Remove="Resources\Fonts\ChillRoundGothic_Medium.ttf" />
+    <None Remove="Resources\Fonts\ChillRoundGothic_Normal.ttf" />
+    <None Remove="Resources\Fonts\ChillRoundGothic_Regular.ttf" />
+    <None Remove="Resources\Icons\8666609_user_icon.svg" />
+    <None Remove="Resources\Icons\8666615_settings_icon.svg" />
+    <None Remove="Resources\Icons\8666620_database_icon.svg" />
+    <None Remove="Resources\Icons\8666689_file_text_icon.svg" />
+    <None Remove="Resources\Icons\8666730_rss_icon.svg" />
+    <None Remove="Resources\Icons\8666803_folder_documents_icon.svg" />
+    <None Remove="Resources\Icons\8666804_code_development_icon.svg" />
+    <None Remove="Resources\Icons\control_btn_1.svg" />
+    <None Remove="Resources\Icons\control_btn_2.svg" />
+    <None Remove="Resources\Icons\control_btn_3.svg" />
+    <None Remove="Resources\Icons\control_btn_4.svg" />
+    <None Remove="Resources\Icons\data-svgrepo-com.svg" />
+    <None Remove="Resources\Icons\file-viewer-svgrepo-com.svg" />
+    <None Remove="Resources\Icons\grid-1-svgrepo-com.svg" />
+    <None Remove="Resources\Icons\heart_rate.svg" />
+    <None Remove="Resources\Icons\setting.svg" />
+    <None Remove="Resources\Icons\tag-svgrepo-com.svg" />
+    <None Remove="Resources\Images\heart-rate.ico" />
+    <None Remove="Resources\Images\heart-rate.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Images\heart-rate.ico" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-beta.920" />
+		<PackageReference Include="MaterialDesignThemes" Version="5.0.0-ci484" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
+		<PackageReference Include="Serilog" Version="3.1.1" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
+		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+		<PackageReference Include="WindowExtras.Wpf" Version="1.0.29" />
+		<PackageReference Include="WindowsAPICodePack.Shell.CommonFileDialogs.Wpf" Version="1.1.5" />
+		<PackageReference Include="YamlDotNet" Version="13.7.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Resources\Fonts\ChillRoundGothic_Bold.ttf" />
+	  <Resource Include="Resources\Fonts\ChillRoundGothic_ExtraLight.ttf" />
+	  <Resource Include="Resources\Fonts\ChillRoundGothic_Heavy.ttf" />
+	  <Resource Include="Resources\Fonts\ChillRoundGothic_Light.ttf" />
+	  <Resource Include="Resources\Fonts\ChillRoundGothic_Medium.ttf" />
+	  <Resource Include="Resources\Fonts\ChillRoundGothic_Normal.ttf" />
+	  <Resource Include="Resources\Fonts\ChillRoundGothic_Regular.ttf" />
+	  <Resource Include="Resources\Icons\8666609_user_icon.svg" />
+	  <Resource Include="Resources\Icons\8666615_settings_icon.svg" />
+	  <Resource Include="Resources\Icons\8666620_database_icon.svg" />
+	  <Resource Include="Resources\Icons\8666689_file_text_icon.svg" />
+	  <Resource Include="Resources\Icons\8666730_rss_icon.svg" />
+	  <Resource Include="Resources\Icons\8666803_folder_documents_icon.svg" />
+	  <Resource Include="Resources\Icons\8666804_code_development_icon.svg" />
+	  <Resource Include="Resources\Icons\control_btn_1.svg" />
+	  <Resource Include="Resources\Icons\control_btn_2.svg" />
+	  <Resource Include="Resources\Icons\control_btn_3.svg" />
+	  <Resource Include="Resources\Icons\control_btn_4.svg" />
+	  <Resource Include="Resources\Icons\data-svgrepo-com.svg" />
+	  <Resource Include="Resources\Icons\file-viewer-svgrepo-com.svg" />
+	  <Resource Include="Resources\Icons\grid-1-svgrepo-com.svg" />
+	  <Resource Include="Resources\Icons\heart_rate.svg" />
+	  <Resource Include="Resources\Icons\setting.svg" />
+	  <Resource Include="Resources\Icons\tag-svgrepo-com.svg" />
+	  <Resource Include="Resources\Images\heart-rate.ico" />
+	  <Resource Include="Resources\Images\heart-rate.png" />
+	</ItemGroup>
+
+</Project>

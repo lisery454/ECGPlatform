@@ -1,0 +1,47 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<SolidColorBrush x:Key="BrushPrimary" Color="{StaticResource ColorPrimary}" />
+	<SolidColorBrush x:Key="BrushPrimary90" Color="{StaticResource ColorPrimary90}" />
+	<SolidColorBrush x:Key="BrushPrimary80" Color="{StaticResource ColorPrimary80}" />
+	<SolidColorBrush x:Key="BrushPrimary70" Color="{StaticResource ColorPrimary70}" />
+	<SolidColorBrush x:Key="BrushPrimary60" Color="{StaticResource ColorPrimary60}" />
+	<SolidColorBrush x:Key="BrushPrimary50" Color="{StaticResource ColorPrimary50}" />
+	<SolidColorBrush x:Key="BrushPrimary40" Color="{StaticResource ColorPrimary40}" />
+	<SolidColorBrush x:Key="BrushPrimary30" Color="{StaticResource ColorPrimary30}" />
+	<SolidColorBrush x:Key="BrushPrimary20" Color="{StaticResource ColorPrimary20}" />
+	<SolidColorBrush x:Key="BrushPrimary10" Color="{StaticResource ColorPrimary10}" />
+
+	<SolidColorBrush x:Key="BrushError" Color="{StaticResource ColorError}" />
+	<SolidColorBrush x:Key="BrushOnError" Color="{StaticResource ColorOnError}" />
+
+	<SolidColorBrush x:Key="BrushBlack" Color="{StaticResource ColorBlack}" />
+	<SolidColorBrush x:Key="BrushBlack90" Color="{StaticResource ColorBlack90}" />
+	<SolidColorBrush x:Key="BrushBlack80" Color="{StaticResource ColorBlack80}" />
+	<SolidColorBrush x:Key="BrushBlack70" Color="{StaticResource ColorBlack70}" />
+	<SolidColorBrush x:Key="BrushBlack60" Color="{StaticResource ColorBlack60}" />
+	<SolidColorBrush x:Key="BrushBlack50" Color="{StaticResource ColorBlack50}" />
+	<SolidColorBrush x:Key="BrushBlack40" Color="{StaticResource ColorBlack40}" />
+	<SolidColorBrush x:Key="BrushBlack30" Color="{StaticResource ColorBlack30}" />
+	<SolidColorBrush x:Key="BrushBlack20" Color="{StaticResource ColorBlack20}" />
+	<SolidColorBrush x:Key="BrushBlack10" Color="{StaticResource ColorBlack10}" />
+
+	<SolidColorBrush x:Key="BrushWhite" Color="{StaticResource ColorWhite}" />
+	<SolidColorBrush x:Key="BrushWhite90" Color="{StaticResource ColorWhite90}" />
+	<SolidColorBrush x:Key="BrushWhite80" Color="{StaticResource ColorWhite80}" />
+	<SolidColorBrush x:Key="BrushWhite70" Color="{StaticResource ColorWhite70}" />
+	<SolidColorBrush x:Key="BrushWhite60" Color="{StaticResource ColorWhite60}" />
+	<SolidColorBrush x:Key="BrushWhite50" Color="{StaticResource ColorWhite50}" />
+	<SolidColorBrush x:Key="BrushWhite40" Color="{StaticResource ColorWhite40}" />
+	<SolidColorBrush x:Key="BrushWhite30" Color="{StaticResource ColorWhite30}" />
+	<SolidColorBrush x:Key="BrushWhite20" Color="{StaticResource ColorWhite20}" />
+	<SolidColorBrush x:Key="BrushWhite10" Color="{StaticResource ColorWhite10}" />
+
+	<SolidColorBrush x:Key="BrushGray90" Color="{StaticResource ColorGray90}" />
+	<SolidColorBrush x:Key="BrushGray80" Color="{StaticResource ColorGray80}" />
+	<SolidColorBrush x:Key="BrushGray70" Color="{StaticResource ColorGray70}" />
+	<SolidColorBrush x:Key="BrushGray60" Color="{StaticResource ColorGray60}" />
+	<SolidColorBrush x:Key="BrushGray50" Color="{StaticResource ColorGray50}" />
+	<SolidColorBrush x:Key="BrushGray40" Color="{StaticResource ColorGray40}" />
+	<SolidColorBrush x:Key="BrushGray30" Color="{StaticResource ColorGray30}" />
+	<SolidColorBrush x:Key="BrushGray20" Color="{StaticResource ColorGray20}" />
+	<SolidColorBrush x:Key="BrushGray10" Color="{StaticResource ColorGray10}" />
+</ResourceDictionary>
