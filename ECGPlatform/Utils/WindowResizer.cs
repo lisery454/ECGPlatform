@@ -1,5 +1,8 @@
-﻿
-
+﻿// ReSharper disable UnusedVariable
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8629 // Nullable value type may be null.
+#pragma warning disable CS8622 // Nullability of reference types in type of parameter doesn't match the target delegate (possibly because of nullability attributes).
+#pragma warning disable CS8605 // Unboxing a possibly null value.
 namespace ECGPlatform;
 
 /// <summary>
@@ -47,7 +50,6 @@ public enum WindowDockPosition
     /// </summary>
     BottomRight = 7,
 }
-
 
 /// <summary>
 /// Fixes the issue with Windows of Style <see cref="WindowStyle.None"/> covering the taskbar
@@ -157,7 +159,6 @@ public class WindowResizer
     /// Default constructor
     /// </summary>
     /// <param name="window">The window to monitor and correctly maximize</param>
-    /// <param name="adjustSize">The callback for the host to adjust the maximum available size if needed</param>
     public WindowResizer(Window window)
     {
         mWindow = window;
@@ -464,7 +465,6 @@ public enum MonitorOptions : uint
     MONITOR_DEFAULTTONEAREST = 0x00000002
 }
 
-
 [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
 public class MONITORINFO
 {
@@ -475,7 +475,6 @@ public class MONITORINFO
     public int DWFlags = 0;
 #pragma warning restore IDE1006 // Naming Styles
 }
-
 
 [StructLayout(LayoutKind.Sequential)]
 public struct Rectangle
