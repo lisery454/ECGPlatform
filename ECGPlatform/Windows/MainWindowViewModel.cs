@@ -6,10 +6,6 @@ partial class MainWindowViewModel : ObservableObject
 {
     [ObservableProperty]
     private string _message;
-    public float CaptionHeight { get; private set; }
-    public float ResizeBorderThickness { get; private set; }
-
-    public float AmendedCaptionHeight => CaptionHeight + ResizeBorderThickness;
 
     private readonly ILogger _logger;
 
@@ -17,8 +13,6 @@ partial class MainWindowViewModel : ObservableObject
     {
         _logger = logger;
         _message = "Hello, World";
-        CaptionHeight = 30f;
-        ResizeBorderThickness = 6f;
         _logger.Information($"{typeof(MainWindowViewModel)} Create.");
     }
 

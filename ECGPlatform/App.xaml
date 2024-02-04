@@ -8,6 +8,8 @@
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="Resources/Constants.xaml" />
                 <ResourceDictionary Source="Resources/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Brushes.xaml" />
                 <ResourceDictionary Source="Resources/Fonts.xaml" />
@@ -15,6 +17,8 @@
                 <ResourceDictionary Source="Resources/Icons.xaml" />
 
                 <ResourceDictionary Source="Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="Styles/ToggleButtonStyles.xaml" />
+                <ResourceDictionary Source="Styles/RadioButtonStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

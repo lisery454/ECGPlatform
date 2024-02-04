@@ -16,6 +16,9 @@
     <Page Update="Resources\Colors.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Resources\Constants.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Resources\Fonts.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -23,6 +26,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\ButtonStyles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\RadioButtonStyles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\ToggleButtonStyles.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\MainWindow.xaml">
