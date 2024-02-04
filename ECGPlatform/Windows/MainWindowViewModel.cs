@@ -1,13 +1,20 @@
-﻿using System.Windows;
+﻿namespace ECGPlatform;
 
-namespace ECGPlatform;
-
-partial class MainWindowViewModel : ObservableObject
+internal partial class MainWindowViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private string _message;
+    #region Public Property
+
+    [ObservableProperty] private string _message;
+
+    #endregion
+
+    #region Private Field
 
     private readonly ILogger _logger;
+
+    #endregion
+    
+    #region Constructor
 
     public MainWindowViewModel(ILogger logger)
     {
@@ -15,6 +22,11 @@ partial class MainWindowViewModel : ObservableObject
         _message = "Hello, World";
         _logger.Information($"{typeof(MainWindowViewModel)} Create.");
     }
+
+    #endregion
+
+
+    #region Commands
 
     [RelayCommand]
     private void Minimize(Window window)
@@ -40,4 +52,6 @@ partial class MainWindowViewModel : ObservableObject
     {
         SystemCommands.CloseWindow(window);
     }
+
+    #endregion
 }

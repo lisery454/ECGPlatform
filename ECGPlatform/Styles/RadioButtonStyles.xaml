@@ -51,9 +51,9 @@
 					</Border>
 					<ControlTemplate.Triggers>
 						<Trigger Property="IsMouseOver" Value="True">
-							<Setter TargetName="txtName" Property="Foreground" Value="{DynamicResource BrushPrimary60}" />
-							<Setter TargetName="icon" Property="Fill" Value="{DynamicResource BrushPrimary60}" />
-							<Setter TargetName="background" Property="Background" Value="{DynamicResource BrushBlack20}" />
+							<Setter TargetName="txtName" Property="Foreground" Value="{DynamicResource BrushWhite80}" />
+							<Setter TargetName="icon" Property="Fill" Value="{DynamicResource BrushWhite80}" />
+							<Setter TargetName="background" Property="Background" Value="{DynamicResource BrushPrimary50}" />
 						</Trigger>
 						<Trigger Property="IsChecked" Value="True">
 							<Setter TargetName="txtName" Property="Foreground" Value="{DynamicResource BrushWhite}" />
