@@ -4,7 +4,7 @@ internal partial class MainWindowViewModel : ObservableObject
 {
     #region Public Property
 
-    [ObservableProperty] private string _message;
+    [ObservableProperty] private PagesName _currentPageName;
 
     #endregion
 
@@ -13,18 +13,17 @@ internal partial class MainWindowViewModel : ObservableObject
     private readonly ILogger _logger;
 
     #endregion
-    
+
     #region Constructor
 
     public MainWindowViewModel(ILogger logger)
     {
         _logger = logger;
-        _message = "Hello, World";
+        _currentPageName = PagesName.LocalDataPage;
         _logger.Information($"{typeof(MainWindowViewModel)} Create.");
     }
 
     #endregion
-
 
     #region Commands
 

@@ -11,13 +11,14 @@
 
   <ItemGroup>
     <Compile Remove="Controls\**" />
-    <Compile Remove="Pages\**" />
     <EmbeddedResource Remove="Controls\**" />
-    <EmbeddedResource Remove="Pages\**" />
     <None Remove="Controls\**" />
-    <None Remove="Pages\**" />
     <Page Remove="Controls\**" />
-    <Page Remove="Pages\**" />
+    <Page Update="Pages\LocalDataPage\LocalDataPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>

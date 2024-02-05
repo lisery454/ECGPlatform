@@ -107,19 +107,21 @@
 						<RowDefinition Height="20" />
 					</Grid.RowDefinitions>
 					<RadioButton Grid.Row="1" Width="100"
+					             IsChecked="{Binding CurrentPageName, Converter={x:Static local:PagesNameToBoolConverter.Instance}, ConverterParameter={x:Static local:PagesName.LocalDataPage}}"
 					             Margin="0,0,0,15"
 					             local:IconHelper.Icon="{StaticResource DataIcon}"
-					             Content="本地" IsChecked="True"
+					             Content="本地数据"
 					             Style="{StaticResource MenuRadioButtonStyle}" />
 
-					<RadioButton Grid.Row="2" Width="100"
-					             Margin="0,0,0,15"
-					             local:IconHelper.Icon="{StaticResource HeartRateIcon}"
-					             Content="展示"
-					             Style="{StaticResource MenuRadioButtonStyle}" />
+					<!--  <RadioButton Grid.Row="2" Width="100"  -->
+					<!--  Margin="0,0,0,15"  -->
+					<!--  local:IconHelper.Icon="{StaticResource HeartRateIcon}"  -->
+					<!--  Content="展示"  -->
+					<!--  Style="{StaticResource MenuRadioButtonStyle}" />  -->
 
 					<RadioButton Grid.Row="7" Width="100"
 					             local:IconHelper.Icon="{StaticResource SettingIcon}"
+					             IsChecked="{Binding CurrentPageName, Converter={x:Static local:PagesNameToBoolConverter.Instance}, ConverterParameter={x:Static local:PagesName.SettingPage}}"
 					             Content="设置"
 					             Style="{StaticResource MenuRadioButtonStyle}" />
 
@@ -128,12 +130,8 @@
 
 			<!--  page  -->
 			<Border Grid.Column="1" Margin="20">
-				<!--<Frame Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden" />-->
-				<TextBlock HorizontalAlignment="Center"
-				           VerticalAlignment="Center" d:Text="Hello"
-				           FontFamily="{StaticResource ChillRoundGothicNormal}"
-				           FontSize="100"
-				           Text="{Binding Message}" />
+				<Frame Content="{Binding CurrentPageName, Converter={x:Static local:PagesNameToPageConverter.Instance}}"
+				       NavigationUIVisibility="Hidden" />
 			</Border>
 		</Grid>
 
