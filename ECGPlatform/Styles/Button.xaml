@@ -82,4 +82,33 @@
 		</Setter>
 	</Style>
 
+	<!--  SimpleButtonStyle  -->
+	<Style TargetType="Button" x:Key="SimpleButtonStyle">
+		<Setter Property="Background" Value="{StaticResource BrushPrimary80}" />
+		<Setter Property="FontFamily" Value="{StaticResource ChillRoundGothicRegular}" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Button">
+					<Grid>
+						<Border CornerRadius="10"
+						        Background="{TemplateBinding Background}"
+						        x:Name="border">
+							<TextBlock Text="{TemplateBinding Content}"
+							           Foreground="{DynamicResource BrushBlack80}"
+							           Margin="10" HorizontalAlignment="Center"
+							           VerticalAlignment="Center" TextAlignment="Center"
+							           FontFamily="{TemplateBinding FontFamily}"
+							           FontSize="{TemplateBinding FontSize}" />
+						</Border>
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" SourceName="border" Value="True">
+							<Setter TargetName="border" Property="Background" Value="{DynamicResource BrushPrimary40}" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
 </ResourceDictionary>

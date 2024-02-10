@@ -97,4 +97,8 @@
 	  <Resource Include="Resources\Images\heart-rate.png" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\ECGFileService\ECGFileService.csproj" />
+	</ItemGroup>
+
 </Project>

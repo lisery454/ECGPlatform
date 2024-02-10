@@ -24,16 +24,26 @@ public partial class App : Application
         {
             DataContext = sp.GetService<MainWindowViewModel>()
         });
+        services.AddTransient<LocalDataPageViewModel>();
+        services.AddTransient<LocalDataPage>(sp => new LocalDataPage
+        {
+            DataContext = sp.GetService<LocalDataPageViewModel>()
+        });
+        services.AddTransient<SettingPageViewModel>();
+        services.AddTransient<SettingPage>(sp => new SettingPage
+        {
+            DataContext = sp.GetService<SettingPageViewModel>()
+        });
 
         return services.BuildServiceProvider();
     }
 
     private void Application_Startup(object sender, StartupEventArgs e)
     {
-		var logger = Services.GetService<ILogger>();
+        var logger = Services.GetService<ILogger>();
         logger?.Information("Application Start Up.");
-       
-		var mainWindow = Services.GetService<MainWindow>();
+
+        var mainWindow = Services.GetService<MainWindow>();
         mainWindow!.Show();
     }
 }

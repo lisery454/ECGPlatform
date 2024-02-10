@@ -1,4 +1,8 @@
 /.vs
 /.idea
-ECGPlatform/bin
-ECGPlatform/obj
+ECGPlatform/bin/
+ECGPlatform/obj/
+ECGFileService/bin/
+ECGFileService/obj/
+SimpleUtils/bin/
+SimpleUtils/obj/

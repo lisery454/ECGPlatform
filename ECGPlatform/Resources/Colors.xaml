@@ -11,6 +11,16 @@
 	<Color x:Key="ColorPrimary20">#33317c83</Color>
 	<Color x:Key="ColorPrimary10">#19317c83</Color>
 
+	<Color x:Key="ColorPrimaryWhite90">#ff44888e</Color>
+	<Color x:Key="ColorPrimaryWhite80">#ff589499</Color>
+	<Color x:Key="ColorPrimaryWhite70">#ff6ba0a5</Color>
+	<Color x:Key="ColorPrimaryWhite60">#ff7eacb0</Color>
+	<Color x:Key="ColorPrimaryWhite50">#ffabc7c9</Color>
+	<Color x:Key="ColorPrimaryWhite40">#ffa6c4c6</Color>
+	<Color x:Key="ColorPrimaryWhite30">#ffb9d0d2</Color>
+	<Color x:Key="ColorPrimaryWhite20">#ffcddcdd</Color>
+	<Color x:Key="ColorPrimaryWhite10">#ffe0e8e8</Color>
+
 	<Color x:Key="ColorError">#ffe81123</Color>
 	<Color x:Key="ColorOnError">#fffffefe</Color>
 
