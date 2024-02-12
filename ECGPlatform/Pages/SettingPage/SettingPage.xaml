@@ -5,64 +5,50 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:ECGPlatform"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      Style="{StaticResource BasePageStyle}"
       mc:Ignorable="d" Title="SettingPage"
       d:Height="1000 " d:Width="2000">
-	<Grid>
-		<Border Background="{DynamicResource BrushPrimary10}"
-		        CornerRadius="10">
-			<i:Interaction.Behaviors>
-				<local:ShadowBehavior Background="{DynamicResource BrushWhite}" />
-			</i:Interaction.Behaviors>
-			<StackPanel>
-				<TextBlock Style="{StaticResource TitleTextStyle}"
-				           Text="设置" />
 
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="2*" />
-						<ColumnDefinition Width="4*" />
-						<ColumnDefinition Width="2*" />
-					</Grid.ColumnDefinitions>
-					<StackPanel Grid.Column="1">
-						<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
-						           FontSize="40" Text="Some Setting"
-						           TextAlignment="Center"
-						           HorizontalAlignment="Center"
-						           VerticalAlignment="Center" Margin="10" />
-						<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
-						           FontSize="40" Text="Some Setting"
-						           TextAlignment="Center"
-						           HorizontalAlignment="Center"
-						           VerticalAlignment="Center" Margin="10" />
-						<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
-						           FontSize="40" Text="Some Setting"
-						           TextAlignment="Center"
-						           HorizontalAlignment="Center"
-						           VerticalAlignment="Center" Margin="10" />
-						<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
-						           FontSize="40" Text="Some Setting"
-						           TextAlignment="Center"
-						           HorizontalAlignment="Center"
-						           VerticalAlignment="Center" Margin="10" />
-						<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
-						           FontSize="40" Text="Some Setting"
-						           TextAlignment="Center"
-						           HorizontalAlignment="Center"
-						           VerticalAlignment="Center" Margin="10" />
-						<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
-						           FontSize="40" Text="Some Setting"
-						           TextAlignment="Center"
-						           HorizontalAlignment="Center"
-						           VerticalAlignment="Center" Margin="10" />
-						<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
-						           FontSize="40" Text="Some Setting"
-						           TextAlignment="Center"
-						           HorizontalAlignment="Center"
-						           VerticalAlignment="Center" Margin="10" />
-					</StackPanel>
+	<StackPanel>
+		<TextBlock Style="{StaticResource TitleTextStyle}" Text="设置" />
 
-				</Grid>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="2*" />
+				<ColumnDefinition Width="4*" />
+				<ColumnDefinition Width="2*" />
+			</Grid.ColumnDefinitions>
+			<StackPanel Grid.Column="1">
+				<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
+				           FontSize="40" Text="Some Setting"
+				           TextAlignment="Center" HorizontalAlignment="Center"
+				           VerticalAlignment="Center" Margin="10" />
+				<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
+				           FontSize="40" Text="Some Setting"
+				           TextAlignment="Center" HorizontalAlignment="Center"
+				           VerticalAlignment="Center" Margin="10" />
+				<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
+				           FontSize="40" Text="Some Setting"
+				           TextAlignment="Center" HorizontalAlignment="Center"
+				           VerticalAlignment="Center" Margin="10" />
+				<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
+				           FontSize="40" Text="Some Setting"
+				           TextAlignment="Center" HorizontalAlignment="Center"
+				           VerticalAlignment="Center" Margin="10" />
+				<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
+				           FontSize="40" Text="Some Setting"
+				           TextAlignment="Center" HorizontalAlignment="Center"
+				           VerticalAlignment="Center" Margin="10" />
+				<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
+				           FontSize="40" Text="Some Setting"
+				           TextAlignment="Center" HorizontalAlignment="Center"
+				           VerticalAlignment="Center" Margin="10" />
+				<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
+				           FontSize="40" Text="Some Setting"
+				           TextAlignment="Center" HorizontalAlignment="Center"
+				           VerticalAlignment="Center" Margin="10" />
 			</StackPanel>
-		</Border>
-	</Grid>
+
+		</Grid>
+	</StackPanel>
 </Page>

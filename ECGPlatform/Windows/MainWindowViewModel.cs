@@ -1,6 +1,6 @@
 ﻿namespace ECGPlatform;
 
-internal partial class MainWindowViewModel : ObservableObject
+internal partial class MainWindowViewModel : WindowBaseViewModel
 {
     #region Public Property
 
@@ -21,35 +21,6 @@ internal partial class MainWindowViewModel : ObservableObject
         _logger = logger;
         _currentPageName = PagesName.LocalDataPage;
         _logger.Information($"{typeof(MainWindowViewModel)} Create.");
-    }
-
-    #endregion
-
-    #region Commands
-
-    [RelayCommand]
-    private void Minimize(Window window)
-    {
-        SystemCommands.MinimizeWindow(window);
-    }
-
-    [RelayCommand]
-    private void Maximize(Window window)
-    {
-        if (window.WindowState == WindowState.Normal)
-        {
-            SystemCommands.MaximizeWindow(window);
-        }
-        else
-        {
-            SystemCommands.RestoreWindow(window);
-        }
-    }
-
-    [RelayCommand]
-    private void Close(Window window)
-    {
-        SystemCommands.CloseWindow(window);
     }
 
     #endregion

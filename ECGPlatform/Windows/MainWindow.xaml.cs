@@ -1,15 +1,9 @@
 ﻿namespace ECGPlatform;
 
-public partial class MainWindow : Window
+public partial class MainWindow : WindowBase
 {
     public MainWindow()
     {
         InitializeComponent();
-        WindowCornerRestorer.ApplyRoundCorner(this);
-    }
-
-    private void Window_Loaded(object sender, RoutedEventArgs e)
-    {
-        WindowAnimRestorer.AddAnimTo(this);
     }
 }

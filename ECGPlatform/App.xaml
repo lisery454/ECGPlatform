@@ -9,7 +9,6 @@
 			<ResourceDictionary.MergedDictionaries>
 
 				<ResourceDictionary Source="Resources/Constants.xaml" />
-				<ResourceDictionary Source="Resources/Colors.xaml" />
 				<ResourceDictionary Source="Resources/Brushes.xaml" />
 				<ResourceDictionary Source="Resources/Fonts.xaml" />
 				<ResourceDictionary Source="Resources/Animations.xaml" />
@@ -22,6 +21,8 @@
 				<ResourceDictionary Source="Styles/ToggleButton.xaml" />
 				<ResourceDictionary Source="Styles/RadioButton.xaml" />
 				<ResourceDictionary Source="Styles/TextBlock.xaml" />
+				<ResourceDictionary Source="Styles/Window.xaml" />
+
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</Application.Resources>

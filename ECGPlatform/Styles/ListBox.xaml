@@ -11,8 +11,8 @@
 		<Setter Property="ItemContainerStyle">
 			<Setter.Value>
 				<Style TargetType="{x:Type ListBoxItem}">
-					<Setter Property="Background" Value="{DynamicResource BrushPrimaryWhite30}" />
-					<Setter Property="Foreground" Value="{DynamicResource BrushBlack70}" />
+					<Setter Property="Background" Value="{DynamicResource BrushPrimary30OnMain}" />
+					<Setter Property="Foreground" Value="{DynamicResource BrushOpposite80OnMain}" />
 					<Setter Property="BorderThickness" Value="0" />
 					<Setter Property="FocusVisualStyle" Value="{x:Null}" />
 					<Setter Property="BorderBrush" Value="Transparent" />
@@ -45,7 +45,7 @@
 								</StackPanel>
 								<ControlTemplate.Triggers>
 									<Trigger Property="IsMouseOver" SourceName="border" Value="True">
-										<Setter TargetName="border" Property="Background" Value="{DynamicResource BrushPrimaryWhite40}" />
+										<Setter TargetName="border" Property="Background" Value="{DynamicResource BrushPrimary40OnMain}" />
 									</Trigger>
 								</ControlTemplate.Triggers>
 							</ControlTemplate>
@@ -61,8 +61,7 @@
 				<DataTemplate DataType="{x:Type local:LocalECGDataItem}">
 					<Grid>
 						<Border Background="Transparent" CornerRadius="10"
-						        HorizontalAlignment="Stretch"
-						        VerticalAlignment="Stretch">
+						        HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 							<Grid Margin="20,10">
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="Auto" />

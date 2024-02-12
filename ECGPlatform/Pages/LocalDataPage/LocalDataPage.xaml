@@ -7,6 +7,7 @@
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       d:Height="1000 " d:Width="2000"
       d:DataContext="{d:DesignInstance Type=local:LocalDataPageViewModel}"
+      Style="{StaticResource BasePageStyle}"
       mc:Ignorable="d" Title="LocalDataPage">
 	<i:Interaction.Triggers>
 		<i:EventTrigger EventName="Loaded">
@@ -15,28 +16,21 @@
 	</i:Interaction.Triggers>
 
 	<Grid>
-		<Border Background="{DynamicResource BrushPrimary10}"
-		        CornerRadius="10">
-			<i:Interaction.Behaviors>
-				<local:ShadowBehavior Background="{DynamicResource BrushWhite}" />
-			</i:Interaction.Behaviors>
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="*" />
-				</Grid.RowDefinitions>
-				<TextBlock Style="{StaticResource TitleTextStyle}"
-				           Text="本地数据" />
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<TextBlock Style="{StaticResource TitleTextStyle}" Text="本地数据" />
 
-				<ScrollViewer Style="{StaticResource VerticalScrollViewer}"
-				              Grid.Row="1">
-					<ListBox Style="{StaticResource ListBoxStyle}"
-					         ItemsSource="{Binding LocalData}"
-					         SelectedItem="{Binding SelectedItem}" />
-				</ScrollViewer>
+		<ScrollViewer Margin="20,0"
+		              PreviewMouseWheel="ScrollViewer_OnPreviewMouseWheel"
+		              Style="{StaticResource VerticalScrollViewer}"
+		              Grid.Row="1">
+			<ListBox Style="{StaticResource ListBoxStyle}"
+			         ItemsSource="{Binding LocalData}"
+			         SelectedItem="{Binding SelectedItem}" />
+		</ScrollViewer>
 
 
-			</Grid>
-		</Border>
 	</Grid>
 </Page>

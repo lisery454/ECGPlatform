@@ -4,10 +4,9 @@
                     xmlns:local="clr-namespace:ECGPlatform">
 
 	<!--  MenuRadioButtonStyle  -->
-	<Style x:Key="MenuRadioButtonStyle"
-	       TargetType="{x:Type RadioButton}">
+	<Style x:Key="MenuRadioButtonStyle" TargetType="{x:Type RadioButton}">
 		<Setter Property="Background" Value="Transparent" />
-		<Setter Property="Foreground" Value="{DynamicResource BrushBlack60}" />
+		<Setter Property="Foreground" Value="{DynamicResource BrushOpposite60OnMain}" />
 		<Setter Property="Cursor" Value="Hand" />
 		<Setter Property="FontWeight" Value="Normal" />
 		<Setter Property="FontSize" Value="15" />
@@ -30,7 +29,7 @@
 								      Height="24" HorizontalAlignment="Center"
 								      VerticalAlignment="Center"
 								      Data="{Binding Path=(local:IconHelper.Icon), RelativeSource={RelativeSource TemplatedParent}}"
-								      Fill="{DynamicResource BrushBlack60}"
+								      Fill="{DynamicResource BrushOpposite60OnMain}"
 								      RenderTransformOrigin="0.5, 0.5" Stretch="None">
 									<Path.RenderTransform>
 										<ScaleTransform ScaleX="1.3" ScaleY="1.3" />
@@ -39,8 +38,7 @@
 							</Grid>
 							<!--  Text  -->
 							<TextBlock x:Name="txtName" Margin="3,3,3,3"
-							           HorizontalAlignment="Center"
-							           VerticalAlignment="Center"
+							           HorizontalAlignment="Center" VerticalAlignment="Center"
 							           FontFamily="{StaticResource ChillRoundGothicRegular}"
 							           FontSize="{TemplateBinding FontSize}"
 							           FontWeight="{TemplateBinding FontWeight}"
@@ -51,13 +49,13 @@
 					</Border>
 					<ControlTemplate.Triggers>
 						<Trigger Property="IsMouseOver" Value="True">
-							<Setter TargetName="txtName" Property="Foreground" Value="{DynamicResource BrushWhite80}" />
-							<Setter TargetName="icon" Property="Fill" Value="{DynamicResource BrushWhite80}" />
-							<Setter TargetName="background" Property="Background" Value="{DynamicResource BrushPrimary50}" />
+							<Setter TargetName="txtName" Property="Foreground" Value="{DynamicResource BrushMain90OnOpposite}" />
+							<Setter TargetName="icon" Property="Fill" Value="{DynamicResource BrushMain90OnOpposite}" />
+							<Setter TargetName="background" Property="Background" Value="{DynamicResource BrushPrimary60OnMain}" />
 						</Trigger>
 						<Trigger Property="IsChecked" Value="True">
-							<Setter TargetName="txtName" Property="Foreground" Value="{DynamicResource BrushWhite}" />
-							<Setter TargetName="icon" Property="Fill" Value="{DynamicResource BrushWhite}" />
+							<Setter TargetName="txtName" Property="Foreground" Value="{DynamicResource BrushMain}" />
+							<Setter TargetName="icon" Property="Fill" Value="{DynamicResource BrushMain}" />
 							<Setter TargetName="background" Property="Background" Value="{DynamicResource BrushPrimary}" />
 						</Trigger>
 					</ControlTemplate.Triggers>
