@@ -3,27 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ECGPlatform"
              Startup="Application_Startup">
-	<Application.Resources>
+  <Application.Resources>
 
-		<ResourceDictionary>
-			<ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
 
-				<ResourceDictionary Source="Resources/Constants.xaml" />
-				<ResourceDictionary Source="Resources/Brushes.xaml" />
-				<ResourceDictionary Source="Resources/Fonts.xaml" />
-				<ResourceDictionary Source="Resources/Animations.xaml" />
-				<ResourceDictionary Source="Resources/Icons.xaml" />
+        <ResourceDictionary Source="Resources/Constants.xaml" />
+        <ResourceDictionary Source="Resources/Colors.xaml" />
+        <ResourceDictionary Source="Resources/Fonts.xaml" />
+        <ResourceDictionary Source="Resources/Animations.xaml" />
+        <ResourceDictionary Source="Resources/Icons.xaml" />
 
-				<ResourceDictionary Source="Styles/Button.xaml" />
-				<ResourceDictionary Source="Styles/ListBox.xaml" />
-				<ResourceDictionary Source="Styles/ScrollViewer.xaml" />
-				<ResourceDictionary Source="Styles/Page.xaml" />
-				<ResourceDictionary Source="Styles/ToggleButton.xaml" />
-				<ResourceDictionary Source="Styles/RadioButton.xaml" />
-				<ResourceDictionary Source="Styles/TextBlock.xaml" />
-				<ResourceDictionary Source="Styles/Window.xaml" />
+        <ResourceDictionary Source="Styles/Button.xaml" />
+        <ResourceDictionary Source="Styles/ListBox.xaml" />
+        <ResourceDictionary Source="Styles/ScrollViewer.xaml" />
+        <ResourceDictionary Source="Styles/Page.xaml" />
+        <ResourceDictionary Source="Styles/ToggleButton.xaml" />
+        <ResourceDictionary Source="Styles/RadioButton.xaml" />
+        <ResourceDictionary Source="Styles/TextBlock.xaml" />
+        <ResourceDictionary Source="Styles/Window.xaml" />
 
-			</ResourceDictionary.MergedDictionaries>
-		</ResourceDictionary>
-	</Application.Resources>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
 </Application>

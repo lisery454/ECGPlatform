@@ -8,7 +8,7 @@ internal class BindingSumConverter : IMultiValueConverter
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         var result = 0f;
-        foreach (var item in values)
+        foreach (var item in values)    
         {
             var f = (float)item;
             result += f;
