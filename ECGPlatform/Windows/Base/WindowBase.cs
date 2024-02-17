@@ -7,6 +7,7 @@ public class WindowBase : Window
     protected WindowBase()
     {
         Loaded += Window_Loaded;
+        SourceInitialized += Window_SourceInitialized;
         WindowCornerRestorer.ApplyRoundCorner(this);
         SetWindowChrome();
     }
@@ -14,6 +15,11 @@ public class WindowBase : Window
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         WindowAnimRestorer.AddAnimTo(this);
+    }
+
+    void Window_SourceInitialized(object? sender, EventArgs e)
+    {
+        // WindowResizer.CoverResizeIssue(this);
     }
 
     private void SetWindowChrome()

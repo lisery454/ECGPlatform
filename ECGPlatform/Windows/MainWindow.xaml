@@ -11,54 +11,49 @@
                   Style="{StaticResource MainWindowStyle}"
                   WindowStartupLocation="CenterScreen" mc:Ignorable="d">
 
-	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition />
-		</Grid.ColumnDefinitions>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
 
-		<!--  left menu  -->
-		<Border Grid.Column="0" Margin="20,20,0,20"
-		        Background="{DynamicResource BrushPrimary20OnMain}"
-		        CornerRadius="10">
-			<Border.Effect>
-				<DropShadowEffect BlurRadius="10" Direction="270"
-				                  Opacity="0.2" ShadowDepth="0"
-				                  Color="{DynamicResource ColorOpposite}" />
-			</Border.Effect>
-			<Grid Width="100">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="20" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="*" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="20" />
-				</Grid.RowDefinitions>
-				<RadioButton Grid.Row="1" Width="100"
-				             IsChecked="{Binding CurrentPageName, Converter={x:Static local:PagesNameToBoolConverter.Instance}, ConverterParameter={x:Static local:PagesName.LocalDataPage}}"
-				             Margin="0,0,0,15"
-				             local:IconHelper.Icon="{StaticResource DataIcon}"
-				             Content="本地数据"
-				             Style="{StaticResource MenuRadioButtonStyle}" />
+    <!--  left menu  -->
+    <Border Grid.Column="0" Margin="20,20,0,20"
+            Background="{DynamicResource BrushPrimary20OnMain}"
+            CornerRadius="10">
+      <Grid Width="100">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="20" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="*" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <RadioButton Grid.Row="1" Width="100"
+                     IsChecked="{Binding CurrentPageName, Converter={x:Static local:PagesNameToBoolConverter.Instance}, ConverterParameter={x:Static local:PagesName.LocalDataPage}}"
+                     Margin="0,0,0,15"
+                     local:IconHelper.Icon="{StaticResource DataIcon}"
+                     Content="本地数据"
+                     Style="{StaticResource MenuRadioButtonStyle}" />
 
 
-				<RadioButton Grid.Row="7" Width="100"
-				             local:IconHelper.Icon="{StaticResource SettingIcon}"
-				             IsChecked="{Binding CurrentPageName, Converter={x:Static local:PagesNameToBoolConverter.Instance}, ConverterParameter={x:Static local:PagesName.SettingPage}}"
-				             Content="设置"
-				             Style="{StaticResource MenuRadioButtonStyle}" />
+        <RadioButton Grid.Row="7" Width="100"
+                     local:IconHelper.Icon="{StaticResource SettingIcon}"
+                     IsChecked="{Binding CurrentPageName, Converter={x:Static local:PagesNameToBoolConverter.Instance}, ConverterParameter={x:Static local:PagesName.SettingPage}}"
+                     Content="设置"
+                     Style="{StaticResource MenuRadioButtonStyle}" />
 
-			</Grid>
-		</Border>
+      </Grid>
+    </Border>
 
-		<!--  page  -->
-		<Border Grid.Column="1" Margin="20">
-			<Frame Content="{Binding CurrentPageName, Converter={x:Static local:PagesNameToPageConverter.Instance}}" NavigationUIVisibility="Hidden" />
-		</Border>
-	</Grid>
+    <!--  page  -->
+    <Border Grid.Column="1" Margin="20">
+      <Frame Content="{Binding CurrentPageName, Converter={x:Static local:PagesNameToPageConverter.Instance}}" NavigationUIVisibility="Hidden" />
+    </Border>
+  </Grid>
 
 </local:WindowBase>

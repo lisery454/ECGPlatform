@@ -28,15 +28,20 @@
           <Setter Property="Template">
             <Setter.Value>
               <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                <Grid Background="Transparent" Margin="40,0">
+                <Grid Background="Transparent" Margin="40,0"
+                      Height="80">
                   <Border x:Name="MouseOverBorder" Opacity="0"
                           BorderBrush="{TemplateBinding BorderBrush}"
                           IsHitTestVisible="False"
                           Background="{DynamicResource BrushPrimary20OnMain}"
                           Style="{StaticResource ListBoxBorderStyle}"
-                          BorderThickness="{TemplateBinding BorderThickness}">
+                          BorderThickness="{TemplateBinding BorderThickness}"
+                          RenderTransformOrigin="0.5,0.5">
                     <Border.RenderTransform>
-                      <TranslateTransform x:Name="MouseOverBorderTranslateTransform" X="100" />
+                      <TransformGroup>
+                        <TranslateTransform x:Name="MouseOverBorderTranslateTransform" X="0" />
+                        <ScaleTransform x:Name="MouseOverBorderScaleTransform" ScaleY="0.98" ScaleX="0.98" />
+                      </TransformGroup>
                     </Border.RenderTransform>
                     <Border IsHitTestVisible="False" Opacity="0"
                             x:Name="MousePressBorder" BorderThickness="0"
@@ -69,19 +74,26 @@
                     <Trigger.EnterActions>
                       <BeginStoryboard>
                         <Storyboard>
-                          <DoubleAnimation To="1" Duration="0:0:0.100"
+                          <DoubleAnimation To="1" Duration="0:0:0.050"
                                            Storyboard.TargetName="MouseOverBorder"
                                            Storyboard.TargetProperty="Opacity">
                             <DoubleAnimation.EasingFunction>
                               <CubicEase EasingMode="EaseIn" />
                             </DoubleAnimation.EasingFunction>
                           </DoubleAnimation>
-                          <DoubleAnimation To="0" Duration="0:0:0.100"
-                                           Storyboard.TargetName="MouseOverBorderTranslateTransform"
-                                           Storyboard.TargetProperty="X">
+
+                          <DoubleAnimation To="1" Duration="0:0:0.200"
+                                           Storyboard.TargetName="MouseOverBorderScaleTransform"
+                                           Storyboard.TargetProperty="ScaleY">
                             <DoubleAnimation.EasingFunction>
-                              <ElasticEase EasingMode="EaseOut" Oscillations="10"
-                                           Springiness="1" />
+                              <CubicEase EasingMode="EaseIn" />
+                            </DoubleAnimation.EasingFunction>
+                          </DoubleAnimation>
+                          <DoubleAnimation To="1" Duration="0:0:0.200"
+                                           Storyboard.TargetName="MouseOverBorderScaleTransform"
+                                           Storyboard.TargetProperty="ScaleX">
+                            <DoubleAnimation.EasingFunction>
+                              <CubicEase EasingMode="EaseIn" />
                             </DoubleAnimation.EasingFunction>
                           </DoubleAnimation>
                         </Storyboard>
@@ -97,18 +109,25 @@
                               <CubicEase EasingMode="EaseOut" />
                             </DoubleAnimation.EasingFunction>
                           </DoubleAnimation>
-                          <DoubleAnimation To="100" Duration="0:0:0.400"
-                                           Storyboard.TargetName="MouseOverBorderTranslateTransform"
-                                           Storyboard.TargetProperty="X">
-                            <DoubleAnimation.EasingFunction>
-                              <CubicEase EasingMode="EaseOut" />
-                            </DoubleAnimation.EasingFunction>
-                          </DoubleAnimation>
                           <DoubleAnimation To="0" Duration="0:0:0.050"
                                            Storyboard.TargetName="MousePressBorder"
                                            Storyboard.TargetProperty="Opacity">
                             <DoubleAnimation.EasingFunction>
                               <CubicEase EasingMode="EaseOut" />
+                            </DoubleAnimation.EasingFunction>
+                          </DoubleAnimation>
+                          <DoubleAnimation To="0.98" Duration="0:0:0.050"
+                                           Storyboard.TargetName="MouseOverBorderScaleTransform"
+                                           Storyboard.TargetProperty="ScaleY">
+                            <DoubleAnimation.EasingFunction>
+                              <ElasticEase EasingMode="EaseOut" />
+                            </DoubleAnimation.EasingFunction>
+                          </DoubleAnimation>
+                          <DoubleAnimation To="0.98" Duration="0:0:0.050"
+                                           Storyboard.TargetName="MouseOverBorderScaleTransform"
+                                           Storyboard.TargetProperty="ScaleX">
+                            <DoubleAnimation.EasingFunction>
+                              <ElasticEase EasingMode="EaseOut" />
                             </DoubleAnimation.EasingFunction>
                           </DoubleAnimation>
                         </Storyboard>
