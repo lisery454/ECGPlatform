@@ -193,11 +193,12 @@
                   </Grid.RowDefinitions>
                   <TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
                              FontSize="24" Grid.Row="0"
-                             SnapsToDevicePixels="True"
+                             HorizontalAlignment="Left" SnapsToDevicePixels="True"
                              TextOptions.TextRenderingMode="ClearType "
                              Text="{Binding Title}" />
                   <TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
                              FontSize="16" Grid.Row="2"
+                             HorizontalAlignment="Right"
                              TextOptions.TextRenderingMode="ClearType "
                              SnapsToDevicePixels="True" Margin="0,8,0,0"
                              Text="{Binding IndexFilePath}" />

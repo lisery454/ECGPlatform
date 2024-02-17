@@ -33,12 +33,13 @@ public class SettingManager : ISettingManager
         CheckIfSettingFileExists();
         try
         {
+            _logger.Debug(File.ReadAllText(_settingPath));
             _currentSetting = _deserializer.Deserialize<Setting>(File.ReadAllText(_settingPath));
             _logger.Information("Load Setting Success.");
         }
         catch (Exception e)
         {
-            _logger.Information($"Load Setting Fail. Exception: {e}");
+            _logger.Warning($"Load Setting Fail. Exception: {e}");
             _currentSetting = new Setting(_defaultLocalDataPath);
             _logger.Information("Create Default Setting.");
             Save();

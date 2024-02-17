@@ -1,54 +1,54 @@
 ﻿<Page x:Class="ECGPlatform.SettingPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:ECGPlatform"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:local="clr-namespace:ECGPlatform"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Title="{DynamicResource SettingTitle}"
+      d:Background="White"
+      d:DataContext="{d:DesignInstance Type=local:SettingPageViewModel}"
+      d:Height="1000 " d:Width="2000"
       Style="{StaticResource BasePageStyle}"
-      mc:Ignorable="d" Title="SettingPage"
-      d:Height="1000 " d:Width="2000">
+      mc:Ignorable="d">
 
-	<StackPanel>
-		<TextBlock Style="{StaticResource TitleTextStyle}" Text="设置" />
+  <StackPanel>
+    <TextBlock Style="{StaticResource TitleTextStyle}" Text="{DynamicResource SettingTitle}" />
 
-		<Grid>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="2*" />
-				<ColumnDefinition Width="4*" />
-				<ColumnDefinition Width="2*" />
-			</Grid.ColumnDefinitions>
-			<StackPanel Grid.Column="1">
-				<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
-				           FontSize="40" Text="Some Setting"
-				           TextAlignment="Center" HorizontalAlignment="Center"
-				           VerticalAlignment="Center" Margin="10" />
-				<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
-				           FontSize="40" Text="Some Setting"
-				           TextAlignment="Center" HorizontalAlignment="Center"
-				           VerticalAlignment="Center" Margin="10" />
-				<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
-				           FontSize="40" Text="Some Setting"
-				           TextAlignment="Center" HorizontalAlignment="Center"
-				           VerticalAlignment="Center" Margin="10" />
-				<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
-				           FontSize="40" Text="Some Setting"
-				           TextAlignment="Center" HorizontalAlignment="Center"
-				           VerticalAlignment="Center" Margin="10" />
-				<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
-				           FontSize="40" Text="Some Setting"
-				           TextAlignment="Center" HorizontalAlignment="Center"
-				           VerticalAlignment="Center" Margin="10" />
-				<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
-				           FontSize="40" Text="Some Setting"
-				           TextAlignment="Center" HorizontalAlignment="Center"
-				           VerticalAlignment="Center" Margin="10" />
-				<TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
-				           FontSize="40" Text="Some Setting"
-				           TextAlignment="Center" HorizontalAlignment="Center"
-				           VerticalAlignment="Center" Margin="10" />
-			</StackPanel>
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4*" />
+        <ColumnDefinition Width="1*" />
+      </Grid.ColumnDefinitions>
+      <ScrollViewer Grid.Column="1" Margin="20,0"
+                    Style="{StaticResource VerticalScrollViewer}">
+        <i:Interaction.Behaviors>
+          <local:ScrollViewerMouseWheelBehavior />
+        </i:Interaction.Behaviors>
+        <StackPanel>
+          <!--  修改本地文件路径  -->
+          <Grid Height="50" Margin="20,10">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" FontSize="24"
+                       Text="{DynamicResource LocalDataDirPath}" />
+            <TextBlock Grid.Column="2" Margin="0,0,20,0"
+                       d:Text="C:/data/user/desktop/.." FontSize="20"
+                       Text="{Binding LocalDataDirectoryPath}" />
+            <Button Grid.Column="3" Margin="5,5"
+                    Command="{Binding ChangeLocalDataDirectoryPathCommand}"
+                    Content="{DynamicResource ChangeStr}"
+                    FontSize="18" />
+          </Grid>
+        </StackPanel>
+      </ScrollViewer>
 
-		</Grid>
-	</StackPanel>
+
+    </Grid>
+  </StackPanel>
 </Page>

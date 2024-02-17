@@ -7,10 +7,12 @@ public partial class LocalDataPageViewModel : ObservableObject
     [ObservableProperty] private LocalECGDataItem? _selectedItem;
 
     private readonly ILogger _logger;
+    private readonly ISettingManager _settingManager;
 
-    public LocalDataPageViewModel(ILogger logger)
+    public LocalDataPageViewModel(ILogger logger, ISettingManager settingManager)
     {
         _logger = logger;
+        _settingManager = settingManager;
         LocalData = new ObservableCollection<LocalECGDataItem>();
         _selectedItem = null;
     }
@@ -18,10 +20,14 @@ public partial class LocalDataPageViewModel : ObservableObject
     [RelayCommand]
     private async Task InitLocalData()
     {
-        // var localDataDirectoryPath = App.Container.Get<ISettingManager>().CurrentSetting.LocalDataDirectoryPath;
-        var localDataDirectoryPath = @"E:\Data\毕业设计\data";
+        var localDataDirectoryPath = _settingManager.CurrentSetting.LocalDataDirectoryPath;
         var directory = new DirectoryInfo(localDataDirectoryPath);
-        if (!directory.Exists) return;
+        if (!directory.Exists)
+        {
+            _logger.Warning("Local data directory not exists, load local data fail.");
+            return;
+        }
+
         foreach (var subDirectory in directory.GetDirectories())
         {
             var fileInfos = subDirectory.GetFiles("index.yaml");
@@ -32,13 +38,14 @@ public partial class LocalDataPageViewModel : ObservableObject
                     var indexFilePath = fileInfos[0].FullName;
                     var ecgIndexFile = await ECGFileManager.ReadIndexFile(indexFilePath);
                     LocalData.Add(new LocalECGDataItem { Title = ecgIndexFile.Title, IndexFilePath = indexFilePath });
+                    _logger.Information($"Load local file {indexFilePath} success.");
                 }
                 catch (Exception e)
                 {
-                    _logger.Warning("读取index.yaml文件错误：" + e.Message);
+                    _logger.Warning("read index.yaml file fail：" + e.Message);
                 }
             }
-            else _logger.Warning($"在{subDirectory.FullName}中找不到index.yaml文件");
+            else _logger.Warning($"In {subDirectory.FullName}, can't find index.yaml file");
         }
     }
 }

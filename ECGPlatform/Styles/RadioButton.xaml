@@ -3,99 +3,97 @@
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:local="clr-namespace:ECGPlatform">
 
-	<!--  MenuRadioButtonStyle  -->
-	<Style x:Key="MenuRadioButtonStyle" TargetType="{x:Type RadioButton}">
-		<Setter Property="Background" Value="Transparent" />
-		<Setter Property="Foreground" Value="{DynamicResource BrushOpposite60OnMain}" />
-		<Setter Property="Cursor" Value="Hand" />
-		<Setter Property="FontWeight" Value="Normal" />
-		<Setter Property="FontSize" Value="15" />
-		<Setter Property="Height" Value="64" />
-		<Setter Property="Width" Value="80" />
-		<Setter Property="Focusable" Value="False" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="{x:Type RadioButton}">
+  <!--  MenuRadioButtonStyle  -->
+  <Style x:Key="MenuRadioButtonStyle" TargetType="{x:Type RadioButton}">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{DynamicResource BrushOpposite60OnMain}" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Setter Property="FontSize" Value="15" />
+    <Setter Property="Height" Value="64" />
+    <Setter Property="Width" Value="80" />
+    <Setter Property="Focusable" Value="False" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type RadioButton}">
+          <!--  background  -->
+          <Grid Background="Transparent" x:Name="background"
+                Height="{TemplateBinding Height}"
+                Width="{TemplateBinding Width}"
+                HorizontalAlignment="Center">
+            <StackPanel Orientation="Vertical" Margin="16,8,16,4">
+              <!--  Icon  -->
+              <Grid Height="30" Width="30">
+                <Path x:Name="icon" Width="24"
+                      Height="24" HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Data="{Binding Path=(local:IconHelper.Icon), RelativeSource={RelativeSource TemplatedParent}}"
+                      Fill="{DynamicResource BrushOpposite60OnMain}"
+                      RenderTransformOrigin="0.5, 0.5" Stretch="None">
+                  <Path.RenderTransform>
+                    <ScaleTransform ScaleX="1.3" ScaleY="1.3" />
+                  </Path.RenderTransform>
+                </Path>
+              </Grid>
+              <!--  Text  -->
+              <TextBlock x:Name="txtName" Margin="3,3,3,3"
+                         HorizontalAlignment="Center" VerticalAlignment="Center"
+                         FontFamily="{StaticResource ChillRoundGothicRegular}"
+                         FontSize="{TemplateBinding FontSize}"
+                         FontWeight="{TemplateBinding FontWeight}"
+                         Foreground="{TemplateBinding Foreground}"
+                         Text="{TemplateBinding Content}" />
+            </StackPanel>
+          </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="txtName" Property="Foreground" Value="{DynamicResource BrushMain90OnOpposite}" />
+              <Setter TargetName="icon" Property="Fill" Value="{DynamicResource BrushMain90OnOpposite}" />
+              <Setter TargetName="background" Property="Background" Value="{DynamicResource BrushPrimary60OnMain}" />
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+              <Setter TargetName="txtName" Property="Foreground" Value="{DynamicResource BrushMain}" />
+              <Setter TargetName="icon" Property="Fill" Value="{DynamicResource BrushMain}" />
+              <Setter TargetName="background" Property="Background" Value="{DynamicResource BrushPrimary}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
 
-					<!--  background  -->
-					<Border Background="Transparent" x:Name="background"
-					        Height="{TemplateBinding Height}"
-					        Width="{TemplateBinding Width}"
-					        HorizontalAlignment="Center">
-						<StackPanel Orientation="Vertical" Margin="16,8,16,4">
-							<!--  Icon  -->
-							<Grid Height="30" Width="30">
-								<Path x:Name="icon" Width="24"
-								      Height="24" HorizontalAlignment="Center"
-								      VerticalAlignment="Center"
-								      Data="{Binding Path=(local:IconHelper.Icon), RelativeSource={RelativeSource TemplatedParent}}"
-								      Fill="{DynamicResource BrushOpposite60OnMain}"
-								      RenderTransformOrigin="0.5, 0.5" Stretch="None">
-									<Path.RenderTransform>
-										<ScaleTransform ScaleX="1.3" ScaleY="1.3" />
-									</Path.RenderTransform>
-								</Path>
-							</Grid>
-							<!--  Text  -->
-							<TextBlock x:Name="txtName" Margin="3,3,3,3"
-							           HorizontalAlignment="Center" VerticalAlignment="Center"
-							           FontFamily="{StaticResource ChillRoundGothicRegular}"
-							           FontSize="{TemplateBinding FontSize}"
-							           FontWeight="{TemplateBinding FontWeight}"
-							           Foreground="{TemplateBinding Foreground}"
-							           Text="{TemplateBinding Content}" />
-						</StackPanel>
-
-					</Border>
-					<ControlTemplate.Triggers>
-						<Trigger Property="IsMouseOver" Value="True">
-							<Setter TargetName="txtName" Property="Foreground" Value="{DynamicResource BrushMain90OnOpposite}" />
-							<Setter TargetName="icon" Property="Fill" Value="{DynamicResource BrushMain90OnOpposite}" />
-							<Setter TargetName="background" Property="Background" Value="{DynamicResource BrushPrimary60OnMain}" />
-						</Trigger>
-						<Trigger Property="IsChecked" Value="True">
-							<Setter TargetName="txtName" Property="Foreground" Value="{DynamicResource BrushMain}" />
-							<Setter TargetName="icon" Property="Fill" Value="{DynamicResource BrushMain}" />
-							<Setter TargetName="background" Property="Background" Value="{DynamicResource BrushPrimary}" />
-						</Trigger>
-					</ControlTemplate.Triggers>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
-
-	<!--  OptionsRadioButtonStyle  -->
-	<!--  <Style x:Key="OptionsRadioButtonStyle"  -->
-	<!--  TargetType="RadioButton">  -->
-	<!-- 	<Setter Property="Focusable" Value="False" /> -->
-	<!-- 	<Setter Property="Background" Value="Transparent" /> -->
-	<!-- 	<Setter Property="Foreground" Value="{DynamicResource ColorOnSurfaceVariant}" /> -->
-	<!-- 	<Setter Property="Cursor" Value="Hand" /> -->
-	<!-- 	<Setter Property="FontWeight" Value="Normal" /> -->
-	<!-- 	<Setter Property="FontSize" Value="16" /> -->
-	<!-- 	<Setter Property="Template"> -->
-	<!-- 		<Setter.Value> -->
-	<!-- 			<ControlTemplate TargetType="{x:Type RadioButton}"> -->
-	<!--  <Border x:Name="border"  -->
-	<!--  Background="{TemplateBinding Background}"  -->
-	<!--  CornerRadius="10">  -->
-	<!--  <TextBlock x:Name="txtName" Margin="5,3"  -->
-	<!--  HorizontalAlignment="Center"  -->
-	<!--  VerticalAlignment="Center"  -->
-	<!--  FontFamily="{StaticResource ChillRoundGothicRegular}"  -->
-	<!--  FontSize="{TemplateBinding FontSize}"  -->
-	<!--  FontWeight="{TemplateBinding FontWeight}"  -->
-	<!--  Foreground="{TemplateBinding Foreground}"  -->
-	<!--  Text="{TemplateBinding Content}" />  -->
-	<!-- 				</Border> -->
-	<!-- 				<ControlTemplate.Triggers> -->
-	<!-- 					<Trigger Property="IsChecked" Value="True"> -->
-	<!-- 						<Setter TargetName="border" Property="Background" Value="{DynamicResource ColorPrimary}" /> -->
-	<!-- 						<Setter TargetName="txtName" Property="Foreground" Value="{DynamicResource ColorOnPrimary}" /> -->
-	<!-- 					</Trigger> -->
-	<!-- 				</ControlTemplate.Triggers> -->
-	<!-- 			</ControlTemplate> -->
-	<!-- 		</Setter.Value> -->
-	<!-- 	</Setter> -->
-	<!-- </Style> -->
+  <!--  OptionsRadioButtonStyle  -->
+  <!--  <Style x:Key="OptionsRadioButtonStyle"  -->
+  <!--  TargetType="RadioButton">  -->
+  <!-- 	<Setter Property="Focusable" Value="False" /> -->
+  <!-- 	<Setter Property="Background" Value="Transparent" /> -->
+  <!-- 	<Setter Property="Foreground" Value="{DynamicResource ColorOnSurfaceVariant}" /> -->
+  <!-- 	<Setter Property="Cursor" Value="Hand" /> -->
+  <!-- 	<Setter Property="FontWeight" Value="Normal" /> -->
+  <!-- 	<Setter Property="FontSize" Value="16" /> -->
+  <!-- 	<Setter Property="Template"> -->
+  <!-- 		<Setter.Value> -->
+  <!-- 			<ControlTemplate TargetType="{x:Type RadioButton}"> -->
+  <!--  <Border x:Name="border"  -->
+  <!--  Background="{TemplateBinding Background}"  -->
+  <!--  CornerRadius="10">  -->
+  <!--  <TextBlock x:Name="txtName" Margin="5,3"  -->
+  <!--  HorizontalAlignment="Center"  -->
+  <!--  VerticalAlignment="Center"  -->
+  <!--  FontFamily="{StaticResource ChillRoundGothicRegular}"  -->
+  <!--  FontSize="{TemplateBinding FontSize}"  -->
+  <!--  FontWeight="{TemplateBinding FontWeight}"  -->
+  <!--  Foreground="{TemplateBinding Foreground}"  -->
+  <!--  Text="{TemplateBinding Content}" />  -->
+  <!-- 				</Border> -->
+  <!-- 				<ControlTemplate.Triggers> -->
+  <!-- 					<Trigger Property="IsChecked" Value="True"> -->
+  <!-- 						<Setter TargetName="border" Property="Background" Value="{DynamicResource ColorPrimary}" /> -->
+  <!-- 						<Setter TargetName="txtName" Property="Foreground" Value="{DynamicResource ColorOnPrimary}" /> -->
+  <!-- 					</Trigger> -->
+  <!-- 				</ControlTemplate.Triggers> -->
+  <!-- 			</ControlTemplate> -->
+  <!-- 		</Setter.Value> -->
+  <!-- 	</Setter> -->
+  <!-- </Style> -->
 </ResourceDictionary>

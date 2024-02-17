@@ -8,29 +8,32 @@
       d:Height="1000 " d:Width="2000"
       d:DataContext="{d:DesignInstance Type=local:LocalDataPageViewModel}"
       Style="{StaticResource BasePageStyle}"
-      mc:Ignorable="d" Title="LocalDataPage">
-	<i:Interaction.Triggers>
-		<i:EventTrigger EventName="Loaded">
-			<i:InvokeCommandAction Command="{Binding InitLocalDataCommand}" />
-		</i:EventTrigger>
-	</i:Interaction.Triggers>
+      mc:Ignorable="d"
+      Title="{DynamicResource LocalDataTitle}">
+  <i:Interaction.Triggers>
+    <i:EventTrigger EventName="Loaded">
+      <i:InvokeCommandAction Command="{Binding InitLocalDataCommand}" />
+    </i:EventTrigger>
+  </i:Interaction.Triggers>
 
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
-		</Grid.RowDefinitions>
-		<TextBlock Style="{StaticResource TitleTextStyle}" Text="本地数据" />
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <TextBlock Style="{StaticResource TitleTextStyle}" Text="{DynamicResource LocalDataTitle}" />
 
-		<ScrollViewer Margin="20,0"
-		              PreviewMouseWheel="ScrollViewer_OnPreviewMouseWheel"
-		              Style="{StaticResource VerticalScrollViewer}"
-		              Grid.Row="1">
-			<ListBox Style="{StaticResource ListBoxStyle}"
-			         ItemsSource="{Binding LocalData}"
-			         SelectedItem="{Binding SelectedItem}" />
-		</ScrollViewer>
+    <ScrollViewer Margin="20,0"
+                  Style="{StaticResource VerticalScrollViewer}"
+                  Grid.Row="1">
+      <i:Interaction.Behaviors>
+        <local:ScrollViewerMouseWheelBehavior />
+      </i:Interaction.Behaviors>
+      <ListBox Style="{StaticResource ListBoxStyle}"
+               ItemsSource="{Binding LocalData}"
+               SelectedItem="{Binding SelectedItem}" />
+    </ScrollViewer>
 
 
-	</Grid>
+  </Grid>
 </Page>
