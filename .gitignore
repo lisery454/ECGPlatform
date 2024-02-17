@@ -1,8 +1,5 @@
 /.vs
 /.idea
-ECGPlatform/bin/
-ECGPlatform/obj/
-ECGFileService/bin/
-ECGFileService/obj/
-SimpleUtils/bin/
-SimpleUtils/obj/
+/.vscode
+**/bin/
+**/obj/
