@@ -4,6 +4,11 @@ public partial class App
 {
     public new static App Current => (App)Application.Current;
 
+    public App()
+    {
+        ProcessManager.GetProcessLock();
+    }
+
     public IServiceProvider Services { get; } = ConfigureServices();
 
     private static IServiceProvider ConfigureServices()
@@ -21,10 +26,16 @@ public partial class App
 
         services.AddSingleton<ISettingManager, SettingManager>();
 
-        services.AddTransient<MainWindowViewModel>();
-        services.AddTransient<MainWindow>(sp => new MainWindow
+        services.AddSingleton<MainWindowViewModel>();
+        services.AddSingleton<MainWindow>(sp =>
         {
-            DataContext = sp.GetService<MainWindowViewModel>()
+            var mainWindowViewModel = sp.GetService<MainWindowViewModel>()!;
+            var mainWindow = new MainWindow
+            {
+                DataContext = mainWindowViewModel
+            };
+            mainWindowViewModel.BindingWindow = mainWindow;
+            return mainWindow;
         });
 
         services.AddTransient<LocalDataPageViewModel>();
@@ -37,6 +48,18 @@ public partial class App
         services.AddTransient<SettingPage>(sp => new SettingPage
         {
             DataContext = sp.GetService<SettingPageViewModel>()
+        });
+
+        services.AddTransient<ShowECGWindowViewModel>();
+        services.AddTransient<ShowECGWindow>(sp =>
+        {
+            var showECGWindowViewModel = sp.GetService<ShowECGWindowViewModel>()!;
+            var showECGWindow = new ShowECGWindow
+            {
+                DataContext = showECGWindowViewModel
+            };
+            showECGWindowViewModel.BindingWindow = showECGWindow;
+            return showECGWindow;
         });
 
         return services.BuildServiceProvider();

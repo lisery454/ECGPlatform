@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:local="clr-namespace:ECGPlatform">
 
   <Style TargetType="Border" x:Key="ListBoxBorderStyle">
@@ -15,7 +16,6 @@
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-
     <!--  ContentTemplate  -->
     <Setter Property="ItemContainerStyle">
       <Setter.Value>
@@ -66,9 +66,7 @@
                                         ContentTemplate="{TemplateBinding ContentTemplate}" />
                     </Grid>
                   </Border>
-
                 </Grid>
-
                 <ControlTemplate.Triggers>
                   <Trigger SourceName="MainBorder" Property="IsMouseOver" Value="True">
                     <Trigger.EnterActions>
@@ -147,7 +145,6 @@
                         </DoubleAnimation>
                       </Storyboard>
                     </BeginStoryboard>
-
                   </EventTrigger>
 
                   <EventTrigger SourceName="MainBorder" RoutedEvent="MouseUp">

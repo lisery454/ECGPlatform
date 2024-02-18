@@ -1,1 +1,12 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" />
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Storyboard x:Key="WinBootAnimation">
+    <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                     DecelerationRatio="0.3" Duration="0:0:0.700"
+                     From="0" To="1" />
+    <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
+                     DecelerationRatio="0.3" Duration="0:0:0.700"
+                     From="0" To="1" />
+    <DoubleAnimation Duration="0:0:0.700" Storyboard.TargetProperty="Opacity"
+                     From="0" To="1" />
+  </Storyboard>
+</ResourceDictionary>

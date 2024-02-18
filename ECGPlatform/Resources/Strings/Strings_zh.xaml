@@ -8,5 +8,6 @@
   <system:String x:Key="SettingTitle">设置</system:String>
   <system:String x:Key="LocalDataDirPath">本地数据目录</system:String>
   <system:String x:Key="ChangeStr">修改</system:String>
+  <system:String x:Key="ShowEcgWindowTitle">心电图数据</system:String>
 
 </ResourceDictionary>

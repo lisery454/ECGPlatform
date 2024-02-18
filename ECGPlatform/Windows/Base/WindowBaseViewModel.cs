@@ -2,6 +2,8 @@
 
 public partial class WindowBaseViewModel : ObservableObject
 {
+    public WindowBase? BindingWindow { get; set; }
+
     [RelayCommand]
     private void Minimize(Window window)
     {

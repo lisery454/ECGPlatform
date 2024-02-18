@@ -15,6 +15,7 @@ public partial class LocalDataPageViewModel : ObservableObject
         _settingManager = settingManager;
         LocalData = new ObservableCollection<LocalECGDataItem>();
         _selectedItem = null;
+        logger.Information("Local Data Page ViewModel Create.");
     }
 
     [RelayCommand]
@@ -48,6 +49,16 @@ public partial class LocalDataPageViewModel : ObservableObject
             else _logger.Warning($"In {subDirectory.FullName}, can't find index.yaml file");
         }
     }
-    
-    
+
+
+    [RelayCommand]
+    private void OpenLocalData(object? selectedItem)
+    {
+        if (selectedItem == null) return;
+        var localECGDataItem = (LocalECGDataItem)selectedItem;
+        var mainWindow = App.Current.Services.GetService<MainWindow>()!;
+        var showECGWindow = App.Current.Services.GetService<ShowECGWindow>()!;
+        showECGWindow.Owner = mainWindow;
+        showECGWindow.Show();
+    }
 }

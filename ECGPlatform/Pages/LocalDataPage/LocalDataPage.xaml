@@ -31,7 +31,14 @@
       </i:Interaction.Behaviors>
       <ListBox Style="{StaticResource ListBoxStyle}"
                ItemsSource="{Binding LocalData}"
-               SelectedItem="{Binding SelectedItem}" />
+               SelectedItem="{Binding SelectedItem}">
+        <i:Interaction.Triggers>
+          <i:EventTrigger EventName="SelectionChanged">
+            <i:InvokeCommandAction Command="{Binding OpenLocalDataCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=SelectedItem}" />
+            <i:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType=ListBox}}" MethodName="UnselectAll" />
+          </i:EventTrigger>
+        </i:Interaction.Triggers>
+      </ListBox>
     </ScrollViewer>
 
 

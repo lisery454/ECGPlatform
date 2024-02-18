@@ -6,8 +6,20 @@ public class WindowBase : Window
 {
     protected WindowBase()
     {
+        RenderTransformOrigin = new Point(0.5, 0.5);
+        RenderTransform = new TransformGroup
+        {
+            Children =
+            {
+                new ScaleTransform(),
+                new TranslateTransform(),
+            }
+        };
+
+
         Loaded += Window_Loaded;
-        SourceInitialized += Window_SourceInitialized;
+        // SourceInitialized += Window_SourceInitialized;
+        // WindowAnimRestorer.AddAnimTo(this);
         WindowCornerRestorer.ApplyRoundCorner(this);
         SetWindowChrome();
     }
@@ -15,11 +27,14 @@ public class WindowBase : Window
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         WindowAnimRestorer.AddAnimTo(this);
+        // var winBootAnim = (Storyboard)Application.Current.FindResource("WinBootAnimation")!;
+        // BeginStoryboard(winBootAnim);
     }
 
     void Window_SourceInitialized(object? sender, EventArgs e)
     {
         // WindowResizer.CoverResizeIssue(this);
+        
     }
 
     private void SetWindowChrome()
