@@ -20,7 +20,8 @@
     <!--  left menu  -->
     <Border Grid.Column="0" Margin="20,20,0,20"
             Background="{DynamicResource BrushPrimary20OnMain}"
-            CornerRadius="10">
+            CornerRadius="10" Opacity="0"
+            x:Name="MenuBackground">
       <Grid Width="100">
         <Grid.RowDefinitions>
           <RowDefinition Height="20" />
@@ -39,15 +40,38 @@
                      local:IconHelper.Icon="{StaticResource DataIcon}"
                      Content="{DynamicResource LocalDataTitle}"
                      Style="{StaticResource MenuRadioButtonStyle}" />
-
-
         <RadioButton Grid.Row="7" Width="100"
                      local:IconHelper.Icon="{StaticResource SettingIcon}"
                      IsChecked="{Binding CurrentPageName, Converter={x:Static local:PagesNameToBoolConverter.Instance}, ConverterParameter={x:Static local:PagesName.SettingPage}}"
                      Content="{DynamicResource SettingTitle}"
                      Style="{StaticResource MenuRadioButtonStyle}" />
-
       </Grid>
+
+      <Border.RenderTransform>
+        <TranslateTransform x:Name="TranslateTransform" X="-30" />
+      </Border.RenderTransform>
+      <Border.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+          <BeginStoryboard>
+            <Storyboard>
+              <DoubleAnimation Storyboard.TargetName="TranslateTransform"
+                               Storyboard.TargetProperty="X" To="0"
+                               Duration="0:0:0.500">
+                <DoubleAnimation.EasingFunction>
+                  <CubicEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+              </DoubleAnimation>
+              <DoubleAnimation Storyboard.TargetName="MenuBackground"
+                               Storyboard.TargetProperty="Opacity" To="1"
+                               Duration="0:0:0.500">
+                <DoubleAnimation.EasingFunction>
+                  <CubicEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+              </DoubleAnimation>
+            </Storyboard>
+          </BeginStoryboard>
+        </EventTrigger>
+      </Border.Triggers>
     </Border>
 
     <!--  page  -->

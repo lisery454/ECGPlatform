@@ -48,4 +48,6 @@ public partial class LocalDataPageViewModel : ObservableObject
             else _logger.Warning($"In {subDirectory.FullName}, can't find index.yaml file");
         }
     }
+    
+    
 }

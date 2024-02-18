@@ -4,15 +4,39 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Page}">
           <Grid>
-            <Border Background="{DynamicResource BrushPrimary10OnMain}" CornerRadius="10">
-              <!-- <Border.Effect> -->
-              <!--  <DropShadowEffect BlurRadius="10" Direction="270"  -->
-              <!--  Opacity="0.2" ShadowDepth="0"  -->
-              <!--  Color="{DynamicResource ColorOpposite}" />  -->
-              <!-- </Border.Effect> -->
+            <Border Background="{DynamicResource BrushPrimary10OnMain}"
+                    CornerRadius="10" Opacity="0.5"
+                    x:Name="Background">
+              <Border.RenderTransform>
+                <TranslateTransform x:Name="TranslateTransform" Y="30" />
+              </Border.RenderTransform>
+
               <ContentPresenter Content="{TemplateBinding Content}" />
             </Border>
           </Grid>
+
+          <ControlTemplate.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+              <BeginStoryboard>
+                <Storyboard>
+                  <DoubleAnimation Storyboard.TargetName="TranslateTransform"
+                                   Storyboard.TargetProperty="Y" To="0"
+                                   Duration="0:0:0.500">
+                    <DoubleAnimation.EasingFunction>
+                      <CubicEase EasingMode="EaseOut" />
+                    </DoubleAnimation.EasingFunction>
+                  </DoubleAnimation>
+                  <DoubleAnimation Storyboard.TargetName="Background"
+                                   Storyboard.TargetProperty="Opacity" To="1"
+                                   Duration="0:0:0.500">
+                    <DoubleAnimation.EasingFunction>
+                      <CubicEase EasingMode="EaseOut" />
+                    </DoubleAnimation.EasingFunction>
+                  </DoubleAnimation>
+                </Storyboard>
+              </BeginStoryboard>
+            </EventTrigger>
+          </ControlTemplate.Triggers>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
