@@ -1,4 +1,4 @@
-﻿namespace ECGPlatform;
+﻿namespace SimpleUtils;
 
 public static class ObjectExtensions
 {

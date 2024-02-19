@@ -29,9 +29,7 @@
       <i:Interaction.Behaviors>
         <local:ScrollViewerMouseWheelBehavior />
       </i:Interaction.Behaviors>
-      <ListBox Style="{StaticResource ListBoxStyle}"
-               ItemsSource="{Binding LocalData}"
-               SelectedItem="{Binding SelectedItem}">
+      <ListBox Style="{StaticResource ListBoxStyle}" ItemsSource="{Binding LocalData}">
         <i:Interaction.Triggers>
           <i:EventTrigger EventName="SelectionChanged">
             <i:InvokeCommandAction Command="{Binding OpenLocalDataCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=SelectedItem}" />

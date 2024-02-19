@@ -2,9 +2,9 @@
 
 namespace ECGPlatform;
 
-public class WindowBase : Window
+public class WindowBase : Window 
 {
-    protected WindowBase()
+    public WindowBase()
     {
         RenderTransformOrigin = new Point(0.5, 0.5);
         RenderTransform = new TransformGroup
@@ -34,7 +34,6 @@ public class WindowBase : Window
     void Window_SourceInitialized(object? sender, EventArgs e)
     {
         // WindowResizer.CoverResizeIssue(this);
-        
     }
 
     private void SetWindowChrome()

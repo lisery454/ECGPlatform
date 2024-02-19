@@ -4,17 +4,17 @@ public partial class LocalDataPageViewModel : ObservableObject
 {
     public ObservableCollection<LocalECGDataItem> LocalData { get; set; }
 
-    [ObservableProperty] private LocalECGDataItem? _selectedItem;
-
     private readonly ILogger _logger;
     private readonly ISettingManager _settingManager;
+    private readonly ReadIndexFileService _readIndexFileService;
 
-    public LocalDataPageViewModel(ILogger logger, ISettingManager settingManager)
+    public LocalDataPageViewModel(ILogger logger, ISettingManager settingManager,
+        ReadIndexFileService readIndexFileService)
     {
         _logger = logger;
         _settingManager = settingManager;
+        _readIndexFileService = readIndexFileService;
         LocalData = new ObservableCollection<LocalECGDataItem>();
-        _selectedItem = null;
         logger.Information("Local Data Page ViewModel Create.");
     }
 
@@ -37,8 +37,8 @@ public partial class LocalDataPageViewModel : ObservableObject
                 try
                 {
                     var indexFilePath = fileInfos[0].FullName;
-                    var ecgIndexFile = await ECGFileManager.ReadIndexFile(indexFilePath);
-                    LocalData.Add(new LocalECGDataItem { Title = ecgIndexFile.Title, IndexFilePath = indexFilePath });
+                    var ecgIndex = await _readIndexFileService.Read(indexFilePath);
+                    LocalData.Add(new LocalECGDataItem(ecgIndex, indexFilePath, ecgIndex.Title));
                     _logger.Information($"Load local file {indexFilePath} success.");
                 }
                 catch (Exception e)
@@ -58,7 +58,11 @@ public partial class LocalDataPageViewModel : ObservableObject
         var localECGDataItem = (LocalECGDataItem)selectedItem;
         var mainWindow = App.Current.Services.GetService<MainWindow>()!;
         var showECGWindow = App.Current.Services.GetService<ShowECGWindow>()!;
-        showECGWindow.Owner = mainWindow;
+        // showECGWindow.Owner = mainWindow;
+        mainWindow.Hide();
+        var showECGWindowViewModel = (ShowECGWindowViewModel)showECGWindow.DataContext;
+        showECGWindowViewModel.EcgIndex = localECGDataItem.ECGIndex;
+        showECGWindowViewModel.Closed += () => { mainWindow.Show(); };
         showECGWindow.Show();
     }
 }

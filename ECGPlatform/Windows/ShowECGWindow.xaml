@@ -4,11 +4,18 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:local="clr-namespace:ECGPlatform" mc:Ignorable="d"
+                  xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                   Style="{StaticResource MainWindowStyle}"
-                  WindowStartupLocation="CenterOwner"
+                  WindowStartupLocation="CenterScreen"
+                  d:DataContext="{d:DesignInstance Type=local:ShowECGWindowViewModel}"
                   Title="{DynamicResource ShowEcgWindowTitle}"
-                  Width="1200" Height="800"
-                  MinWidth="800" MinHeight="500">
+                  Width="1600" Height="1000"
+                  MinWidth="1000" MinHeight="600">
+  <i:Interaction.Triggers>
+    <i:EventTrigger EventName="Closed">
+      <i:InvokeCommandAction Command="{Binding ClosedCommand}" />
+    </i:EventTrigger>
+  </i:Interaction.Triggers>
   <Grid>
     <TextBlock Text="Hello" FontSize="50" />
   </Grid>

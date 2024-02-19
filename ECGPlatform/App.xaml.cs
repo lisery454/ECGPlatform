@@ -24,7 +24,11 @@ public partial class App
         services.AddSingleton<ISerializer, Serializer>();
         services.AddSingleton<IDeserializer, Deserializer>();
 
+        services.AddSingleton<ReadIndexFileService>();
+
         services.AddSingleton<ISettingManager, SettingManager>();
+
+        services.AddTransient<ECGFileManager>();
 
         services.AddSingleton<MainWindowViewModel>();
         services.AddSingleton<MainWindow>(sp =>

@@ -1,6 +1,6 @@
 ﻿namespace ECGPlatform;
 
-public partial class MainWindow : WindowBase
+public partial class MainWindow 
 {
     public MainWindow()
     {

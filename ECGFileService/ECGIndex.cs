@@ -1,7 +1,7 @@
 ﻿namespace ECGFileService;
 
 
-public class ECGIndexFile
+public class ECGIndex
 {
     public string Title { get; set; } = string.Empty;
     public string MainDataPath { get; set; } = string.Empty;
