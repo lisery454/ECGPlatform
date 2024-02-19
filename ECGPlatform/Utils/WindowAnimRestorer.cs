@@ -1,7 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using System.Windows.Interop;
-
-namespace ECGPlatform;
+﻿namespace ECGPlatform;
 
 public static class WindowAnimRestorer
 {

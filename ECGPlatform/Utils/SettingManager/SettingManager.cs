@@ -33,7 +33,6 @@ public class SettingManager : ISettingManager
         CheckIfSettingFileExists();
         try
         {
-            _logger.Debug(File.ReadAllText(_settingPath));
             _currentSetting = _deserializer.Deserialize<Setting>(File.ReadAllText(_settingPath));
             _logger.Information("Load Setting Success.");
         }

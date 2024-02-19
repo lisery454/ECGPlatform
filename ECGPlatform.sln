@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECGFileService", "ECGFileSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleUtils", "SimpleUtils\SimpleUtils.csproj", "{D568F7BB-8455-4556-A8F0-DC680D870588}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trivia", "Trivia\Trivia.csproj", "{7149462A-8459-4834-8274-38256BF1304C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D568F7BB-8455-4556-A8F0-DC680D870588}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D568F7BB-8455-4556-A8F0-DC680D870588}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D568F7BB-8455-4556-A8F0-DC680D870588}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7149462A-8459-4834-8274-38256BF1304C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7149462A-8459-4834-8274-38256BF1304C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7149462A-8459-4834-8274-38256BF1304C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7149462A-8459-4834-8274-38256BF1304C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -11,11 +11,6 @@
                   Title="{DynamicResource ShowEcgWindowTitle}"
                   Width="1600" Height="1000"
                   MinWidth="1000" MinHeight="600">
-  <i:Interaction.Triggers>
-    <i:EventTrigger EventName="Closed">
-      <i:InvokeCommandAction Command="{Binding ClosedCommand}" />
-    </i:EventTrigger>
-  </i:Interaction.Triggers>
   <Grid>
     <TextBlock Text="Hello" FontSize="50" />
   </Grid>

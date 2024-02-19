@@ -2,7 +2,26 @@
 
 public partial class WindowBaseViewModel : ObservableObject
 {
-    public WindowBase? BindingWindow { get; set; }
+    private WindowBase? _bindingWindow;
+
+    public WindowBase? BindingWindow
+    {
+        get => _bindingWindow;
+        set
+        {
+            if (_bindingWindow != null) _bindingWindow.Closed -= OnClosed;
+            _bindingWindow = value;
+            if (_bindingWindow != null) _bindingWindow.Closed += OnClosed;
+        }
+    }
+
+    public event Action? Closed;
+
+    private void OnClosed(object? sender, EventArgs e)
+    {
+        Closed?.Invoke();
+    }
+
 
     [RelayCommand]
     private void Minimize(Window window)

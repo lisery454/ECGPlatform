@@ -27,7 +27,8 @@ public class ReadIndexFileService
         var indexFileDirectoryPath = new FileInfo(indexFilePath).DirectoryName!;
         var text = await File.ReadAllTextAsync(indexFilePath);
         var ecgIndex = _deserializer.Deserialize<ECGIndex>(text);
-        ecgIndex.MainDataPath = Path.Combine(indexFileDirectoryPath, ecgIndex.MainDataPath);
+        ecgIndex.WaveDataPaths =
+            ecgIndex.WaveDataPaths.Select(path => Path.Combine(indexFileDirectoryPath, path)).ToList();
         ecgIndex.RPeaksPath = Path.Combine(indexFileDirectoryPath, ecgIndex.RPeaksPath);
         ecgIndex.RPeaksModificationPath = Path.Combine(indexFileDirectoryPath, ecgIndex.RPeaksModificationPath);
 

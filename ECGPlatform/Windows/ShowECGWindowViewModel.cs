@@ -6,8 +6,6 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
 
     private ECGIndex? _ecgIndex;
 
-    public event Action Closed;
-
     public ECGIndex? EcgIndex
     {
         get => _ecgIndex;
@@ -18,15 +16,9 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
         }
     }
 
-    public ShowECGWindowViewModel(ECGFileManager ecgFileManager)
+    public ShowECGWindowViewModel()
     {
-        _ecgFileManager = ecgFileManager;
+        _ecgFileManager = new ECGFileManager();
         Closed += () => _ecgFileManager.Dispose();
-    }
-
-    [RelayCommand]
-    private void OnClosed()
-    {
-        Closed();
     }
 }

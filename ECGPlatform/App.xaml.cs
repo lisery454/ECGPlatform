@@ -28,8 +28,6 @@ public partial class App
 
         services.AddSingleton<ISettingManager, SettingManager>();
 
-        services.AddTransient<ECGFileManager>();
-
         services.AddSingleton<MainWindowViewModel>();
         services.AddSingleton<MainWindow>(sp =>
         {
