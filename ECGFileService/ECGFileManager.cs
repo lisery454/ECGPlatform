@@ -2,11 +2,11 @@
 
 public class ECGFileManager : IDisposable
 {
-    private ECGIndex Index { get; set; } = null!;
+    private ECGIndex Index { get; set; }
 
     public readonly List<WaveDataReader> waveDataReaders = new();
 
-    public void Load(ECGIndex index)
+    public ECGFileManager (ECGIndex index)
     {
         Index = index;
         waveDataReaders.ForEach(reader => reader.Dispose());

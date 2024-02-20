@@ -5,10 +5,9 @@
         <ControlTemplate TargetType="{x:Type Page}">
           <Grid>
             <Border Background="{DynamicResource BrushPrimary10OnMain}"
-                    CornerRadius="10" Opacity="0.5"
-                    x:Name="Background">
+                    CornerRadius="10" x:Name="Background">
               <Border.RenderTransform>
-                <TranslateTransform x:Name="TranslateTransform" Y="30" />
+                <TranslateTransform x:Name="TranslateTransform" />
               </Border.RenderTransform>
 
               <ContentPresenter Content="{TemplateBinding Content}" />
@@ -19,14 +18,14 @@
             <EventTrigger RoutedEvent="Loaded">
               <BeginStoryboard>
                 <Storyboard>
-                  <DoubleAnimation Storyboard.TargetName="TranslateTransform"
+                  <DoubleAnimation Storyboard.TargetName="TranslateTransform" From="30"
                                    Storyboard.TargetProperty="Y" To="0"
                                    Duration="0:0:0.500">
                     <DoubleAnimation.EasingFunction>
                       <CubicEase EasingMode="EaseOut" />
                     </DoubleAnimation.EasingFunction>
                   </DoubleAnimation>
-                  <DoubleAnimation Storyboard.TargetName="Background"
+                  <DoubleAnimation Storyboard.TargetName="Background" From="0"
                                    Storyboard.TargetProperty="Opacity" To="1"
                                    Duration="0:0:0.500">
                     <DoubleAnimation.EasingFunction>

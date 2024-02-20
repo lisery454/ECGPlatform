@@ -1,17 +1,120 @@
 ﻿<local:WindowBase x:Class="ECGPlatform.ShowECGWindow"
                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                  xmlns:local="clr-namespace:ECGPlatform" mc:Ignorable="d"
                   xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-                  Style="{StaticResource MainWindowStyle}"
-                  WindowStartupLocation="CenterScreen"
-                  d:DataContext="{d:DesignInstance Type=local:ShowECGWindowViewModel}"
+                  xmlns:local="clr-namespace:ECGPlatform"
+                  xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   Title="{DynamicResource ShowEcgWindowTitle}"
                   Width="1600" Height="1000"
-                  MinWidth="1000" MinHeight="600">
+                  MinWidth="1000" MinHeight="600"
+                  d:DataContext="{d:DesignInstance Type=local:ShowECGWindowViewModel}"
+                  Style="{StaticResource MainWindowStyle}"
+                  WindowStartupLocation="CenterScreen" mc:Ignorable="d">
+  <i:Interaction.Triggers>
+    <i:EventTrigger EventName="Loaded">
+      <i:InvokeCommandAction Command="{Binding LoadDataCommand}" />
+    </i:EventTrigger>
+  </i:Interaction.Triggers>
+
   <Grid>
-    <TextBlock Text="Hello" FontSize="50" />
+    <Grid d:Visibility="Hidden" Visibility="{Binding IsLoadingData, Converter={x:Static local:BoolToVisibilityConverter.InstanceCollapsedTrueForVisible}}">
+      <TextBlock FontSize="50" Text="IsLoading..." />
+    </Grid>
+    <Grid x:Name="GridBackground" d:Visibility="Visible"
+          Visibility="{Binding IsLoadingData, Converter={x:Static local:BoolToVisibilityConverter.InstanceCollapsedFalseForVisible}}">
+      <i:Interaction.Triggers>
+        <i:DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=Visibility}" Value="{x:Static Visibility.Visible}">
+          <i:ControlStoryboardAction ControlStoryboardOption="Play">
+            <i:ControlStoryboardAction.Storyboard>
+              <Storyboard>
+                <DoubleAnimation Storyboard.TargetName="TranslateTransform"
+                                 Storyboard.TargetProperty="Y" From="30"
+                                 To="0" Duration="0:0:0.500">
+                  <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut" />
+                  </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+                <DoubleAnimation Storyboard.TargetName="GridBackground"
+                                 Storyboard.TargetProperty="Opacity" From="0"
+                                 To="1" Duration="0:0:0.500">
+                  <DoubleAnimation.EasingFunction>
+                    <CubicEase EasingMode="EaseOut" />
+                  </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+              </Storyboard>
+            </i:ControlStoryboardAction.Storyboard>
+          </i:ControlStoryboardAction>
+        </i:DataTrigger>
+      </i:Interaction.Triggers>
+
+      <Grid.RenderTransform>
+        <TranslateTransform x:Name="TranslateTransform" />
+      </Grid.RenderTransform>
+
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+
+      <!--  row = 0  -->
+      <Grid Grid.Row="0" Height="50"
+            Margin="0,16,0,12">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Margin="20,0,10,0"
+                Background="{DynamicResource BrushPrimary10OnMain}"
+                CornerRadius="10" />
+
+        <Border Grid.Column="1" Margin="10,0,20,0"
+                Background="{DynamicResource BrushPrimary10OnMain}"
+                CornerRadius="10" />
+
+      </Grid>
+
+      <!--  row = 1  -->
+      <Grid Grid.Row="1" Margin="0,0,0,12">
+        <Border Grid.Column="0" Margin="20,0,20,0"
+                Background="{DynamicResource BrushPrimary10OnMain}"
+                CornerRadius="10">
+          <ScrollViewer Style="{StaticResource VerticalScrollViewer}">
+            <Grid>
+              <Border>
+                <lvc:CartesianChart DrawMarginFrame="{Binding DrawMarginFrame}"
+                                    EasingFunction="{x:Null}"
+                                    TooltipPosition="Hidden"
+                                    Series="{Binding Series}"
+                                    UpdateStartedCommand="{Binding ChartUpdatedCommand}"
+                                    XAxes="{Binding XAxes}"
+                                    YAxes="{Binding YAxes}" />
+              </Border>
+            </Grid>
+          </ScrollViewer>
+        </Border>
+      </Grid>
+
+      <!--  row = 2  -->
+      <Grid Grid.Row="2" Height="100"
+            Margin="0,0,0,12">
+        <Border Grid.Column="0" Margin="20,0,20,0"
+                Background="{DynamicResource BrushPrimary10OnMain}"
+                CornerRadius="10" />
+      </Grid>
+
+      <!--  row = 3  -->
+      <Grid Grid.Row="3" Height="50"
+            Margin="0,0,0,20">
+        <Border Grid.Column="0" Margin="20,0,20,0"
+                Background="{DynamicResource BrushPrimary10OnMain}"
+                CornerRadius="10" />
+      </Grid>
+
+    </Grid>
   </Grid>
 </local:WindowBase>
