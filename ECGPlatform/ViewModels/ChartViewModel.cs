@@ -16,7 +16,7 @@ public partial class ChartViewModel : ObservableObject
 
     private const float YLimit = 2;
     public const float GridWidth = 40;
-    private const float DistanceBetweenSeries = 1.5f;
+    private const float DistanceBetweenSeries = 1.8f;
 
     public ChartViewModel()
     {
@@ -26,11 +26,11 @@ public partial class ChartViewModel : ObservableObject
         _series = new ObservableCollection<ISeries>();
     }
 
-    private static SKColor LabelColor => GetSKColor("ColorPrimary");
-    private static SKColor SeparatorColor => GetSKColor("ColorPrimary");
-    private static SKColor SubseparatorsColor => GetSKColor("ColorPrimary");
-    private static SKColor TickColor => GetSKColor("ColorPrimary");
-    private static SKColor LineColor => GetSKColor("ColorPrimary");
+    private static SKColor LabelColor => GetSKColor("ColorPrimaryAlpha90");
+    private static SKColor SeparatorColor => GetSKColor("ColorOppositeAlpha40");
+    private static SKColor SubseparatorsColor => GetSKColor("ColorOppositeAlpha20");
+    private static SKColor TickColor => GetSKColor("ColorOppositeAlpha40");
+    private static SKColor LineColor => GetSKColor("ColorPrimaryAlpha90");
     private static string FontFamily => "Chill Round Gothic Regular";
 
     [RelayCommand]
@@ -191,7 +191,7 @@ public partial class ChartViewModel : ObservableObject
     private static SKColor GetSKColor(string name)
     {
         var color = (Color)Application.Current.FindResource(name)!;
-        return new SKColor(color.R, color.G, color.B);
+        return new SKColor(color.R, color.G, color.B, color.A);
     }
 
     #endregion

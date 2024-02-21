@@ -14,6 +14,33 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
     [ObservableProperty] private long _allMilliSeconds;
 
     [ObservableProperty] private ChartViewModel _chartViewModel;
+    private const long TimePerMouseWheel = 600;
+
+    private readonly Animator<long> _currentTimeAnimator;
+    public ShowECGWindowViewModel(ILogger logger)
+    {
+        _isLoadingData = true;
+        _logger = logger;
+        Closed += () =>
+        {
+            _currentTimeAnimator?.Dispose();
+            _ecgFileManager?.Dispose();
+        };
+
+        _chartViewModel = new ChartViewModel();
+        _currentTimeAnimator = new Animator<long>(() => CurrentTime, TimeSpan.FromSeconds(0.1f),
+            (current, target, isTargetChanged) =>
+            {
+                if (Math.Abs(current - target) < 40)
+                {
+                    CurrentTime = target;
+                }
+                else
+                {
+                    CurrentTime = (long)(current + (target - current) * 0.5f);
+                }
+            });
+    }
 
     partial void OnWaveDataCollectionChanged(List<List<PointData>> value)
     {
@@ -24,19 +51,18 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
 
     partial void OnTimeIntervalChanged(long value)
     {
+        _ = value;
         ChartViewModel.UpdateChartSize(TimeInterval, WaveDataCollection.Count);
-        UpdateWaveData(Refresh(ref _updateWaveDataCts).Token).Await();
+        UpdateWaveData(CtsUtils.Refresh(ref _updateWaveDataCts).Token).Await();
     }
 
-    public ShowECGWindowViewModel(ILogger logger)
+    partial void OnCurrentTimeChanged(long value)
     {
-        _isLoadingData = true;
-        _logger = logger;
-        Closed += () => _ecgFileManager?.Dispose();
-
-
-        _chartViewModel = new ChartViewModel();
+        _ = value;
+        ChartViewModel.UpdateChartSize(TimeInterval, WaveDataCollection.Count);
+        UpdateWaveData(CtsUtils.Refresh(ref _updateWaveDataCts).Token).Await();
     }
+
 
     [RelayCommand]
     private async Task LoadData()
@@ -48,7 +74,7 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
         CurrentTime = 0;
         TimeInterval = 5000;
 
-        await UpdateWaveData(Refresh(ref _updateWaveDataCts).Token);
+        await UpdateWaveData(CtsUtils.Refresh(ref _updateWaveDataCts).Token);
 
         IsLoadingData = false;
     }
@@ -56,7 +82,21 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
     [RelayCommand]
     private void ChartBorderSizeChanged(Border border)
     {
-        TimeInterval = (long)(border.ActualWidth / ChartViewModel.GridWidth * ChartViewModel.XGridValue);
+        var newTimeInterval = (long)(border.ActualWidth / ChartViewModel.GridWidth * ChartViewModel.XGridValue);
+        if (TimeInterval + CurrentTime > AllMilliSeconds)
+            _currentTimeAnimator.ChangeTarget(AllMilliSeconds - newTimeInterval);
+
+        TimeInterval = newTimeInterval;
+    }
+
+    [RelayCommand]
+    private void ChartMouseWheel(MouseWheelEventArgs e)
+    {
+        if (e.Handled) return;
+        var newCurrentTime = CurrentTime + TimePerMouseWheel * MathF.Sign(e.Delta);
+        _currentTimeAnimator.ChangeTarget(MathUtils.Clamp(newCurrentTime, 0, AllMilliSeconds - TimeInterval));
+        // CurrentTime = MathUtils.Clamp(newCurrentTime, 0, AllMilliSeconds - TimeInterval);
+        e.Handled = true;
     }
 }
 
@@ -64,19 +104,6 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
 public partial class ShowECGWindowViewModel
 {
     private CancellationTokenSource? _updateWaveDataCts;
-
-    private CancellationTokenSource Refresh(ref CancellationTokenSource? source)
-    {
-        if (source != null)
-        {
-            source.Cancel();
-            source.Dispose();
-            source = null;
-        }
-
-        source = new CancellationTokenSource();
-        return source;
-    }
 
     private async Task UpdateWaveData(CancellationToken cancellationToken)
     {

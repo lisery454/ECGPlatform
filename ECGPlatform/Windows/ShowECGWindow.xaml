@@ -104,7 +104,13 @@
                                     Series="{Binding Series}"
                                     UpdateStartedCommand="{Binding ChartUpdatedCommand}"
                                     XAxes="{Binding XAxes}"
-                                    YAxes="{Binding YAxes}" />
+                                    YAxes="{Binding YAxes}">
+                  <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseWheel">
+                      <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ChartMouseWheelCommand}" PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                  </i:Interaction.Triggers>
+                </lvc:CartesianChart>
               </Border>
             </Grid>
           </ScrollViewer>

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using SimpleUtils;
 
 namespace ECGFileService;
@@ -135,6 +136,7 @@ public class WaveDataReader : IDisposable
 
         if (currentFrame < lastFrame) ParseStrToData();
         await waveFileStream.DisposeAsync();
+        
         return pointData;
 
         void ParseStrToData()
