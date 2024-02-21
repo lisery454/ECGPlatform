@@ -14,12 +14,17 @@
     <EmbeddedResource Remove="Controls\**" />
     <None Remove="Controls\**" />
     <Page Remove="Controls\**" />
-    <Page Update="Pages\LocalDataPage\LocalDataPage.xaml">
+    <Page Update="Resources\Strings\Strings_en.xaml">
       <Generator>MSBuild:Compile</Generator>
       <XamlRuntime>Wpf</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Resources\Strings\Strings_en.xaml">
+    <Page Update="Pages\LocalDataPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\SettingPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <XamlRuntime>Wpf</XamlRuntime>
       <SubType>Designer</SubType>

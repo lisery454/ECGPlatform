@@ -1,111 +1,30 @@
-﻿namespace ECGPlatform;
+﻿using LiveChartsCore.Measure;
 
-public partial class ShowECGWindowViewModel : WindowBaseViewModel
-{
-    public ECGIndex? EcgIndex { get; set; }
-    private readonly ILogger _logger;
-    private ECGFileManager? _ecgFileManager;
-    [ObservableProperty] private bool _isLoadingData;
-    [ObservableProperty] private List<List<PointData>> _waveDataCollection = new();
-    [ObservableProperty] private long _timeInterval;
-    [ObservableProperty] private long _currentTime;
-    [ObservableProperty] private long _allMilliSeconds;
+namespace ECGPlatform;
 
-    partial void OnWaveDataCollectionChanged(List<List<PointData>> value)
-    {
-        YAxes = new ObservableCollection<Axis> { BuildYAxis(value.Count) };
-        Series.Clear();
-        foreach (var list in value)
-        {
-            Series.Add(BuildLineSeries(list.Select(data => new ObservablePoint(data.time, data.value)).ToList()));
-        }
-    }
-
-    public ShowECGWindowViewModel(ILogger logger)
-    {
-        _isLoadingData = true;
-        _logger = logger;
-        Closed += () => _ecgFileManager?.Dispose();
-
-        _xAxes = new ObservableCollection<Axis> { BuildXAxis() };
-        _yAxes = new ObservableCollection<Axis> { BuildYAxis() };
-        _drawMarginFrame = BuildDrawMarginFrame();
-        _series = new ObservableCollection<ISeries>();
-    }
-
-    [RelayCommand]
-    private async Task LoadData()
-    {
-        _ecgFileManager?.Dispose();
-        _ecgFileManager = new ECGFileManager(EcgIndex!);
-
-        AllMilliSeconds = _ecgFileManager.waveDataReaders.First().TotalTime;
-        CurrentTime = 0;
-        TimeInterval = 5000;
-
-        await UpdateWaveData();
-
-        IsLoadingData = false;
-    }
-}
-
-// update functions
-public partial class ShowECGWindowViewModel
-{
-    private CancellationTokenSource? _updateWaveDataCts;
-
-    private async Task UpdateWaveData()
-    {
-        if (_ecgFileManager == null) return;
-
-        if (_updateWaveDataCts != null)
-        {
-            _updateWaveDataCts?.Cancel();
-            _updateWaveDataCts?.Dispose();
-        }
-
-        _updateWaveDataCts = new CancellationTokenSource();
-
-        var result = new List<List<PointData>>();
-        foreach (var waveDataReader in _ecgFileManager.waveDataReaders)
-        {
-            try
-            {
-                var data = await waveDataReader.GetDataParallelAsync(CurrentTime, TimeInterval, 10,
-                    _updateWaveDataCts.Token);
-                result.Add(data);
-            }
-            catch (OperationCanceledException)
-            {
-                // 正常取消获取数据操作
-            }
-            catch (Exception e)
-            {
-                _logger.Error(e.ToString());
-            }
-        }
-
-        WaveDataCollection = result;
-        _updateWaveDataCts?.Dispose();
-        _updateWaveDataCts = null;
-        _logger.Information("Wave Data Load Success.");
-    }
-}
-
-// charts
-public partial class ShowECGWindowViewModel
+public partial class ChartViewModel : ObservableObject
 {
     [ObservableProperty] private ObservableCollection<Axis> _xAxes;
     [ObservableProperty] private ObservableCollection<Axis> _yAxes;
     [ObservableProperty] private DrawMarginFrame _drawMarginFrame;
     [ObservableProperty] private ObservableCollection<ISeries> _series;
-    [ObservableProperty] private float _yGridWidth = 0.5f;
-    [ObservableProperty] private float _xGridWidth = 200;
+    [ObservableProperty] private float _yGridValue = 0.5f;
+    [ObservableProperty] private float _xGridValue = 200;
+
+    [ObservableProperty] private float _width;
+    [ObservableProperty] private float _height;
 
     private const float YLimit = 2;
-
-    // private float _gridWidth;
+    public const float GridWidth = 40;
     private const float DistanceBetweenSeries = 1.5f;
+
+    public ChartViewModel()
+    {
+        _xAxes = new ObservableCollection<Axis> { BuildXAxis() };
+        _yAxes = new ObservableCollection<Axis> { BuildYAxis() };
+        _drawMarginFrame = BuildDrawMarginFrame();
+        _series = new ObservableCollection<ISeries>();
+    }
 
     private static SKColor LabelColor => GetSKColor("ColorPrimary");
     private static SKColor SeparatorColor => GetSKColor("ColorPrimary");
@@ -119,7 +38,33 @@ public partial class ShowECGWindowViewModel
     {
     }
 
-    private ISeries BuildLineSeries(List<ObservablePoint> points)
+    public void UpdateYAxes(int count)
+    {
+        YAxes = new ObservableCollection<Axis> { BuildYAxis(count) };
+    }
+
+    public void UpdateChartSize(long timeInterval, int waveCount)
+    {
+        Width = timeInterval / XGridValue * GridWidth;
+        Height = ((waveCount - 1) * DistanceBetweenSeries + 2 * YLimit) / YGridValue * GridWidth;
+    }
+
+    public void UpdateLineSeries(List<List<PointData>> points)
+    {
+        Series.Clear();
+        for (var i = 0; i < points.Count; i++)
+        {
+            var p = points[i];
+            var index = i;
+            Series.Add(BuildLineSeries(p.Select(data =>
+                new ObservablePoint(data.time, data.value - YLimit - index * DistanceBetweenSeries))));
+        }
+    }
+
+
+    #region Utils
+
+    private ISeries BuildLineSeries(IEnumerable<ObservablePoint> points)
     {
         return new LineSeries<ObservablePoint>
         {
@@ -180,9 +125,10 @@ public partial class ShowECGWindowViewModel
         return new Axis
         {
             SeparatorsPaint = separatorsPaint,
-            MinStep = XGridWidth,
+            MinStep = XGridValue,
             ForceStepToMin = true,
             Labeler = labeler,
+            Position = AxisPosition.End,
             LabelsPaint = labelsPaint,
             SubseparatorsPaint = subseparatorsPaint,
             SubseparatorsCount = 4,
@@ -222,10 +168,10 @@ public partial class ShowECGWindowViewModel
             LabelsAlignment = Align.End,
             Labeler = Labeler,
             TextSize = 10,
-            MinStep = YGridWidth,
+            MinStep = YGridValue,
             ForceStepToMin = true,
-            MaxLimit = YLimit + waveCount * DistanceBetweenSeries,
-            MinLimit = -YLimit,
+            MaxLimit = 0,
+            MinLimit = -2 * YLimit - (waveCount - 1) * DistanceBetweenSeries,
             UnitWidth = 1,
             SeparatorsPaint = separatorsPaint,
             SubseparatorsPaint = subseparatorsPaint,
@@ -247,4 +193,6 @@ public partial class ShowECGWindowViewModel
         var color = (Color)Application.Current.FindResource(name)!;
         return new SKColor(color.R, color.G, color.B);
     }
+
+    #endregion
 }
