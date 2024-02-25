@@ -1,6 +1,6 @@
 ﻿namespace ECGPlatform;
 
-public partial class ShowECGWindow 
+public partial class ShowECGWindow
 {
     public ShowECGWindow()
     {

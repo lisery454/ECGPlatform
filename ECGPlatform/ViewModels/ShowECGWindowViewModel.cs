@@ -1,6 +1,4 @@
-﻿using SimpleUtils;
-
-namespace ECGPlatform;
+﻿namespace ECGPlatform;
 
 public partial class ShowECGWindowViewModel : WindowBaseViewModel
 {
@@ -12,11 +10,12 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
     [ObservableProperty] private long _timeInterval;
     [ObservableProperty] private long _currentTime;
     [ObservableProperty] private long _allMilliSeconds;
-
     [ObservableProperty] private ChartViewModel _chartViewModel;
+    [ObservableProperty] private string _textBoxInputCurrentTimeStr;
     private const long TimePerMouseWheel = 600;
 
     private readonly Animator<long> _currentTimeAnimator;
+
     public ShowECGWindowViewModel(ILogger logger)
     {
         _isLoadingData = true;
@@ -27,9 +26,11 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
             _ecgFileManager?.Dispose();
         };
 
+        _currentTime = 0;
         _chartViewModel = new ChartViewModel();
+        _textBoxInputCurrentTimeStr = TimeFormatter.MircoSecondsToString(_currentTime);
         _currentTimeAnimator = new Animator<long>(() => CurrentTime, TimeSpan.FromSeconds(0.1f),
-            (current, target, isTargetChanged) =>
+            (current, target, _) =>
             {
                 if (Math.Abs(current - target) < 40)
                 {
@@ -41,7 +42,11 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
                 }
             });
     }
+}
 
+// property changed
+public partial class ShowECGWindowViewModel
+{
     partial void OnWaveDataCollectionChanged(List<List<PointData>> value)
     {
         ChartViewModel.UpdateChartSize(TimeInterval, WaveDataCollection.Count);
@@ -60,10 +65,14 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
     {
         _ = value;
         ChartViewModel.UpdateChartSize(TimeInterval, WaveDataCollection.Count);
+        TextBoxInputCurrentTimeStr = TimeFormatter.MircoSecondsToString(CurrentTime);
         UpdateWaveData(CtsUtils.Refresh(ref _updateWaveDataCts).Token).Await();
     }
+}
 
-
+// Commands
+public partial class ShowECGWindowViewModel
+{
     [RelayCommand]
     private async Task LoadData()
     {
@@ -97,6 +106,24 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
         _currentTimeAnimator.ChangeTarget(MathUtils.Clamp(newCurrentTime, 0, AllMilliSeconds - TimeInterval));
         // CurrentTime = MathUtils.Clamp(newCurrentTime, 0, AllMilliSeconds - TimeInterval);
         e.Handled = true;
+    }
+
+    [RelayCommand]
+    private void CurrentTimeTextBox_OnLostKeyboardFocus()
+    {
+        if (!TimeFormatter.TryParseTimeMsFromStr(TextBoxInputCurrentTimeStr, out var milliSeconds)) return;
+
+        if (milliSeconds >= 0 && milliSeconds <= AllMilliSeconds - TimeInterval)
+            _currentTimeAnimator.ChangeTarget(milliSeconds);
+    }
+
+    [RelayCommand]
+    private void CurrentTimeTextBox_OnTextInput(TextCompositionEventArgs e)
+    {
+        if (e.Text == "\r")
+        {
+            Keyboard.ClearFocus();
+        }
     }
 }
 

@@ -10,9 +10,6 @@
     <Page Update="Resources\Animations.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Resources\Brushes.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Resources\Constants.xaml">
       <SubType>Designer</SubType>
     </Page>

@@ -2,7 +2,7 @@
 
 namespace ECGPlatform;
 
-public class WindowBase : Window 
+public class WindowBase : Window
 {
     public WindowBase()
     {
@@ -16,12 +16,17 @@ public class WindowBase : Window
             }
         };
 
-
+        MouseDown += OnMouseDown;
         Loaded += Window_Loaded;
         // SourceInitialized += Window_SourceInitialized;
         // WindowAnimRestorer.AddAnimTo(this);
         WindowCornerRestorer.ApplyRoundCorner(this);
         SetWindowChrome();
+    }
+
+    private void OnMouseDown(object sender, MouseButtonEventArgs e)
+    {
+        Keyboard.ClearFocus();
     }
 
     private void Window_Loaded(object sender, RoutedEventArgs e)

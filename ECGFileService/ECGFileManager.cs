@@ -6,17 +6,17 @@ public class ECGFileManager : IDisposable
 
     public readonly List<WaveDataReader> waveDataReaders = new();
 
-    public ECGFileManager (ECGIndex index)
+    public ECGFileManager(ECGIndex index, bool isCachedWaveData = false)
     {
         Index = index;
         waveDataReaders.ForEach(reader => reader.Dispose());
         foreach (var waveDataPath in Index.WaveDataPaths)
         {
             waveDataReaders.Add(new WaveDataReader(waveDataPath, Index.WaveDataFrequency, Index.WaveDataWidth,
-                Index.WaveDataYFactor));
+                Index.WaveDataYFactor, isCachedWaveData));
         }
     }
-    
+
     public void Dispose()
     {
         waveDataReaders.ForEach(reader => reader.Dispose());

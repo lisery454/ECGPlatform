@@ -3,7 +3,7 @@
 [ValueConversion(typeof(float), typeof(float))]
 internal class BindingSumConverter : IMultiValueConverter
 {
-    public static BindingSumConverter Instance = new BindingSumConverter();
+    public static BindingSumConverter Instance = new();
 
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
@@ -18,6 +18,6 @@ internal class BindingSumConverter : IMultiValueConverter
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
-        throw new NotImplementedException();
+        throw new InvalidOperationException();
     }
 }

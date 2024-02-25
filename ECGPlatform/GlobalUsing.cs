@@ -44,3 +44,4 @@ global using Microsoft.Xaml.Behaviors;
 global using ECGFileService;
 global using System.Reflection;
 global using System.Security.Cryptography;
+global using SimpleUtils;

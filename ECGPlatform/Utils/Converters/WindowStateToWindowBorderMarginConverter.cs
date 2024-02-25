@@ -15,12 +15,12 @@ public class WindowStateToWindowBorderMarginConverter : IValueConverter
             WindowState.Normal => new Thickness(0),
             WindowState.Minimized => new Thickness(0),
             WindowState.Maximized => new Thickness(resizeBorderSize),
-            _ => throw new ArgumentOutOfRangeException(nameof(state)),
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        throw new NotImplementedException();
+        throw new InvalidOperationException();
     }
 }
