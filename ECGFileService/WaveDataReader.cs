@@ -15,7 +15,7 @@ public class WaveDataReader : IDisposable
     private const int FileStreamPoolBufferSize = 96;
     public long TotalTime { get; private set; }
 
-    private bool _isCached;
+    private readonly bool _isCached;
     private bool _isCachedOk;
     private bool CanUseCache => _isCached && _isCachedOk;
     private List<float> _waveCache;

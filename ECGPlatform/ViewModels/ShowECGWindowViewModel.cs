@@ -29,16 +29,19 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
         _currentTime = 0;
         _chartViewModel = new ChartViewModel();
         _textBoxInputCurrentTimeStr = TimeFormatter.MircoSecondsToString(_currentTime);
-        _currentTimeAnimator = new Animator<long>(() => CurrentTime, TimeSpan.FromSeconds(0.1f),
+        _currentTimeAnimator = new Animator<long>(() => CurrentTime, TimeSpan.FromSeconds(0.034f),
             (current, target, _) =>
             {
-                if (Math.Abs(current - target) < 40)
+                if (Math.Abs(current - target) < 1)
+                    return;
+
+                if (Math.Abs(current - target) < 5)
                 {
                     CurrentTime = target;
                 }
                 else
                 {
-                    CurrentTime = (long)(current + (target - current) * 0.5f);
+                    CurrentTime = (long)(current + (target - current) * 0.4f);
                 }
             });
     }
@@ -158,6 +161,6 @@ public partial class ShowECGWindowViewModel
         if (cancellationToken.IsCancellationRequested) return;
 
         WaveDataCollection = result;
-        _logger.Information("Wave Data Load Success.");
+        // _logger.Information("Wave Data Load Success.");
     }
 }
