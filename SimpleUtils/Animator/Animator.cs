@@ -2,27 +2,26 @@
 
 namespace SimpleUtils;
 
-public delegate void Move<in T>(T current, T target, bool isTargetChanged) where T : INumber<T>;
-
-public class Animator<T> : IDisposable where T : INumber<T>
+public class Animator : IDisposable
 {
-    private readonly Move<T> _moveFunc;
-    private readonly Func<T> _getFunc;
+    private readonly Func<double> _getFunc;
+    private readonly Action<double> _setFunc;
 
-    private T Current => _getFunc();
-    private T Target { get; set; }
+    private double Current => _getFunc();
+    private double Target { get; set; }
 
     private readonly CancellationTokenSource _cts;
-    private readonly TimeSpan _timeInterval;
-    private bool _isTargetChanged;
+    private readonly IAnimationType _animationType;
 
-    public Animator(Func<T> getFunc, TimeSpan timeInterval, Move<T> moveFunc)
+    private readonly TimeSpan _timeInterval;
+
+    public Animator(Func<double> getFunc, Action<double> setFunc, TimeSpan timeInterval, IAnimationType animationType)
     {
         _getFunc = getFunc;
-        _moveFunc = moveFunc;
+        _setFunc = setFunc;
         Target = getFunc();
         _timeInterval = timeInterval;
-        _isTargetChanged = false;
+        _animationType = animationType;
         _cts = new CancellationTokenSource();
         Animate(_cts.Token).Await();
     }
@@ -31,16 +30,16 @@ public class Animator<T> : IDisposable where T : INumber<T>
     {
         while (!cancellationToken.IsCancellationRequested)
         {
-            _moveFunc(Current, Target, _isTargetChanged);
-            _isTargetChanged = false;
+            var nextState = _animationType.GetNextState(Current, Target, _timeInterval);
+            if (nextState != null)
+                _setFunc(nextState.Value);
             await Task.Delay(_timeInterval, cancellationToken);
         }
     }
 
-    public void ChangeTarget(T target)
+    public void ChangeTarget(double target)
     {
         Target = target;
-        _isTargetChanged = true;
     }
 
     public void Dispose()

@@ -106,22 +106,20 @@
               <Border>
                 <i:Interaction.Triggers>
                   <i:EventTrigger EventName="SizeChanged">
-                    <i:InvokeCommandAction
-                      Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ChartBorderSizeChangedCommand}"
-                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Border}}" />
+                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ChartBorderSizeChangedCommand}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Border}}" />
                   </i:EventTrigger>
                   <i:EventTrigger EventName="Loaded">
-                    <i:InvokeCommandAction
-                      Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ChartBorderSizeChangedCommand}"
-                      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Border}}" />
+                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ChartBorderSizeChangedCommand}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Border}}" />
                   </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <lvc:CartesianChart Width="{Binding Width}"
                                     Height="{Binding Height}"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top"
-                                    DrawMarginFrame="{Binding DrawMarginFrame}"
                                     EasingFunction="{x:Null}"
+                                    DrawMarginFrame="{Binding DrawMarginFrame}"
                                     Series="{Binding Series}"
                                     TooltipPosition="Hidden"
                                     UpdateStartedCommand="{Binding ChartUpdatedCommand}"
@@ -129,9 +127,8 @@
                                     YAxes="{Binding YAxes}">
                   <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseWheel">
-                      <i:InvokeCommandAction
-                        Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ChartMouseWheelCommand}"
-                        PassEventArgsToCommand="True" />
+                      <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ChartMouseWheelCommand}"
+                                             PassEventArgsToCommand="True" />
                     </i:EventTrigger>
                   </i:Interaction.Triggers>
                 </lvc:CartesianChart>

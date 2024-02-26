@@ -14,7 +14,7 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
     [ObservableProperty] private string _textBoxInputCurrentTimeStr;
     private const long TimePerMouseWheel = 600;
 
-    private readonly Animator<long> _currentTimeAnimator;
+    private readonly Animator _currentTimeAnimator;
 
     public ShowECGWindowViewModel(ILogger logger)
     {
@@ -29,21 +29,12 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
         _currentTime = 0;
         _chartViewModel = new ChartViewModel();
         _textBoxInputCurrentTimeStr = TimeFormatter.MircoSecondsToString(_currentTime);
-        _currentTimeAnimator = new Animator<long>(() => CurrentTime, TimeSpan.FromSeconds(0.034f),
-            (current, target, _) =>
-            {
-                if (Math.Abs(current - target) < 1)
-                    return;
-
-                if (Math.Abs(current - target) < 5)
-                {
-                    CurrentTime = target;
-                }
-                else
-                {
-                    CurrentTime = (long)(current + (target - current) * 0.6f);
-                }
-            });
+        _currentTimeAnimator = new Animator(
+            () => CurrentTime,
+            value => CurrentTime = (long)value,
+            TimeSpan.FromSeconds(0.016f),
+            new EaseOutSquare(1, 4, TimeSpan.FromSeconds(0.2f))
+            );
     }
 }
 
