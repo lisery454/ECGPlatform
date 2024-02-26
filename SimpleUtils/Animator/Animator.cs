@@ -42,6 +42,12 @@ public class Animator : IDisposable
         Target = target;
     }
 
+    public void NoAnimateChangeTarget(double target)
+    {
+        Target = target;
+        _setFunc(Target);
+    }
+
     public void Dispose()
     {
         _cts.Cancel();

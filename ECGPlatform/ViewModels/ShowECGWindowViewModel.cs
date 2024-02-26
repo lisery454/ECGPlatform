@@ -128,7 +128,7 @@ public partial class ShowECGWindowViewModel
     {
         var milliSeconds = (long)e.NewValue;
         if (milliSeconds >= 0 && milliSeconds <= AllMilliSeconds - TimeInterval)
-            _currentTimeAnimator.ChangeTarget(milliSeconds);
+            _currentTimeAnimator.NoAnimateChangeTarget(milliSeconds);
     }
 }
 

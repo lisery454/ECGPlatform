@@ -10,9 +10,9 @@
       <Setter.Value>
         <ControlTemplate TargetType="RepeatButton">
           <Border BorderThickness="0"
-                  CornerRadius="0,2,2,0"
+                  CornerRadius="0,4,4,0"
                   BorderBrush="Transparent"
-                  Height="5">
+                  Height="8">
             <Border.Background>
               <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <LinearGradientBrush.GradientStops>
@@ -35,10 +35,10 @@
       <Setter.Value>
         <ControlTemplate TargetType="RepeatButton">
           <Border SnapsToDevicePixels="True"
-                  CornerRadius="2,0,0,2"
+                  CornerRadius="4,0,0,4"
                   BorderThickness="0"
                   BorderBrush="Transparent"
-                  Height="5">
+                  Height="8">
             <Border.Background>
               <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <LinearGradientBrush.GradientStops>
@@ -76,7 +76,7 @@
                                 BlurRadius="10" />
             </Border.Effect>
             <Border.RenderTransform>
-              <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+              <ScaleTransform ScaleX="2" ScaleY="2" />
             </Border.RenderTransform>
           </Border>
           <ControlTemplate.Triggers>

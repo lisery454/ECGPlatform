@@ -241,6 +241,7 @@
                   VerticalAlignment="Center"
                   Maximum="{Binding AllMilliSeconds}"
                   Minimum="0"
+                  Delay="20"
                   Style="{StaticResource HorizontalSlider}">
             <i:Interaction.Triggers>
               <i:EventTrigger EventName="ValueChanged">
