@@ -9,5 +9,8 @@
   <system:String x:Key="LocalDataDirPath">Local Data Directory</system:String>
   <system:String x:Key="ChangeStr">Change</system:String>
   <system:String x:Key="ShowEcgWindowTitle">ECG Data</system:String>
+  <system:String x:Key="AllTimeTitle">All Time</system:String>
+  <system:String x:Key="CurrentTimeTitle">Current Time</system:String>
+
 
 </ResourceDictionary>

@@ -41,7 +41,7 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
                 }
                 else
                 {
-                    CurrentTime = (long)(current + (target - current) * 0.4f);
+                    CurrentTime = (long)(current + (target - current) * 0.6f);
                 }
             });
     }
@@ -107,14 +107,17 @@ public partial class ShowECGWindowViewModel
         if (e.Handled) return;
         var newCurrentTime = CurrentTime + TimePerMouseWheel * MathF.Sign(e.Delta);
         _currentTimeAnimator.ChangeTarget(MathUtils.Clamp(newCurrentTime, 0, AllMilliSeconds - TimeInterval));
-        // CurrentTime = MathUtils.Clamp(newCurrentTime, 0, AllMilliSeconds - TimeInterval);
         e.Handled = true;
     }
 
     [RelayCommand]
     private void CurrentTimeTextBox_OnLostKeyboardFocus()
     {
-        if (!TimeFormatter.TryParseTimeMsFromStr(TextBoxInputCurrentTimeStr, out var milliSeconds)) return;
+        if (!TimeFormatter.TryParseTimeMsFromStr(TextBoxInputCurrentTimeStr, out var milliSeconds))
+        {
+            TextBoxInputCurrentTimeStr = TimeFormatter.MircoSecondsToString(CurrentTime);
+            return;
+        }
 
         if (milliSeconds >= 0 && milliSeconds <= AllMilliSeconds - TimeInterval)
             _currentTimeAnimator.ChangeTarget(milliSeconds);
@@ -127,6 +130,14 @@ public partial class ShowECGWindowViewModel
         {
             Keyboard.ClearFocus();
         }
+    }
+
+    [RelayCommand]
+    private void SliderValueChanged(RoutedPropertyChangedEventArgs<double> e)
+    {
+        var milliSeconds = (long)e.NewValue;
+        if (milliSeconds >= 0 && milliSeconds <= AllMilliSeconds - TimeInterval)
+            _currentTimeAnimator.ChangeTarget(milliSeconds);
     }
 }
 

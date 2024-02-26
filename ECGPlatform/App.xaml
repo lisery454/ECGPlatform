@@ -22,6 +22,7 @@
         <ResourceDictionary Source="Styles/ToggleButton.xaml" />
         <ResourceDictionary Source="Styles/RadioButton.xaml" />
         <ResourceDictionary Source="Styles/TextBlock.xaml" />
+        <ResourceDictionary Source="Styles/Slider.xaml" />
         <ResourceDictionary Source="Styles/Window.xaml" />
 
       </ResourceDictionary.MergedDictionaries>
