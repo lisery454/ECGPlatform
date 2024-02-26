@@ -15,40 +15,17 @@ public class WaveDataReader : IDisposable
     private const int FileStreamPoolBufferSize = 96;
     public long TotalTime { get; private set; }
 
-    private readonly bool _isCached;
-    private bool _isCachedOk;
-    private bool CanUseCache => _isCached && _isCachedOk;
-    private List<float> _waveCache;
-
-    public WaveDataReader(string filePath, int frequency, int width, float yFactor, bool isCached = false)
+    public WaveDataReader(string filePath, int frequency, int width, float yFactor)
     {
         _filePath = filePath;
         _frequency = frequency;
         _width = width;
         _yFactor = yFactor;
-        _isCached = isCached;
-        _isCachedOk = false;
-        _waveCache = new List<float>();
         TotalTime = new FileInfo(_filePath).Length / _width / _frequency * 1000;
         _fileStreamPool = new ObjectPool<BufferedFileStream>(
             () => new BufferedFileStream(
                 new FileStream(_filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite),
                 FileStreamPoolBufferSize), 5);
-
-        if (isCached)
-        {
-            UpdateCache().Await(() =>
-            {
-                _isCachedOk = true;
-                "update cache finished!".Debug();
-            }, exception => throw exception);
-        }
-    }
-
-    private async Task UpdateCache()
-    {
-        var dataParallelAsync = await GetDataParallelAsync(0, TotalTime, count: 10);
-        _waveCache = dataParallelAsync.Select(data => data.value).ToList();
     }
 
 
@@ -87,23 +64,14 @@ public class WaveDataReader : IDisposable
     /// <exception cref="Exception">读取数据异常</exception>
     public async Task<PointData> ValueAtAsync(long time, CancellationToken cancellationToken = default)
     {
-        if (CanUseCache)
-        {
-            var frame = TimeToFrame(time);
-            var value = _waveCache[(int)frame];
-            return new PointData(time, value);
-        }
-        else
-        {
-            var fs = _fileStreamPool.Get();
-            var s = await fs.ReadAsync(TimeToFrame(time) * _width, _width, cancellationToken);
-            _fileStreamPool.Release(fs);
-            var strings = s.Split(';');
-            if (float.TryParse(strings[0], out var result))
-                return new PointData(time, result * _yFactor);
+        var fs = _fileStreamPool.Get();
+        var s = await fs.ReadAsync(TimeToFrame(time) * _width, _width, cancellationToken);
+        _fileStreamPool.Release(fs);
+        var strings = s.Split(';');
+        if (float.TryParse(strings[0], out var result))
+            return new PointData(time, result * _yFactor);
 
-            throw new Exception("转换失败");
-        }
+        throw new Exception("转换失败");
     }
 
     /// <summary>
@@ -117,35 +85,24 @@ public class WaveDataReader : IDisposable
     public async Task<List<PointData>> GetDataParallelAsync(long beginTime, long lastTime, int count = 10,
         CancellationToken cancellationToken = default)
     {
-        if (CanUseCache)
+        var subLastTime = lastTime * 1f / count;
+        var beginFrame = new List<long>();
+        for (var i = 0; i < count; i++) beginFrame.Add(TimeToFrame((long)(beginTime + subLastTime * i)));
+        var lastFrame = new List<long>();
+        for (var i = 0; i < count - 1; i++) lastFrame.Add(beginFrame[i + 1] - beginFrame[i]);
+        lastFrame.Add(TimeToFrame(lastTime) + beginFrame[0] - beginFrame[count - 1]);
+
+        var tasks = Enumerable.Range(0, count)
+            .Select(i => GetDataSubParallelAsync(beginFrame[i], lastFrame[i], cancellationToken)).ToList();
+
+        await Task.WhenAll(tasks);
+
+        var result = tasks.Aggregate(new List<PointData>(), (data, task) =>
         {
-            var beginFrame = (int)TimeToFrame(beginTime);
-            var lastFrame = (int)TimeToFrame(lastTime);
-
-            return _waveCache.GetRange(beginFrame, lastFrame)
-                .Select((value, index) => new PointData(FrameToTime(index), value)).ToList();
-        }
-        else
-        {
-            var subLastTime = lastTime * 1f / count;
-            var beginFrame = new List<long>();
-            for (var i = 0; i < count; i++) beginFrame.Add(TimeToFrame((long)(beginTime + subLastTime * i)));
-            var lastFrame = new List<long>();
-            for (var i = 0; i < count - 1; i++) lastFrame.Add(beginFrame[i + 1] - beginFrame[i]);
-            lastFrame.Add(TimeToFrame(lastTime) + beginFrame[0] - beginFrame[count - 1]);
-
-            var tasks = Enumerable.Range(0, count)
-                .Select(i => GetDataSubParallelAsync(beginFrame[i], lastFrame[i], cancellationToken)).ToList();
-
-            await Task.WhenAll(tasks);
-
-            var result = tasks.Aggregate(new List<PointData>(), (data, task) =>
-            {
-                data.AddRange(task.Result);
-                return data;
-            });
-            return result;
-        }
+            data.AddRange(task.Result);
+            return data;
+        });
+        return result;
     }
 
     private async Task<List<PointData>> GetDataSubParallelAsync(long beginFrame, long lastFrame,

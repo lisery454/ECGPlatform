@@ -82,7 +82,7 @@ public partial class ShowECGWindowViewModel
         _ecgFileManager?.Dispose();
         _ecgFileManager = new ECGFileManager(EcgIndex!);
 
-        AllMilliSeconds = _ecgFileManager.waveDataReaders.First().TotalTime;
+        AllMilliSeconds = _ecgFileManager.TotalTime;
         CurrentTime = 0;
         TimeInterval = 5000;
 
@@ -151,11 +151,11 @@ public partial class ShowECGWindowViewModel
         if (_ecgFileManager == null) return;
 
         var result = new List<List<PointData>>();
-        foreach (var waveDataReader in _ecgFileManager.waveDataReaders)
+        foreach (var i in Enumerable.Range(0, _ecgFileManager.WaveCount))
         {
             try
             {
-                var data = await waveDataReader.GetDataParallelAsync(CurrentTime, TimeInterval, 10,
+                var data = await _ecgFileManager.GetRangedWaveDataAsync(i, CurrentTime, TimeInterval, 10,
                     cancellationToken);
                 result.Add(data);
             }
