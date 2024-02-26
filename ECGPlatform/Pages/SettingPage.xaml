@@ -8,12 +8,14 @@
       Title="{DynamicResource SettingTitle}"
       d:Background="White"
       d:DataContext="{d:DesignInstance Type=local:SettingPageViewModel}"
-      d:Height="1000 " d:Width="2000"
+      d:Height="1000 "
+      d:Width="2000"
       Style="{StaticResource BasePageStyle}"
       mc:Ignorable="d">
 
   <StackPanel>
-    <TextBlock Style="{StaticResource TitleTextStyle}" Text="{DynamicResource SettingTitle}" />
+    <TextBlock Style="{StaticResource TitleTextStyle}"
+               Text="{DynamicResource SettingTitle}" />
 
     <Grid>
       <Grid.ColumnDefinitions>
@@ -21,29 +23,63 @@
         <ColumnDefinition Width="4*" />
         <ColumnDefinition Width="1*" />
       </Grid.ColumnDefinitions>
-      <ScrollViewer Grid.Column="1" Margin="20,0"
+      <ScrollViewer Grid.Column="1"
+                    Margin="20,0"
                     Style="{StaticResource VerticalScrollViewer}">
         <i:Interaction.Behaviors>
           <local:ScrollViewerMouseWheelBehavior />
         </i:Interaction.Behaviors>
         <StackPanel>
           <!--  修改本地文件路径  -->
-          <Grid Height="50" Margin="20,10">
+          <Grid Height="50"
+                Margin="20,10">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="*" />
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" FontSize="24"
+            <TextBlock Grid.Column="0"
+                       FontSize="24"
                        Text="{DynamicResource LocalDataDirPath}" />
-            <TextBlock Grid.Column="2" Margin="0,0,20,0"
-                       d:Text="C:/data/user/desktop/.." FontSize="20"
+            <TextBlock Grid.Column="2"
+                       Margin="0,0,20,0"
+                       d:Text="C:/data/user/desktop/.."
+                       FontSize="20"
                        Text="{Binding LocalDataDirectoryPath}" />
-            <Button Grid.Column="3" Margin="5,5"
+            <Button Grid.Column="3"
+                    Margin="5,5"
                     Command="{Binding ChangeLocalDataDirectoryPathCommand}"
                     Content="{DynamicResource ChangeStr}"
                     FontSize="18" />
+          </Grid>
+
+          <!--  修改语言  -->
+          <Grid Height="50"
+                Margin="20,10">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0"
+                       FontSize="24"
+                       Text="{DynamicResource LanguageTitle}" />
+            <RadioButton Grid.Column="2"
+                         Content="{DynamicResource ChineseStr}"
+                         Command="{Binding ChangeLanguageCommand}"
+                         CommandParameter="{x:Static local:LanguageType.CHINESE}"
+                         IsChecked="{Binding IsChineseChecked}"
+                         Style="{DynamicResource OptionsRadioButtonStyle}" />
+
+            <RadioButton Grid.Column="3"
+                         Content="{DynamicResource EnglishStr}"
+                         Command="{Binding ChangeLanguageCommand}"
+                         CommandParameter="{x:Static local:LanguageType.ENGLISH}"
+                         IsChecked="{Binding IsEnglishChecked}"
+                         Style="{DynamicResource OptionsRadioButtonStyle}" />
+
           </Grid>
         </StackPanel>
       </ScrollViewer>

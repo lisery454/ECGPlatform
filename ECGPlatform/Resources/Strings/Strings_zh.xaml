@@ -11,5 +11,6 @@
   <system:String x:Key="ShowEcgWindowTitle">心电图数据</system:String>
   <system:String x:Key="AllTimeTitle">总时间</system:String>
   <system:String x:Key="CurrentTimeTitle">当前时间</system:String>
+  <system:String x:Key="LanguageTitle">语言</system:String>
 
 </ResourceDictionary>

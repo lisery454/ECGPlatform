@@ -28,6 +28,8 @@ public partial class App
 
         services.AddSingleton<ISettingManager, SettingManager>();
 
+        services.AddSingleton<ILanguageManager, LanguageManager>();
+
         services.AddSingleton<MainWindowViewModel>();
         services.AddSingleton<MainWindow>(sp =>
         {
