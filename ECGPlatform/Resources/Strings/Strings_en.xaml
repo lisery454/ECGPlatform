@@ -12,5 +12,8 @@
   <system:String x:Key="AllTimeTitle">All Time</system:String>
   <system:String x:Key="CurrentTimeTitle">Current Time</system:String>
   <system:String x:Key="LanguageTitle">Language</system:String>
+  <system:String x:Key="ThemeTitle">Theme</system:String>
+  <system:String x:Key="LightThemeTitle">Light</system:String>
+  <system:String x:Key="DarkThemeTitle">Dark</system:String>
 
 </ResourceDictionary>

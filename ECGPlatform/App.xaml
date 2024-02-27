@@ -9,8 +9,9 @@
       <ResourceDictionary.MergedDictionaries>
 
         <ResourceDictionary Source="Resources/Constants.xaml" />
-        <!--  keep this string in 1 pos  -->
+        <!--  keep this Strings_zh.xaml in 1 pos  -->
         <ResourceDictionary Source="Resources/Strings/Strings_zh.xaml" />
+        <!--  keep this Colors.xaml in 2 pos  -->
         <ResourceDictionary Source="Resources/Colors.xaml" />
         <ResourceDictionary Source="Resources/Fonts.xaml" />
         <ResourceDictionary Source="Resources/Animations.xaml" />

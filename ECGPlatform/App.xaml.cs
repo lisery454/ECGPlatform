@@ -29,6 +29,7 @@ public partial class App
         services.AddSingleton<ISettingManager, SettingManager>();
 
         services.AddSingleton<ILanguageManager, LanguageManager>();
+        services.AddSingleton<IThemeManager, ThemeManager>();
 
         services.AddSingleton<MainWindowViewModel>();
         services.AddSingleton<MainWindow>(sp =>
@@ -73,6 +74,8 @@ public partial class App
     {
         var logger = Services.GetService<ILogger>();
         logger?.Information("Application Start Up.");
+        _ = Services.GetService<ILanguageManager>();
+        _ = Services.GetService<IThemeManager>();
 
         var mainWindow = Services.GetService<MainWindow>();
         mainWindow!.Show();

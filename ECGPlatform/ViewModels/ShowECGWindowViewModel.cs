@@ -33,7 +33,7 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
             () => CurrentTime,
             value => CurrentTime = (long)value,
             TimeSpan.FromSeconds(0.016f),
-            new EaseOutSquare(1, 4, TimeSpan.FromSeconds(0.2f))
+            new EaseOutSquare(1, 4, TimeSpan.FromSeconds(0.1f))
             );
     }
 }

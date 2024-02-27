@@ -169,7 +169,7 @@
                   BorderBrush="{DynamicResource BrushPrimary50OnMain}"
                   BorderThickness="2"
                   CornerRadius="10">
-            <StackPanel Margin="6,0"
+            <StackPanel Margin="16,0"
                         Orientation="Horizontal">
               <TextBlock HorizontalAlignment="Center"
                          VerticalAlignment="Center"
@@ -259,7 +259,7 @@
                   BorderBrush="{DynamicResource BrushPrimary50OnMain}"
                   BorderThickness="2"
                   CornerRadius="10">
-            <StackPanel Margin="6,0"
+            <StackPanel Margin="16,0"
                         Orientation="Horizontal">
               <TextBlock HorizontalAlignment="Center"
                          VerticalAlignment="Center"

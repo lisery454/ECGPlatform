@@ -81,6 +81,34 @@
                          Style="{DynamicResource OptionsRadioButtonStyle}" />
 
           </Grid>
+
+          <!--  修改主题  -->
+          <Grid Height="50"
+                Margin="20,10">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0"
+                       FontSize="24"
+                       Text="{DynamicResource ThemeTitle}" />
+            <RadioButton Grid.Column="2"
+                         Content="{DynamicResource LightThemeTitle}"
+                         Command="{Binding ChangeThemeCommand}"
+                         CommandParameter="{x:Static local:ThemeType.LIGHT}"
+                         IsChecked="{Binding IsLightThemeChecked}"
+                         Style="{DynamicResource OptionsRadioButtonStyle}" />
+
+            <RadioButton Grid.Column="3"
+                         Content="{DynamicResource DarkThemeTitle}"
+                         Command="{Binding ChangeThemeCommand}"
+                         CommandParameter="{x:Static local:ThemeType.DARK}"
+                         IsChecked="{Binding IsDarkThemeChecked}"
+                         Style="{DynamicResource OptionsRadioButtonStyle}" />
+
+          </Grid>
         </StackPanel>
       </ScrollViewer>
 

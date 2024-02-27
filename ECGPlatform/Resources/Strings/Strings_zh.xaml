@@ -12,5 +12,8 @@
   <system:String x:Key="AllTimeTitle">总时间</system:String>
   <system:String x:Key="CurrentTimeTitle">当前时间</system:String>
   <system:String x:Key="LanguageTitle">语言</system:String>
+  <system:String x:Key="ThemeTitle">主题</system:String>
+  <system:String x:Key="LightThemeTitle">浅色</system:String>
+  <system:String x:Key="DarkThemeTitle">深色</system:String>
 
 </ResourceDictionary>
