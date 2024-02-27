@@ -17,9 +17,16 @@ public static class TaskExtensions
         }
     }
 
+    public static void AwaitThrow<T>(this Task<T> task,
+        Action<T>? onCompleted = null)
+    {
+        task.Await(onCompleted, e => throw e);
+    }
+
     public static async void Await(this Task task,
         Action? onCompleted = null,
         Action<Exception>? onError = null)
+
     {
         try
         {
@@ -30,5 +37,11 @@ public static class TaskExtensions
         {
             onError?.Invoke(e);
         }
+    }
+
+    public static void AwaitThrow(this Task task,
+        Action? onCompleted = null)
+    {
+        task.Await(onCompleted, e => throw e);
     }
 }

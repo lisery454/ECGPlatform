@@ -8,6 +8,8 @@ public class ObjectPool<T> where T : notnull
 
     public int Size => _pool.Count;
 
+    private int _originSize;
+
     public bool IsAvailable(T obj)
     {
         if (_pool.TryGetValue(obj, out var isAvailable))
@@ -36,6 +38,8 @@ public class ObjectPool<T> where T : notnull
         {
             _pool.Add(_factoryFunction.Invoke(), true);
         }
+
+        _originSize = originalSize;
     }
 
     public T Get(Action<T>? onGet = null)

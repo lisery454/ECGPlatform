@@ -1,4 +1,7 @@
-﻿namespace ECGFileService;
+﻿using System.Diagnostics;
+using SimpleUtils;
+
+namespace ECGFileService;
 
 public class ECGFileManager : IDisposable
 {
@@ -42,16 +45,24 @@ public class ECGFileManager : IDisposable
         return await _waveDataReaders[index].GetDataParallelAsync(beginTime, lastTime, count, cancellationToken);
     }
 
-    public async Task<List<HighlightPoint>> GetRangedRPeaksAsync(long beginTime, long lastTime,
+    public async Task<List<HighlightPointData>> GetRangedRPeaksAsync(long beginTime, long lastTime,
         CancellationToken cancellationToken = default)
     {
         var rPeakUnits = await _rPeaksDataReader.GetDataAsync(beginTime, lastTime, cancellationToken);
+        
+        var result = new List<HighlightPointData>();
+        foreach (var rPeakUnit in rPeakUnits)
+        {
+            var values = new List<float>();
+            for (var i = 0; i < WaveCount; i++)
+            {
+                values.Add((await GetSingleWaveDataAsync(i, rPeakUnit.Time, cancellationToken)).value);
+            }
 
-        return (from rPeakUnit in rPeakUnits
-            let values = Enumerable.Range(0, WaveCount)
-                .Select(async i => await GetSingleWaveDataAsync(i, rPeakUnit.Time, cancellationToken))
-                .Select(task => task.Result.value)
-                .ToList()
-            select new HighlightPoint(rPeakUnit.Time, values, rPeakUnit.Id)).ToList();
+            result.Add(new HighlightPointData(rPeakUnit.Time, values, rPeakUnit.Id));
+        }
+
+        
+        return result;
     }
 }

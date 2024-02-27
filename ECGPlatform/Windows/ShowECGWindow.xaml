@@ -27,6 +27,7 @@
       <TextBlock FontSize="50"
                  Text="IsLoading..." />
     </Grid>
+
     <Grid x:Name="GridBackground"
           d:Visibility="Visible"
           Visibility="{Binding IsLoadingData, Converter={x:Static local:BoolToVisibilityConverter.InstanceCollapsedFalseForVisible}}">
@@ -94,8 +95,7 @@
 
       <!--  row = 1  -->
       <Grid Grid.Row="1"
-            Margin="0,0,0,12"
-            DataContext="{Binding ChartViewModel}">
+            Margin="0,0,0,12">
         <Border Grid.Column="0"
                 Margin="20,0,20,0"
                 Padding="12"
@@ -106,11 +106,11 @@
               <Border>
                 <i:Interaction.Triggers>
                   <i:EventTrigger EventName="SizeChanged">
-                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ChartBorderSizeChangedCommand}"
+                    <i:InvokeCommandAction Command="{Binding ChartBorderSizeChangedCommand}"
                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Border}}" />
                   </i:EventTrigger>
                   <i:EventTrigger EventName="Loaded">
-                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ChartBorderSizeChangedCommand}"
+                    <i:InvokeCommandAction Command="{Binding ChartBorderSizeChangedCommand}"
                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Border}}" />
                   </i:EventTrigger>
                 </i:Interaction.Triggers>
@@ -118,13 +118,14 @@
                                     Height="{Binding Height}"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top"
-                                    EasingFunction="{x:Null}"
                                     DrawMarginFrame="{Binding DrawMarginFrame}"
+                                    EasingFunction="{x:Null}"
                                     Series="{Binding Series}"
                                     TooltipPosition="Hidden"
                                     UpdateStartedCommand="{Binding ChartUpdatedCommand}"
                                     XAxes="{Binding XAxes}"
-                                    YAxes="{Binding YAxes}">
+                                    YAxes="{Binding YAxes}"
+                                    x:Name="CartesianChart">
                   <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseWheel">
                       <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ChartMouseWheelCommand}"
@@ -133,6 +134,10 @@
                   </i:Interaction.Triggers>
                 </lvc:CartesianChart>
               </Border>
+              <local:HighlightPointGroup HighlightPoints="{Binding HighlightPoints}"
+                                         CartesianChart="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=Children[0].(Border.Child), Converter={x:Static local:UIElementToCartesianChartConverter.Instance}}"
+                                         IsYInProperInterval="{Binding IsYInProperInterval}"
+                                         GetChartCoordY="{Binding GetChartCoordY}" />
             </Grid>
           </ScrollViewer>
         </Border>
@@ -239,9 +244,9 @@
                   Margin="20,0"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="Center"
+                  Delay="20"
                   Maximum="{Binding AllMilliSeconds}"
                   Minimum="0"
-                  Delay="20"
                   Style="{StaticResource HorizontalSlider}">
             <i:Interaction.Triggers>
               <i:EventTrigger EventName="ValueChanged">

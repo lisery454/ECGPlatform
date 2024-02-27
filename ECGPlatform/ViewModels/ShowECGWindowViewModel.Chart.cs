@@ -2,7 +2,7 @@
 
 namespace ECGPlatform;
 
-public partial class ChartViewModel : ObservableObject
+public partial class ShowECGWindowViewModel
 {
     [ObservableProperty] private ObservableCollection<Axis> _xAxes;
     [ObservableProperty] private ObservableCollection<Axis> _yAxes;
@@ -14,17 +14,9 @@ public partial class ChartViewModel : ObservableObject
     [ObservableProperty] private float _width;
     [ObservableProperty] private float _height;
 
-    private const float YLimit = 2;
+    public const float YLimit = 2;
     public const float GridWidth = 40;
-    private const float DistanceBetweenSeries = 1.8f;
-
-    public ChartViewModel()
-    {
-        _xAxes = new ObservableCollection<Axis> { BuildXAxis() };
-        _yAxes = new ObservableCollection<Axis> { BuildYAxis() };
-        _drawMarginFrame = BuildDrawMarginFrame();
-        _series = new ObservableCollection<ISeries>();
-    }
+    public const float DistanceBetweenSeries = 1.8f;
 
     private static SKColor LabelColor => GetSKColor("ColorPrimaryAlpha90");
     private static SKColor SeparatorColor => GetSKColor("ColorOppositeAlpha40");
@@ -34,8 +26,9 @@ public partial class ChartViewModel : ObservableObject
     private static string FontFamily => "Chill Round Gothic Regular";
 
     [RelayCommand]
-    private void ChartUpdated()
+    private async Task ChartUpdated()
     {
+        await UpdateRPeaksData(CtsUtils.Refresh(ref _updateRPeaksDataCts).Token);
     }
 
     public void UpdateYAxes(int count)

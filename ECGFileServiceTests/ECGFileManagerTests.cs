@@ -1,4 +1,6 @@
+using System.Diagnostics;
 using ECGFileService;
+using SimpleUtils;
 using YamlDotNet.Serialization;
 
 namespace ECGFileServiceTests;
@@ -16,8 +18,18 @@ public class ECGFileManagerTests
     public async Task Test2()
     {
         using var ecgFileManager = await GetECGFileManager();
-        var rangedRPeaksAsync = await ecgFileManager.GetRangedRPeaksAsync(0, 10000);
-        Assert.Pass(rangedRPeaksAsync.Count.ToString());
+
+        for (int i = 0; i < 100; i++)
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            var rangedRPeaksAsync = await ecgFileManager.GetRangedRPeaksAsync(i * 10, 8630 * i);
+            stopwatch.Stop();
+            Console.WriteLine($"time: {stopwatch.ElapsedMilliseconds} ");
+        }
+
+
+        Assert.Pass();
     }
 
     [Test]
@@ -35,6 +47,7 @@ public class ECGFileManagerTests
         var pointData = await ecgFileManager.GetRangedWaveDataAsync(0, 0, 1000);
         Assert.Pass($"{pointData.Count}");
     }
+
 
     private async Task<ECGFileManager> GetECGFileManager()
     {

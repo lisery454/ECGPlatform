@@ -10,11 +10,15 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
     [ObservableProperty] private long _timeInterval;
     [ObservableProperty] private long _currentTime;
     [ObservableProperty] private long _allMilliSeconds;
-    [ObservableProperty] private ChartViewModel _chartViewModel;
     [ObservableProperty] private string _textBoxInputCurrentTimeStr;
+    [ObservableProperty] private List<HighlightPointData> _highlightPoints = new();
+    [ObservableProperty] private Func<double, bool> _isYInProperInterval;
+    [ObservableProperty] private Func<float, int, double> _getChartCoordY;
+
     private const long TimePerMouseWheel = 600;
 
     private readonly Animator _currentTimeAnimator;
+
 
     public ShowECGWindowViewModel(ILogger logger)
     {
@@ -27,14 +31,21 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
         };
 
         _currentTime = 0;
-        _chartViewModel = new ChartViewModel();
+        _xAxes = new ObservableCollection<Axis> { BuildXAxis() };
+        _yAxes = new ObservableCollection<Axis> { BuildYAxis() };
+        _drawMarginFrame = BuildDrawMarginFrame();
+        _series = new ObservableCollection<ISeries>();
         _textBoxInputCurrentTimeStr = TimeFormatter.MircoSecondsToString(_currentTime);
         _currentTimeAnimator = new Animator(
             () => CurrentTime,
             value => CurrentTime = (long)value,
             TimeSpan.FromSeconds(0.016f),
             new EaseOutSquare(1, 4, TimeSpan.FromSeconds(0.1f))
-            );
+        );
+
+        _isYInProperInterval = y => y >= -2 * YLimit -
+            (_ecgFileManager!.WaveCount - 1) * DistanceBetweenSeries * 2 && y <= 0;
+        _getChartCoordY = (val, i) => val - DistanceBetweenSeries * i - YLimit;
     }
 }
 
@@ -43,24 +54,24 @@ public partial class ShowECGWindowViewModel
 {
     partial void OnWaveDataCollectionChanged(List<List<PointData>> value)
     {
-        ChartViewModel.UpdateChartSize(TimeInterval, WaveDataCollection.Count);
-        ChartViewModel.UpdateYAxes(value.Count);
-        ChartViewModel.UpdateLineSeries(value);
+        UpdateChartSize(TimeInterval, WaveDataCollection.Count);
+        UpdateYAxes(value.Count);
+        UpdateLineSeries(value);
     }
 
     partial void OnTimeIntervalChanged(long value)
     {
         _ = value;
-        ChartViewModel.UpdateChartSize(TimeInterval, WaveDataCollection.Count);
-        UpdateWaveData(CtsUtils.Refresh(ref _updateWaveDataCts).Token).Await();
+        UpdateChartSize(TimeInterval, WaveDataCollection.Count);
+        UpdateWaveData(CtsUtils.Refresh(ref _updateWaveDataCts).Token).AwaitThrow();
     }
 
     partial void OnCurrentTimeChanged(long value)
     {
         _ = value;
-        ChartViewModel.UpdateChartSize(TimeInterval, WaveDataCollection.Count);
+        UpdateChartSize(TimeInterval, WaveDataCollection.Count);
         TextBoxInputCurrentTimeStr = TimeFormatter.MircoSecondsToString(CurrentTime);
-        UpdateWaveData(CtsUtils.Refresh(ref _updateWaveDataCts).Token).Await();
+        UpdateWaveData(CtsUtils.Refresh(ref _updateWaveDataCts).Token).AwaitThrow();
     }
 }
 
@@ -78,6 +89,7 @@ public partial class ShowECGWindowViewModel
         TimeInterval = 5000;
 
         await UpdateWaveData(CtsUtils.Refresh(ref _updateWaveDataCts).Token);
+        // await UpdateRPeaksData(CtsUtils.Refresh(ref _updateRPeaksDataCts).Token);
 
         IsLoadingData = false;
     }
@@ -85,7 +97,7 @@ public partial class ShowECGWindowViewModel
     [RelayCommand]
     private void ChartBorderSizeChanged(Border border)
     {
-        var newTimeInterval = (long)(border.ActualWidth / ChartViewModel.GridWidth * ChartViewModel.XGridValue);
+        var newTimeInterval = (long)(border.ActualWidth / GridWidth * XGridValue);
         if (TimeInterval + CurrentTime > AllMilliSeconds)
             _currentTimeAnimator.ChangeTarget(AllMilliSeconds - newTimeInterval);
 
@@ -111,7 +123,7 @@ public partial class ShowECGWindowViewModel
         }
 
         if (milliSeconds >= 0 && milliSeconds <= AllMilliSeconds - TimeInterval)
-            _currentTimeAnimator.ChangeTarget(milliSeconds);
+            _currentTimeAnimator.NoAnimateChangeTarget(milliSeconds);
     }
 
     [RelayCommand]
@@ -132,37 +144,7 @@ public partial class ShowECGWindowViewModel
     }
 }
 
-// update functions
+// utils
 public partial class ShowECGWindowViewModel
 {
-    private CancellationTokenSource? _updateWaveDataCts;
-
-    private async Task UpdateWaveData(CancellationToken cancellationToken)
-    {
-        if (_ecgFileManager == null) return;
-
-        var result = new List<List<PointData>>();
-        foreach (var i in Enumerable.Range(0, _ecgFileManager.WaveCount))
-        {
-            try
-            {
-                var data = await _ecgFileManager.GetRangedWaveDataAsync(i, CurrentTime, TimeInterval, 10,
-                    cancellationToken);
-                result.Add(data);
-            }
-            catch (OperationCanceledException)
-            {
-                // 正常取消获取数据操作
-            }
-            catch (Exception e)
-            {
-                _logger.Error(e.ToString());
-            }
-        }
-
-        if (cancellationToken.IsCancellationRequested) return;
-
-        WaveDataCollection = result;
-        // _logger.Information("Wave Data Load Success.");
-    }
 }

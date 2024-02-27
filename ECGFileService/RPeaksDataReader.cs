@@ -10,6 +10,7 @@ public class RPeaksDataReader : IDisposable
     private readonly int _rPeaksWidth;
     private readonly ObjectPool<BufferedFileStream> _fileStreamPool;
     private readonly int _frequency;
+    private Dictionary<int, RPeakUnit> _cache;
 
     private int AllRPeaksNum { get; }
 
@@ -22,6 +23,7 @@ public class RPeaksDataReader : IDisposable
                 new FileStream(rPeaksPath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite), 96), 5);
         _rPeaksWidth = rPeaksWidth;
         AllRPeaksNum = GetAllRPeaksNum();
+        _cache = new Dictionary<int, RPeakUnit>();
     }
 
     public async Task<List<RPeakUnit>> GetDataAsync(long beginTime, long lastTime,
@@ -38,6 +40,7 @@ public class RPeaksDataReader : IDisposable
         var beginIndex = await FindFirstIndexBiggerEqualThenAsync(beginTime, cancellationToken);
         var endIndex = await FindFirstIndexBiggerEqualThenAsync(endTime, cancellationToken);
         var res = await RangeValueAtAsync(beginIndex, endIndex, cancellationToken);
+
         return res;
     }
 
@@ -133,13 +136,23 @@ public class RPeaksDataReader : IDisposable
 
     private async Task<RPeakUnit> ValueAtAsync(int index, CancellationToken cancellationToken = default)
     {
+        if (_cache.TryGetValue(index, out var unit)) return unit;
+        
         if (index >= GetAllRPeaksNum()) throw new Exception("index >= all indexes");
         var fs = _fileStreamPool.Get();
+
         var result = await fs.ReadAsync(index * _rPeaksWidth, _rPeaksWidth, cancellationToken);
+
         _fileStreamPool.Release(fs);
         var strings = result.Split(';');
+
         if (long.TryParse(strings[0], out var frame) && int.TryParse(strings[1], out var id))
-            return new RPeakUnit(id, FrameToTime(frame));
+        {
+            var res = new RPeakUnit(id, FrameToTime(frame));
+            _cache.Add(index, res);
+            return res;
+        }
+
         throw new Exception("parse str fail!");
     }
 
