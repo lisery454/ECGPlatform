@@ -74,6 +74,17 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
     private bool _canMouseMoveToSelectPoint;
 
 
+    /// <summary>
+    /// 当前要创建的点的标签
+    /// </summary>
+    [ObservableProperty] private RPeakLabel _createRPeakLabel;
+    
+    /// <summary>
+    /// 当前要修改标签的点的标签
+    /// </summary>
+    [ObservableProperty] private RPeakLabel _updateRPeakLabel;
+
+
     public ShowECGWindowViewModel(ILogger logger)
     {
         _isLoadingData = true;
@@ -120,5 +131,8 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
                 SimplePointCanvas.Children.Add(highlightPoint);
                 return highlightPoint;
             }, 3));
+
+        _createRPeakLabel = RPeakLabel.NONE;
+        _updateRPeakLabel = RPeakLabel.NONE;
     }
 }

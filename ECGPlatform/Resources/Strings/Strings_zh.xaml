@@ -22,5 +22,16 @@
   <system:String x:Key="CreateRStr">创建R点</system:String>
   <system:String x:Key="DeleteRStr">删除R点</system:String>
   <system:String x:Key="UpdateRStr">更新R点标签</system:String>
+  <system:String x:Key="RPeakLabel.None">无标签</system:String>
+  <system:String x:Key="RPeakLabel.SinusRhythm">窦性心律</system:String>
+  <system:String x:Key="RPeakLabel.VentricularPreexcitation">心室预激</system:String>
+  <system:String x:Key="RPeakLabel.PrematureAtrialContractions">房性早搏</system:String>
+  <system:String x:Key="RPeakLabel.PrematureVentricularContractions">室性早搏</system:String>
+  <system:String x:Key="RPeakLabel.AtrialFibrillation">心房颤动</system:String>
+  <system:String x:Key="RPeakLabel.AtrialFlutter">心房扑动</system:String>
+  <system:String x:Key="RPeakLabel.VentricularFlutterVentricularFibrillation">室扑室颤</system:String>
+  <system:String x:Key="RPeakLabel.AtrioventricularBlock">房室传导阻滞</system:String>
+  <system:String x:Key="RPeakLabel.Noise">噪声</system:String>
+  <system:String x:Key="RPeakLabel.ParoxysmalSupraventricularTachycardia">阵发性室上性心动过速</system:String>
 
 </ResourceDictionary>

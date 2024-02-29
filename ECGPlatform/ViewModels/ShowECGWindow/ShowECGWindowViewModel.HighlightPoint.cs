@@ -79,7 +79,11 @@ public partial class ShowECGWindowViewModel
     private void SetSelectSimplePoint()
     {
         foreach (HighlightPoint child in SimplePointCanvas.Children)
-            _simplePointPool.Value.Release(child, point => point.Visibility = Visibility.Hidden);
+            _simplePointPool.Value.Release(child, point =>
+            {
+                point.Visibility = Visibility.Hidden;
+                // point.IsSelected = false;
+            });
 
         if (CurrentHighlightPointData == null) return;
         var time = CurrentHighlightPointData.Time;

@@ -5,7 +5,7 @@ public partial class RPeakUnit
     public long Time { get; set; }
     public int Id { get; set; }
 
-    public string Label => FromIdToLabel(Id);
+    public RPeakLabel Label => FromIdToLabel(Id);
 
     public RPeakUnit(int id, long time)
     {
@@ -16,38 +16,34 @@ public partial class RPeakUnit
 
 public partial class RPeakUnit
 {
-    private static readonly Dictionary<string, int> LabelMap = new()
+    private static readonly Dictionary<RPeakLabel, int> LabelMap = new()
     {
-        { "无标签", 0 },
-        { "窦性心律", 1 },
-        { "心室预激", 2 },
-        { "房性早搏", 3 },
-        { "室性早搏", 4 },
-        { "心房颤动", 5 },
-        { "心房扑动", 6 },
-        { "室扑室颤", 7 },
-        { "房室传导阻滞", 8 },
-        { "噪声", 9 },
-        { "噪音", 9 },
-        { "阵发性室上性心动过速", 10 },
+        { RPeakLabel.NONE, 0 },
+        { RPeakLabel.SINUS_RHYTHM, 1 },
+        { RPeakLabel.VENTRICULAR_PREEXCITATION, 2 },
+        { RPeakLabel.PREMATURE_ATRIAL_CONTRACTIONS, 3 },
+        { RPeakLabel.PREMATURE_VENTRICULAR_CONTRACTIONS, 4 },
+        { RPeakLabel.ATRIAL_FIBRILLATION, 5 },
+        { RPeakLabel.ATRIAL_FLUTTER, 6 },
+        { RPeakLabel.VENTRICULAR_FLUTTER_VENTRICULAR_FIBRILLATION, 7 },
+        { RPeakLabel.ATRIOVENTRICULAR_BLOCK, 8 },
+        { RPeakLabel.NOISE, 9 },
+        { RPeakLabel.PAROXYSMAL_SUPRAVENTRICULAR_TACHYCARDIA, 10 },
     };
 
-    public static readonly List<string> AllLabels = new();
+    public static readonly List<RPeakLabel> AllLabels = new();
 
     static RPeakUnit()
     {
         foreach (var (_, value) in LabelMap2.Value)
         {
-            if (!string.IsNullOrEmpty(value))
-            {
-                AllLabels.Add(value);
-            }
+            AllLabels.Add(value);
         }
     }
 
-    private static readonly Lazy<Dictionary<int, string>> LabelMap2 = new(() =>
+    private static readonly Lazy<Dictionary<int, RPeakLabel>> LabelMap2 = new(() =>
     {
-        var map = new Dictionary<int, string>();
+        var map = new Dictionary<int, RPeakLabel>();
         foreach (var (label, id) in LabelMap)
         {
             map.TryAdd(id, label);
@@ -56,12 +52,12 @@ public partial class RPeakUnit
         return map;
     });
 
-    public static int FromLabelToId(string label)
+    public static int FromLabelToId(RPeakLabel label)
     {
         return LabelMap[label];
     }
 
-    public static string FromIdToLabel(int id)
+    public static RPeakLabel FromIdToLabel(int id)
     {
         return LabelMap2.Value[id];
     }

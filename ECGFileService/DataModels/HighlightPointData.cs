@@ -4,10 +4,10 @@ public class HighlightPointData : IEquatable<HighlightPointData>
 {
     public long Time { get; }
     public List<float> Values { get; }
-    public int? Id { get; }
+    private int? Id { get; }
 
     public string Letter => Id == null ? "?" : RPeakUnit.FromIdToLetter(Id.Value);
-    public string? Label => Id == null ? null : RPeakUnit.FromIdToLabel(Id.Value);
+    public RPeakLabel? Label => Id == null ? null : RPeakUnit.FromIdToLabel(Id.Value);
     public PointType PointType => Id == null ? PointType.SIMPLE_POINT : PointType.R_PEAKS_POINT;
 
     public HighlightPointData(long time, List<float> values, int id)

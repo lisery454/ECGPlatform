@@ -66,6 +66,7 @@ public partial class App
             showECGWindowViewModel.BindingWindow = showECGWindow;
             return showECGWindow;
         });
+        
 
         return services.BuildServiceProvider();
     }

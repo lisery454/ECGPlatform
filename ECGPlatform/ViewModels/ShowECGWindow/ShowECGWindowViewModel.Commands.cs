@@ -91,16 +91,21 @@ public partial class ShowECGWindowViewModel
     [RelayCommand]
     private void UpdateRPoint()
     {
+        // TODO CurrentHighlightPointData， 更新为 UpdateRPeakLabel
     }
 
     [RelayCommand]
     private void DeleteRPoint()
     {
+        // TODO 删除 CurrentHighlightPointData
     }
 
     [RelayCommand]
     private void CreateRPoint()
     {
+        var rPeakLabel = CreateRPeakLabel;
+        var currentHighlightPointData = CurrentHighlightPointData;
+        // TODO 在 CurrentHighlightPointData , 创建一个 CreateRPeakLabel
     }
 
     [RelayCommand]

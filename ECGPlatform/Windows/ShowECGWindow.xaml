@@ -107,10 +107,30 @@
                        VerticalAlignment="Center" />
             <StackPanel Grid.Column="2"
                         Orientation="Horizontal">
+              <ComboBox Margin="5,8"
+                        ItemsSource="{local:EnumBindingSource EnumType=ecgFile:RPeakLabel}"
+                        SelectedItem="{Binding CreateRPeakLabel}"
+                        Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.SIMPLE_POINT}}">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock Text="{Binding ., Converter={x:Static local:RPeakLabelToStrConverter.Instance}}" />
+                  </DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
               <Button Command="{Binding CreateRPointCommand}"
                       Content="{DynamicResource CreateRStr}"
                       Margin="5,8"
                       Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.SIMPLE_POINT}}" />
+              <ComboBox Margin="5,8"
+                        ItemsSource="{local:EnumBindingSource EnumType=ecgFile:RPeakLabel}"
+                        SelectedItem="{Binding CreateRPeakLabel}"
+                        Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.R_PEAKS_POINT}}">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock Text="{Binding ., Converter={x:Static local:RPeakLabelToStrConverter.Instance}}" />
+                  </DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
               <Button Command="{Binding UpdateRPointCommand}"
                       Content="{DynamicResource UpdateRStr}"
                       Margin="5,8"

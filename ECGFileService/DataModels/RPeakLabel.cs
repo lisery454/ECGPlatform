@@ -1,0 +1,16 @@
+﻿namespace ECGFileService;
+
+public enum RPeakLabel
+{
+    NONE, // 无标签
+    SINUS_RHYTHM, // 窦性心律
+    VENTRICULAR_PREEXCITATION, // 心室预激
+    PREMATURE_ATRIAL_CONTRACTIONS, // 房性早搏
+    PREMATURE_VENTRICULAR_CONTRACTIONS, // 室性早搏
+    ATRIAL_FIBRILLATION, // 心房颤动
+    ATRIAL_FLUTTER, // 心房扑动 
+    VENTRICULAR_FLUTTER_VENTRICULAR_FIBRILLATION, //室扑室颤
+    ATRIOVENTRICULAR_BLOCK, // 房室传导阻滞
+    NOISE, // 噪声
+    PAROXYSMAL_SUPRAVENTRICULAR_TACHYCARDIA, //阵发性室上性心动过速
+}

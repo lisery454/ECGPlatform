@@ -22,6 +22,16 @@
   <system:String x:Key="CreateRStr">Create R</system:String>
   <system:String x:Key="DeleteRStr">Delete R</system:String>
   <system:String x:Key="UpdateRStr">Update R Label</system:String>
-
+  <system:String x:Key="RPeakLabel.None">None</system:String>
+  <system:String x:Key="RPeakLabel.SinusRhythm">Sinus Rhythm</system:String>
+  <system:String x:Key="RPeakLabel.VentricularPreexcitation">Ventricular Preexcitation</system:String>
+  <system:String x:Key="RPeakLabel.PrematureAtrialContractions">Premature Atrial Contractions</system:String>
+  <system:String x:Key="RPeakLabel.PrematureVentricularContractions">Premature Ventricular Contractions</system:String>
+  <system:String x:Key="RPeakLabel.AtrialFibrillation">Atrial Fibrillation</system:String>
+  <system:String x:Key="RPeakLabel.AtrialFlutter">Atrial Flutter</system:String>
+  <system:String x:Key="RPeakLabel.VentricularFlutterVentricularFibrillation">Ventricular Flutter/Fibrillation</system:String>
+  <system:String x:Key="RPeakLabel.AtrioventricularBlock">Atrioventricular Block</system:String>
+  <system:String x:Key="RPeakLabel.Noise">Noise</system:String>
+  <system:String x:Key="RPeakLabel.ParoxysmalSupraventricularTachycardia">Paroxysmal Supraventricular Tachycardia</system:String>
 
 </ResourceDictionary>
