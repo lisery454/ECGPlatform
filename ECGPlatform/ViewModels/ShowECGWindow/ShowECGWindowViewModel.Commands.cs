@@ -13,9 +13,13 @@ public partial class ShowECGWindowViewModel
         AllMilliSeconds = _ecgFileManager.TotalTime;
         CurrentTime = 0;
         TimeInterval = 5000;
+        ThumbTimeDuration = _ecgFileManager.TotalTime / 20;
 
         // 加载波形数据
         await UpdateWaveData(CtsUtils.Refresh(ref _updateWaveDataCts).Token);
+
+        // 加载R点间隔数据
+        await UpdateRIntervalData(CtsUtils.Refresh(ref _updateRIntervalDataCts).Token);
 
         IsLoadingData = false;
     }
@@ -141,5 +145,63 @@ public partial class ShowECGWindowViewModel
         _canMouseMoveToSelectPoint = true;
         SetHighlightPointByPixelPosition(e.GetPosition(ChartBorder));
         e.Handled = true;
+    }
+
+
+    [RelayCommand]
+    private void RIntervalChartUpdated(ChartCommandArgs e)
+    {
+    }
+
+    [RelayCommand]
+    private void RIntervalPointerDown(PointerCommandArgs e)
+    {
+        _isDown = true;
+    }
+
+    [RelayCommand]
+    private void RIntervalPointerMove(PointerCommandArgs args)
+    {
+        if (!_isDown) return;
+
+        var chart = (ICartesianChartView<SkiaSharpDrawingContext>)args.Chart;
+        var positionInData = chart.ScalePixelsToData(args.PointerPosition);
+        var newValue = (long)(positionInData.X - ThumbTimeDuration / 2f);
+        if (newValue < 0) newValue = 0;
+        if (newValue > AllMilliSeconds - ThumbTimeDuration) newValue = AllMilliSeconds - ThumbTimeDuration;
+        ThumbCurrentTime = newValue;
+    }
+
+    [RelayCommand]
+    private void RIntervalPointerUp(PointerCommandArgs e)
+    {
+        _isDown = false;
+    }
+
+
+    [RelayCommand]
+    private void PartRIntervalPointerDown(PointerCommandArgs e)
+    {
+        _isPartDown = true;
+    }
+
+    [RelayCommand]
+    private void PartRIntervalPointerMove(PointerCommandArgs args)
+    {
+        if (!_isPartDown) return;
+
+        var chart = (ICartesianChartView<SkiaSharpDrawingContext>)args.Chart;
+        var positionInData = chart.ScalePixelsToData(args.PointerPosition);
+        var newValue = (long)(positionInData.X - _partTimeDuration / 2f);
+        if (newValue < ThumbCurrentTime) newValue = ThumbCurrentTime;
+        if (newValue > ThumbCurrentTime + ThumbTimeDuration - _partTimeDuration)
+            newValue = ThumbCurrentTime + ThumbTimeDuration - _partTimeDuration;
+        _currentTimeAnimator.NoAnimateChangeTarget(newValue);
+    }
+
+    [RelayCommand]
+    private void PartRIntervalPointerUp(PointerCommandArgs e)
+    {
+        _isPartDown = false;
     }
 }

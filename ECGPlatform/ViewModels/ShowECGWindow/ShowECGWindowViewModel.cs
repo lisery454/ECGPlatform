@@ -78,7 +78,7 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
     /// 当前要创建的点的标签
     /// </summary>
     [ObservableProperty] private RPeakLabel _createRPeakLabel;
-    
+
     /// <summary>
     /// 当前要修改标签的点的标签
     /// </summary>
@@ -134,5 +134,20 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
 
         _createRPeakLabel = RPeakLabel.NONE;
         _updateRPeakLabel = RPeakLabel.NONE;
+
+        RIntervalXAxes.Add(BuildRIntervalXAxis());
+        PartRIntervalXAxes.Add(BuildRIntervalXAxis());
+        RIntervalYAxes.Add(BuildRIntervalYAxis());
+        PartRIntervalYAxes.Add(BuildRIntervalYAxis());
+        RIntervalSeries.Add(BuildRIntervalLineSeries(new List<ObservablePoint>()));
+        PartRIntervalSeries.Add(BuildRIntervalLineSeries(new List<ObservablePoint>()));
+        RIntervalDrawMarginFrame = BuildRIntervalDrawMarginFrame();
+        PartRIntervalDrawMarginFrame = BuildRIntervalDrawMarginFrame();
+        Thumbs = new[] { BuildRectangularSection() };
+        PartThumbs = new[] { BuildRectangularSection() };
+        _partTimeDuration = 3000;
+        ThumbCurrentTime = 0;
+        UpdateThumbPos();
+        UpdatePartThumbPos();
     }
 }

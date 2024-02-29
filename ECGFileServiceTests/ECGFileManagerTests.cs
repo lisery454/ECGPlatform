@@ -47,6 +47,14 @@ public class ECGFileManagerTests
         var pointData = await ecgFileManager.GetRangedWaveDataAsync(0, 0, 1000);
         Assert.Pass($"{pointData.Count}");
     }
+    
+    [Test]
+    public async Task Test5()
+    {
+        using var ecgFileManager = await GetECGFileManager();
+        var pointData = await ecgFileManager.GetRIntervalDataAsync(0, ecgFileManager.TotalTime, 2560);
+        Assert.Pass($"{pointData.Count}");
+    }
 
 
     private async Task<ECGFileManager> GetECGFileManager()

@@ -22,6 +22,7 @@ public partial class ShowECGWindowViewModel
         UpdateChartSize(TimeInterval, WaveDataCollection.Count);
         TextBoxInputCurrentTimeStr = TimeFormatter.MircoSecondsToString(CurrentTime);
         UpdateWaveData(CtsUtils.Refresh(ref _updateWaveDataCts).Token).AwaitThrow();
+        UpdatePartThumbPos();
     }
 
     partial void OnCurrentHighlightPointDataChanged(HighlightPointData? value)
@@ -69,5 +70,31 @@ public partial class ShowECGWindowViewModel
         }
 
         UpdateHighlightPoint();
+    }
+
+    partial void OnThumbCurrentTimeChanged(long value)
+    {
+        _ = value;
+        UpdatePartRIntervalData(CtsUtils.Refresh(ref _updatePartRIntervalDataCts).Token).AwaitThrow();
+        UpdateThumbPos();
+    }
+
+    partial void OnThumbTimeDurationChanged(long value)
+    {
+        _ = value;
+        UpdatePartRIntervalData(CtsUtils.Refresh(ref _updatePartRIntervalDataCts).Token).AwaitThrow();
+        UpdateThumbPos();
+    }
+
+    partial void OnRIntervalsDataChanged(List<RIntervalData> value)
+    {
+        _ = value;
+        UpdateRIntervalSeries();
+    }
+
+    partial void OnPartRIntervalsDataChanged(List<RIntervalData> value)
+    {
+        _ = value;
+        UpdatePartRIntervalSeries();
     }
 }

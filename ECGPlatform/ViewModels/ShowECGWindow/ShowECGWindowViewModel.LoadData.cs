@@ -1,6 +1,5 @@
 ﻿namespace ECGPlatform;
 
-// update functions
 public partial class ShowECGWindowViewModel
 {
     private CancellationTokenSource? _updateWaveDataCts;
@@ -44,19 +43,13 @@ public partial class ShowECGWindowViewModel
     /// <param name="cancellationToken"></param>
     private async Task UpdateRPeaksData(CancellationToken cancellationToken)
     {
-        
-        
         if (_ecgFileManager == null) return;
 
         var result = new List<HighlightPointData>();
 
         try
         {
-            // var stopwatch = new Stopwatch();
-            // stopwatch.Start();
             result = await _ecgFileManager.GetRangedRPeaksAsync(CurrentTime, TimeInterval, cancellationToken);
-            // stopwatch.Start();
-            // $"{stopwatch.ElapsedMilliseconds}".Debug();
         }
         catch (OperationCanceledException)
         {
@@ -68,8 +61,67 @@ public partial class ShowECGWindowViewModel
         }
 
         if (cancellationToken.IsCancellationRequested) return;
-        
-        
+
+
         RPeakPoints = result;
+    }
+
+
+    private CancellationTokenSource? _updateRIntervalDataCts;
+
+    /// <summary>
+    /// 加载R点间隔数据
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    private async Task UpdateRIntervalData(CancellationToken cancellationToken)
+    {
+        if (_ecgFileManager == null) return;
+
+        var totalTime = _ecgFileManager.TotalTime;
+
+        var result = new List<RIntervalData>();
+        try
+        {
+            result = await _ecgFileManager.GetRIntervalDataAsync(0, totalTime, 2560, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            // 正常取消获取数据操作
+        }
+        catch (Exception e)
+        {
+            _logger.Error(e.ToString());
+        }
+
+        RIntervalsData = result;
+    }
+
+    private CancellationTokenSource? _updatePartRIntervalDataCts;
+
+    
+    /// <summary>
+    /// 加载Thumb的部分R点间隔数据
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    private async Task UpdatePartRIntervalData(CancellationToken cancellationToken)
+    {
+        if (_ecgFileManager == null) return;
+
+        var result = new List<RIntervalData>();
+        try
+        {
+            result = await _ecgFileManager.GetRIntervalDataAsync(ThumbCurrentTime, ThumbTimeDuration, 2560,
+                cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            // 正常取消获取数据操作
+        }
+        catch (Exception e)
+        {
+            _logger.Error(e.ToString());
+        }
+
+        PartRIntervalsData = result;
     }
 }

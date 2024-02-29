@@ -8,8 +8,8 @@
                   xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   Title="{DynamicResource ShowEcgWindowTitle}"
-                  Width="1800"
-                  Height="1000"
+                  Width="2000"
+                  Height="1100"
                   MinWidth=" 1000"
                   MinHeight="600"
                   d:DataContext="{d:DesignInstance Type=local:ShowECGWindowViewModel}"
@@ -207,12 +207,42 @@
 
       <!--  row = 2  -->
       <Grid Grid.Row="2"
-            Height="100"
             Margin="0,0,0,12">
         <Border Grid.Column="0"
                 Margin="20,0,20,0"
                 Background="{DynamicResource BrushPrimary10OnMain}"
-                CornerRadius="10" />
+                CornerRadius="10">
+          <Grid Margin="20,0">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <lvc:CartesianChart XAxes="{Binding PartRIntervalXAxes}"
+                                YAxes="{Binding PartRIntervalYAxes}"
+                                DrawMarginFrame="{Binding PartRIntervalDrawMarginFrame}"
+                                Sections="{Binding PartThumbs}"
+                                Series="{Binding PartRIntervalSeries}"
+                                PointerMoveCommand="{Binding PartRIntervalPointerMoveCommand}"
+                                PointerPressedCommand="{Binding PartRIntervalPointerDownCommand}"
+                                PointerReleasedCommand="{Binding PartRIntervalPointerUpCommand}"
+                                EasingFunction="{x:Null}"
+                                Height="80"
+                                TooltipPosition="Hidden" />
+            <lvc:CartesianChart XAxes="{Binding RIntervalXAxes}"
+                                YAxes="{Binding RIntervalYAxes}"
+                                DrawMarginFrame="{Binding RIntervalDrawMarginFrame}"
+                                Sections="{Binding Thumbs}"
+                                Series="{Binding RIntervalSeries}"
+                                PointerMoveCommand="{Binding RIntervalPointerMoveCommand}"
+                                PointerPressedCommand="{Binding RIntervalPointerDownCommand}"
+                                PointerReleasedCommand="{Binding RIntervalPointerUpCommand}"
+                                UpdateStartedCommand="{Binding RIntervalChartUpdatedCommand}"
+                                EasingFunction="{x:Null}"
+                                Grid.Row="1"
+                                Height="80"
+                                TooltipPosition="Hidden" />
+          </Grid>
+        </Border>
       </Grid>
 
       <!--  row = 3  -->

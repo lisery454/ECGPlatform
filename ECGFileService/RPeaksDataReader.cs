@@ -154,7 +154,7 @@ public class RPeaksDataReader : IDisposable
         if (long.TryParse(strings[0], out var frame) && int.TryParse(strings[1], out var id))
         {
             var res = new RPeakUnit((RPeakLabel)id, FrameToTime(frame));
-            _cache.Add(index, res);
+            _cache.TryAdd(index, res);
             return res;
         }
 
