@@ -20,7 +20,8 @@ public class ECGFileManager : IDisposable
                 Index.WaveDataYFactor));
         }
 
-        _rPeaksDataReader = new RPeaksDataReader(Index.RPeaksPath, Index.RPeaksFrequency, Index.RPeaksWidth);
+        _rPeaksDataReader = new RPeaksDataReader(Index.RPeaksPath, Index.RPeaksFrequency, Index.RPeaksWidth,
+            Index.RPeaksModificationPath);
     }
 
     public void Dispose()
@@ -49,7 +50,7 @@ public class ECGFileManager : IDisposable
         CancellationToken cancellationToken = default)
     {
         var rPeakUnits = await _rPeaksDataReader.GetDataAsync(beginTime, lastTime, cancellationToken);
-        
+
         var result = new List<HighlightPointData>();
         foreach (var rPeakUnit in rPeakUnits)
         {
@@ -59,10 +60,24 @@ public class ECGFileManager : IDisposable
                 values.Add((await GetSingleWaveDataAsync(i, rPeakUnit.Time, cancellationToken)).value);
             }
 
-            result.Add(new HighlightPointData(rPeakUnit.Time, values, rPeakUnit.Id));
+            result.Add(new HighlightPointData(rPeakUnit.Time, values, rPeakUnit.Label));
         }
 
-        
         return result;
+    }
+
+    public async Task AddRPeakPointAsync(long time, RPeakLabel label)
+    {
+        await _rPeaksDataReader.AddRPeakPointAsync(time, label);
+    }
+
+    public async Task DeleteRPeak(long time)
+    {
+        await _rPeaksDataReader.DeleteRPeakPointAsync(time);
+    }
+
+    public async Task UpdateRPeakPointLabel(long time, RPeakLabel oldLabel, RPeakLabel newLabel)
+    {
+        await _rPeaksDataReader.UpdateRPeakPointLabel(time, oldLabel, newLabel);
     }
 }

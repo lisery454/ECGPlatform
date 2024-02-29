@@ -123,7 +123,7 @@
                       Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.SIMPLE_POINT}}" />
               <ComboBox Margin="5,8"
                         ItemsSource="{local:EnumBindingSource EnumType=ecgFile:RPeakLabel}"
-                        SelectedItem="{Binding CreateRPeakLabel}"
+                        SelectedItem="{Binding UpdateRPeakLabel}"
                         Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.R_PEAKS_POINT}}">
                 <ComboBox.ItemTemplate>
                   <DataTemplate>

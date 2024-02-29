@@ -36,7 +36,7 @@
             MouseLeftButtonDown="OnMouseLeftButtonDown"
             RenderTransformOrigin="0.5, 0.5">
       <Border.RenderTransform>
-        <ScaleTransform x:Name="ScaleTransform" ScaleX="2" ScaleY="2" />
+        <ScaleTransform x:Name="ScaleTransform" ScaleX="{StaticResource UnSelectedSize}" ScaleY="{StaticResource UnSelectedSize}" />
       </Border.RenderTransform>
 
       <i:Interaction.Triggers>
@@ -47,17 +47,14 @@
               <Storyboard>
                 <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                  Storyboard.TargetProperty="ScaleX"
-                                 From="{StaticResource UnSelectedSize}"
                                  Duration="{StaticResource SelectDuration}"
                                  To="{StaticResource SelectedSize}" />
                 <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                  Storyboard.TargetProperty="ScaleY"
-                                 From="{StaticResource UnSelectedSize}"
                                  Duration="{StaticResource SelectDuration}"
                                  To="{StaticResource SelectedSize}" />
                 <DoubleAnimation Storyboard.TargetName="Border"
                                  Storyboard.TargetProperty="Opacity"
-                                 From="{StaticResource UnSelectedOpacity}"
                                  Duration="{StaticResource SelectDuration}"
                                  To="{StaticResource SelectedOpacity}" />
               </Storyboard>
@@ -72,17 +69,14 @@
               <Storyboard>
                 <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                  Storyboard.TargetProperty="ScaleX"
-                                 From="{StaticResource SelectedSize}"
                                  Duration="{StaticResource SelectDuration}"
                                  To="{StaticResource UnSelectedSize}" />
                 <DoubleAnimation Storyboard.TargetName="ScaleTransform"
                                  Storyboard.TargetProperty="ScaleY"
-                                 From="{StaticResource SelectedSize}"
                                  Duration="{StaticResource SelectDuration}"
                                  To="{StaticResource UnSelectedSize}" />
                 <DoubleAnimation Storyboard.TargetName="Border"
                                  Storyboard.TargetProperty="Opacity"
-                                 From="{StaticResource SelectedOpacity}"
                                  Duration="{StaticResource SelectDuration}"
                                  To="{StaticResource UnSelectedOpacity}" />
               </Storyboard>

@@ -4,35 +4,40 @@ public class HighlightPointData : IEquatable<HighlightPointData>
 {
     public long Time { get; }
     public List<float> Values { get; }
-    private int? Id { get; }
+    public RPeakLabel? Label { get; }
 
-    public string Letter => Id == null ? "?" : RPeakUnit.FromIdToLetter(Id.Value);
-    public RPeakLabel? Label => Id == null ? null : RPeakUnit.FromIdToLabel(Id.Value);
-    public PointType PointType => Id == null ? PointType.SIMPLE_POINT : PointType.R_PEAKS_POINT;
+    public string Letter => Label == null ? "?" : RPeakUnit.FromLabelToLetter(Label.Value);
 
-    public HighlightPointData(long time, List<float> values, int id)
+    public PointType PointType => Label == null ? PointType.SIMPLE_POINT : PointType.R_PEAKS_POINT;
+
+    public HighlightPointData(long time, List<float> values, RPeakLabel label)
     {
         Time = time;
         Values = values;
-        Id = id;
+        Label = label;
     }
 
     public HighlightPointData(long time, List<float> values)
     {
         Time = time;
         Values = values;
-        Id = null;
+        Label = null;
     }
 
 
     public override string ToString()
     {
-        return $"time {Time}; value: {Values}; id: {Id}";
+        return $"time {Time}; value: {Values}; label: {Label}";
     }
 
     public static bool operator ==(HighlightPointData? lhs, HighlightPointData? rhs)
     {
-        return lhs?.Equals(rhs) ?? ReferenceEquals(null, rhs);
+        if (ReferenceEquals(null, lhs))
+            return ReferenceEquals(null, rhs);
+
+        if (ReferenceEquals(null, rhs)) return false;
+        
+        return lhs.Equals(rhs);
     }
 
     public static bool operator !=(HighlightPointData? lhs, HighlightPointData? rhs) => !(lhs == rhs);
@@ -41,7 +46,8 @@ public class HighlightPointData : IEquatable<HighlightPointData>
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
-        return Time == other.Time && Values.Equals(other.Values) && Id == other.Id;
+        return Time == other.Time && Values.All(other.Values.Contains) && Values.Count == other.Values.Count &&
+               Label == other.Label;
     }
 
     public override bool Equals(object? obj)
@@ -54,6 +60,6 @@ public class HighlightPointData : IEquatable<HighlightPointData>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Time, Values, Id);
+        return HashCode.Combine(Time, Values, Label);
     }
 }

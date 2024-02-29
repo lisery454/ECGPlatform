@@ -10,27 +10,32 @@ public class RPeaksDataReader : IDisposable
     private readonly int _rPeaksWidth;
     private readonly ObjectPool<BufferedFileStream> _fileStreamPool;
     private readonly int _frequency;
-    private Dictionary<int, RPeakUnit> _cache;
+    private readonly Dictionary<int, RPeakUnit> _cache;
+    private readonly string _modificationPath;
+    private readonly List<IRPeaksModifyEntry> _entries;
 
     private int AllRPeaksNum { get; }
 
-    public RPeaksDataReader(string rPeaksPath, int frequency, int rPeaksWidth)
+    public RPeaksDataReader(string rPeaksPath, int frequency, int rPeaksWidth, string modificationPath)
     {
         _rPeaksPath = rPeaksPath;
         _frequency = frequency;
+        _modificationPath = modificationPath;
         _fileStreamPool = new ObjectPool<BufferedFileStream>(
             () => new BufferedFileStream(
                 new FileStream(rPeaksPath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite), 96), 5);
         _rPeaksWidth = rPeaksWidth;
         AllRPeaksNum = GetAllRPeaksNum();
         _cache = new Dictionary<int, RPeakUnit>();
+        _entries = new List<IRPeaksModifyEntry>();
+        InitEntries();
     }
 
     public async Task<List<RPeakUnit>> GetDataAsync(long beginTime, long lastTime,
         CancellationToken cancellationToken = default)
     {
         var result = await GetOriginalDataAsync(beginTime, lastTime, cancellationToken);
-        return result;
+        return GetAfterModifyData(beginTime, lastTime, result);
     }
 
     private async Task<List<RPeakUnit>> GetOriginalDataAsync(long beginTime, long lastTime,
@@ -88,7 +93,7 @@ public class RPeaksDataReader : IDisposable
             }
             else if (long.TryParse(strings[0], out var frame) && int.TryParse(strings[1], out var id))
             {
-                var value = new RPeakUnit(id, FrameToTime(frame));
+                var value = new RPeakUnit((RPeakLabel)id, FrameToTime(frame));
                 tmd.Add(value);
             }
             else
@@ -137,7 +142,7 @@ public class RPeaksDataReader : IDisposable
     private async Task<RPeakUnit> ValueAtAsync(int index, CancellationToken cancellationToken = default)
     {
         if (_cache.TryGetValue(index, out var unit)) return unit;
-        
+
         if (index >= GetAllRPeaksNum()) throw new Exception("index >= all indexes");
         var fs = _fileStreamPool.Get();
 
@@ -148,7 +153,7 @@ public class RPeaksDataReader : IDisposable
 
         if (long.TryParse(strings[0], out var frame) && int.TryParse(strings[1], out var id))
         {
-            var res = new RPeakUnit(id, FrameToTime(frame));
+            var res = new RPeakUnit((RPeakLabel)id, FrameToTime(frame));
             _cache.Add(index, res);
             return res;
         }
@@ -164,6 +169,114 @@ public class RPeaksDataReader : IDisposable
     private long TimeToFrame(long time)
     {
         return time * _frequency / 1000;
+    }
+
+    private void InitEntries()
+    {
+        using var modificationFileStream =
+            new FileStream(_modificationPath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+        modificationFileStream.Seek(0, SeekOrigin.Begin);
+        using var sr = new StreamReader(modificationFileStream);
+        string? line;
+        long frame;
+        int labelNum;
+        int oldLabelNum;
+        int newLabelNum;
+        RPeaksModifyEntryType rPeaksModifyEntryType;
+        string[] strings;
+        while (!string.IsNullOrWhiteSpace(line = sr.ReadLine()))
+        {
+            strings = line.Split(';');
+            rPeaksModifyEntryType = IRPeaksModifyEntry.StrToType(strings[0]);
+            switch (rPeaksModifyEntryType)
+            {
+                case RPeaksModifyEntryType.CREATE:
+                    frame = long.Parse(strings[1]);
+                    labelNum = int.Parse(strings[2]);
+                    _entries.Add(new CreateModifyEntry(frame, (RPeakLabel)labelNum));
+                    break;
+                case RPeaksModifyEntryType.DELETE:
+                    frame = long.Parse(strings[1]);
+                    _entries.Add(new DeleteModifyEntry(frame));
+                    break;
+                case RPeaksModifyEntryType.UPDATE_LABEL:
+                    frame = long.Parse(strings[1]);
+                    oldLabelNum = int.Parse(strings[2]);
+                    newLabelNum = int.Parse(strings[3]);
+                    _entries.Add(new UpdateLabelModifyEntry(frame, (RPeakLabel)oldLabelNum, (RPeakLabel)newLabelNum));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+    }
+
+    public async Task AddRPeakPointAsync(long time, RPeakLabel label)
+    {
+        var frame = TimeToFrame(time);
+        _entries.Add(new CreateModifyEntry(frame, label));
+        await using var sw = File.AppendText(_modificationPath);
+        await sw.WriteLineAsync($"c;{frame};{(int)label}");
+    }
+
+    public async Task DeleteRPeakPointAsync(long time)
+    {
+        var frame = TimeToFrame(time);
+        _entries.Add(new DeleteModifyEntry(frame));
+        await using var sw = File.AppendText(_modificationPath);
+        await sw.WriteLineAsync($"d;{frame}");
+    }
+
+    public async Task UpdateRPeakPointLabel(long time, RPeakLabel oldLabel, RPeakLabel newLabel)
+    {
+        var frame = TimeToFrame(time);
+        _entries.Add(new UpdateLabelModifyEntry(frame, oldLabel, newLabel));
+        await using var sw = File.AppendText(_modificationPath);
+        await sw.WriteLineAsync($"ul;{frame};{(int)oldLabel};{(int)newLabel}");
+    }
+
+    private List<RPeakUnit> GetAfterModifyData(long beginTime, long lastTime, List<RPeakUnit> originalData)
+    {
+        var endTime = beginTime + lastTime;
+        var isBetweenTime = (long time) => time > beginTime && time < endTime;
+        long time;
+        RPeakLabel label, newLabel;
+        foreach (var entry in _entries)
+        {
+            switch (entry.Type)
+            {
+                case RPeaksModifyEntryType.CREATE:
+                    var createModifyEntry = (CreateModifyEntry)entry;
+                    time = FrameToTime(createModifyEntry.Frame);
+                    label = createModifyEntry.Label;
+                    if (isBetweenTime(time))
+                    {
+                        var index = originalData.FindIndex(value => value.Time > time);
+                        if (index != -1)
+                            originalData.Insert(index, new RPeakUnit(label, time));
+                        else originalData.Add(new RPeakUnit(label, time));
+                    }
+
+                    break;
+                case RPeaksModifyEntryType.DELETE:
+                    var deleteModifyEntry = (DeleteModifyEntry)entry;
+                    originalData.RemoveAll(value => value.Time == FrameToTime(deleteModifyEntry.Frame));
+                    break;
+
+                case RPeaksModifyEntryType.UPDATE_LABEL:
+                    var updateLabelModifyEntry = (UpdateLabelModifyEntry)entry;
+                    newLabel = updateLabelModifyEntry.NewLabel;
+                    foreach (var rPeakUnitValue in originalData.Where(rPeakUnitValue =>
+                                 rPeakUnitValue.Time == FrameToTime(updateLabelModifyEntry.Frame)))
+                        rPeakUnitValue.Label = newLabel;
+
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        return originalData;
     }
 
     public void Dispose()

@@ -17,6 +17,7 @@ public partial class ShowECGWindowViewModel
             {
                 point.Visibility = Visibility.Hidden;
                 point.ClearBinding(HighlightPoint.ClickedCommandProperty);
+                // point.Reset();
                 point.IsSelected = false;
             });
     }

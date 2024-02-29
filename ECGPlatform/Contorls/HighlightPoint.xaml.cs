@@ -44,6 +44,13 @@ public sealed partial class HighlightPoint
     }
 
     #endregion
+
+    public void Reset()
+    {
+        ScaleTransform.ScaleX = (double)FindResource("UnSelectedSize");
+        ScaleTransform.ScaleY = (double)FindResource("UnSelectedSize");
+        Border.Opacity = (double)FindResource("UnSelectedOpacity");
+    }
 }
 
 public sealed partial class HighlightPoint : INotifyPropertyChanged

@@ -3,13 +3,12 @@
 public partial class RPeakUnit
 {
     public long Time { get; set; }
-    public int Id { get; set; }
+    public RPeakLabel Label { get; set; }
 
-    public RPeakLabel Label => FromIdToLabel(Id);
 
-    public RPeakUnit(int id, long time)
+    public RPeakUnit(RPeakLabel label, long time)
     {
-        Id = id;
+        Label = label;
         Time = time;
     }
 }
@@ -66,8 +65,8 @@ public partial class RPeakUnit
     // TODO 
     static string a = "abcdefghijklmnopqrstuvwxyz";
 
-    public static string FromIdToLetter(int id)
+    public static string FromLabelToLetter(RPeakLabel label)
     {
-        return a[id].ToString();
+        return a[(int)label].ToString();
     }
 }

@@ -89,23 +89,31 @@ public partial class ShowECGWindowViewModel
     }
 
     [RelayCommand]
-    private void UpdateRPoint()
+    private async Task UpdateRPoint()
     {
-        // TODO CurrentHighlightPointData， 更新为 UpdateRPeakLabel
+        await _ecgFileManager!.UpdateRPeakPointLabel(CurrentHighlightPointData!.Time,
+            CurrentHighlightPointData.Label!.Value,
+            UpdateRPeakLabel);
+        CurrentHighlightPointData = new HighlightPointData(CurrentHighlightPointData!.Time,
+            CurrentHighlightPointData!.Values, UpdateRPeakLabel);
+        await ChartUpdated();
     }
 
     [RelayCommand]
-    private void DeleteRPoint()
+    private async Task DeleteRPoint()
     {
-        // TODO 删除 CurrentHighlightPointData
+        await _ecgFileManager!.DeleteRPeak(CurrentHighlightPointData!.Time);
+        CurrentHighlightPointData = null;
+        await ChartUpdated();
     }
 
     [RelayCommand]
-    private void CreateRPoint()
+    private async Task CreateRPoint()
     {
-        var rPeakLabel = CreateRPeakLabel;
-        var currentHighlightPointData = CurrentHighlightPointData;
-        // TODO 在 CurrentHighlightPointData , 创建一个 CreateRPeakLabel
+        await _ecgFileManager!.AddRPeakPointAsync(CurrentHighlightPointData!.Time, CreateRPeakLabel);
+        CurrentHighlightPointData = new HighlightPointData(CurrentHighlightPointData!.Time,
+            CurrentHighlightPointData!.Values, CreateRPeakLabel);
+        await ChartUpdated();
     }
 
     [RelayCommand]
