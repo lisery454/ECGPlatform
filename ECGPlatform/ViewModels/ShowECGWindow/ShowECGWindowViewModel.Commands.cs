@@ -84,7 +84,22 @@ public partial class ShowECGWindowViewModel
     [RelayCommand]
     private async Task ChartUpdated()
     {
-        HideAllRPeakPoints();
+        // HideAllRPeakPoints();
         await UpdateRPeaksData(CtsUtils.Refresh(ref _updateRPeaksDataCts).Token);
+    }
+
+    [RelayCommand]
+    private void UpdateRPoint()
+    {
+    }
+
+    [RelayCommand]
+    private void DeleteRPoint()
+    {
+    }
+
+    [RelayCommand]
+    private void CreateRPoint()
+    {
     }
 }

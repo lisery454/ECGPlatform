@@ -4,6 +4,7 @@
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                   xmlns:local="clr-namespace:ECGPlatform"
+                  xmlns:ecgFile="clr-namespace:ECGFileService;assembly=ECGFileService"
                   xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   Title="{DynamicResource ShowEcgWindowTitle}"
@@ -89,7 +90,38 @@
         <Border Grid.Column="1"
                 Margin="10,0,20,0"
                 Background="{DynamicResource BrushPrimary10OnMain}"
-                CornerRadius="10" />
+                CornerRadius="10">
+          <Grid Margin="10,0">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
+                       FontSize="14"
+                       Foreground="{DynamicResource BrushOpposite80OnMain}"
+                       HorizontalAlignment="Left"
+                       Margin="5,2"
+                       Text="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToStrConverter.Instance}}"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center" />
+            <StackPanel Grid.Column="2"
+                        Orientation="Horizontal">
+              <Button Command="{Binding CreateRPointCommand}"
+                      Content="{DynamicResource CreateRStr}"
+                      Margin="5,8"
+                      Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.SIMPLE_POINT}}" />
+              <Button Command="{Binding UpdateRPointCommand}"
+                      Content="{DynamicResource UpdateRStr}"
+                      Margin="5,8"
+                      Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.R_PEAKS_POINT}}" />
+              <Button Command="{Binding DeleteRPointCommand}"
+                      Content="{DynamicResource DeleteRStr}"
+                      Margin="5,8"
+                      Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.R_PEAKS_POINT}}" />
+            </StackPanel>
+          </Grid>
+        </Border>
 
       </Grid>
 
@@ -135,12 +167,6 @@
                 </lvc:CartesianChart>
               </Border>
               <Canvas x:Name="HighlightPointCanvas" />
-              <!--  <local:HighlightPointGroup HighlightPoints="{Binding HighlightPoints}"  -->
-              <!--  CartesianChart="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=Children[0].(Border.Child), Converter={x:Static local:UIElementToCartesianChartConverter.Instance}}"  -->
-              <!--  IsYInProperInterval="{Binding IsYInProperInterval}"  -->
-              <!--  GetChartCoordY="{Binding GetChartCoordY}"  -->
-              <!--  HighlightPointData="{Binding HighlightPointData}"  -->
-              <!--  ClickedCommand="{Binding HighlightPointPointClickedCommand}" />  -->
             </Grid>
           </ScrollViewer>
         </Border>

@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ECGPlatform">
   <!--  WindowControlButton  -->
-  <Style x:Key="WindowControlButton" TargetType="{x:Type Button}">
+  <Style x:Key="WindowControlButton"
+         TargetType="{x:Type Button}">
     <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
     <Setter Property="FontFamily" Value="{StaticResource ChillRoundGothicRegular}" />
     <Setter Property="Background" Value="Transparent" />
@@ -16,9 +17,12 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Button}">
           <Grid>
-            <Border Background="{TemplateBinding Background}" WindowChrome.IsHitTestVisibleInChrome="False">
-              <Path x:Name="PathIcon" Margin="0,0"
-                    HorizontalAlignment="Center" VerticalAlignment="Center"
+            <Border Background="{TemplateBinding Background}"
+                    WindowChrome.IsHitTestVisibleInChrome="False">
+              <Path x:Name="PathIcon"
+                    Margin="0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
                     Data="{Binding Path=(local:IconHelper.Icon), RelativeSource={RelativeSource TemplatedParent}}"
                     Fill="{DynamicResource BrushOpposite80OnMain}"
                     Stretch="None">
@@ -51,9 +55,12 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Button}">
           <Grid>
-            <Border Background="{TemplateBinding Background}" WindowChrome.IsHitTestVisibleInChrome="False">
-              <Path x:Name="PathIcon" Margin="0,0"
-                    HorizontalAlignment="Center" VerticalAlignment="Center"
+            <Border Background="{TemplateBinding Background}"
+                    WindowChrome.IsHitTestVisibleInChrome="False">
+              <Path x:Name="PathIcon"
+                    Margin="0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
                     Data="{Binding Path=(local:IconHelper.Icon), RelativeSource={RelativeSource TemplatedParent}}"
                     Fill="{DynamicResource BrushOpposite80OnMain}"
                     Stretch="None">
@@ -89,16 +96,18 @@
                     Background="{TemplateBinding Background}"
                     x:Name="border">
               <TextBlock Text="{TemplateBinding Content}"
-                         Foreground="{DynamicResource BrushOpposite80OnMain}"
-                         Margin="10" HorizontalAlignment="Center"
-                         VerticalAlignment="Center" TextAlignment="Center"
+                         Foreground="{DynamicResource BrushMain}"
+                         Margin="10"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         TextAlignment="Center"
                          FontFamily="{TemplateBinding FontFamily}"
                          FontSize="{TemplateBinding FontSize}" />
             </Border>
           </Grid>
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" SourceName="border" Value="True">
-              <Setter TargetName="border" Property="Background" Value="{DynamicResource BrushPrimary40OnMain}" />
+              <Setter TargetName="border" Property="Background" Value="{DynamicResource BrushPrimary60OnMain}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>

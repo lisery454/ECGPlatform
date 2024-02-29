@@ -15,5 +15,12 @@
   <system:String x:Key="ThemeTitle">主题</system:String>
   <system:String x:Key="LightThemeTitle">浅色</system:String>
   <system:String x:Key="DarkThemeTitle">深色</system:String>
+  <system:String x:Key="TimeStr">时间</system:String>
+  <system:String x:Key="VoltageStr">电压</system:String>
+  <system:String x:Key="LabelStr">标签</system:String>
+  <system:String x:Key="DefaultPointDataInfoStr">没有选中点</system:String>
+  <system:String x:Key="CreateRStr">创建R点</system:String>
+  <system:String x:Key="DeleteRStr">删除R点</system:String>
+  <system:String x:Key="UpdateRStr">更新R点标签</system:String>
 
 </ResourceDictionary>

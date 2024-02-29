@@ -15,5 +15,13 @@
   <system:String x:Key="ThemeTitle">Theme</system:String>
   <system:String x:Key="LightThemeTitle">Light</system:String>
   <system:String x:Key="DarkThemeTitle">Dark</system:String>
+  <system:String x:Key="TimeStr">Time</system:String>
+  <system:String x:Key="VoltageStr">Voltage</system:String>
+  <system:String x:Key="LabelStr">Label</system:String>
+  <system:String x:Key="DefaultPointDataInfoStr">No point selected</system:String>
+  <system:String x:Key="CreateRStr">Create R</system:String>
+  <system:String x:Key="DeleteRStr">Delete R</system:String>
+  <system:String x:Key="UpdateRStr">Update R Label</system:String>
+
 
 </ResourceDictionary>

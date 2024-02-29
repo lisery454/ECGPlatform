@@ -26,11 +26,23 @@ public partial class ShowECGWindowViewModel
 
     partial void OnCurrentHighlightPointDataChanged(HighlightPointData? value)
     {
-        // 设置所有P点的选中状态
-        _rPeakPointPool.Value.ForeachNotAvail(rPeakPoint =>
+        if (value == null)
         {
-            rPeakPoint.IsSelected = rPeakPoint.HighlightPointData == value;
-        });
+            // TODO 
+            _rPeakPointPool.Value.ForeachNotAvail(rPeakPoint => rPeakPoint.IsSelected = false);
+        }
+        else if (value.PointType == PointType.R_PEAKS_POINT)
+        {
+            // 设置所有P点的选中状态
+            _rPeakPointPool.Value.ForeachNotAvail(rPeakPoint =>
+            {
+                rPeakPoint.IsSelected = rPeakPoint.HighlightPointData == value;
+            });
+        }
+        else if (value.PointType == PointType.SIMPLE_POINT)
+        {
+            // TODO
+        }
     }
 
     partial void OnRPeakPointsChanged(List<HighlightPointData> value)
@@ -39,7 +51,7 @@ public partial class ShowECGWindowViewModel
         var highLightPointPool = _rPeakPointPool.Value;
         // 先取消显示当前显示的点 
         HideAllRPeakPoints();
-        
+
         // 显示当前要显示的点
         foreach (var pointData in RPeakPoints)
         {
