@@ -40,10 +40,10 @@ public class ECGFileManager : IDisposable
         return await _waveDataReaders[index].ValueAtAsync(time, cancellationToken);
     }
 
-    public async Task<List<PointData>> GetRangedWaveDataAsync(int index, long beginTime, long lastTime, int count = 10,
+    public async Task<List<PointData>> GetRangedWaveDataAsync(int index, long beginTime, long lastTime, int threadCount = 10,
         CancellationToken cancellationToken = default)
     {
-        return await _waveDataReaders[index].GetDataParallelAsync(beginTime, lastTime, count, cancellationToken);
+        return await _waveDataReaders[index].GetDataParallelAsync(beginTime, lastTime, threadCount, cancellationToken);
     }
 
     public async Task<List<HighlightPointData>> GetRangedRPeaksAsync(long beginTime, long lastTime,
@@ -79,5 +79,12 @@ public class ECGFileManager : IDisposable
     public async Task UpdateRPeakPointLabel(long time, RPeakLabel oldLabel, RPeakLabel newLabel)
     {
         await _rPeaksDataReader.UpdateRPeakPointLabel(time, oldLabel, newLabel);
+    }
+
+    public async Task<List<RIntervalData>> GetRIntervalDataAsync(long beginTime, long lastTime,
+        int dataCount = 2560,
+        CancellationToken cancellationToken = default)
+    {
+        return await _rPeaksDataReader.GetRIntervalDataAsync(beginTime, lastTime, dataCount, cancellationToken);
     }
 }

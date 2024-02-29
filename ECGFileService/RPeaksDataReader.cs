@@ -279,6 +279,47 @@ public class RPeaksDataReader : IDisposable
         return originalData;
     }
 
+    public async Task<List<RIntervalData>> GetRIntervalDataAsync(long beginTime, long lastTime, int dataCount,
+        CancellationToken cancellationToken)
+    {
+        var rPeakUnits = await GetDataAsync(beginTime, lastTime, cancellationToken);
+        var result = GetRIntervalFromRPeakUnits(rPeakUnits, dataCount);
+        return result;
+    }
+
+    private List<RIntervalData> GetRIntervalFromRPeakUnits(List<RPeakUnit> rPeakUnitValues,
+        int count = 2560)
+    {
+        var res = new List<RIntervalData>();
+        var allCount = rPeakUnitValues.Count;
+        if (allCount < count)
+        {
+            for (var i = 0; i < allCount - 1; i++)
+            {
+                res.Add(new RIntervalData(rPeakUnitValues[i].Time,
+                    rPeakUnitValues[i + 1].Time - rPeakUnitValues[i].Time));
+            }
+        }
+        else
+        {
+            var num = -1;
+            int newNum;
+            for (var i = 0; i < allCount - 1; i++)
+            {
+                newNum = (int)(i * 1f / (allCount - 1) * count);
+                if (newNum != num)
+                {
+                    num = newNum;
+                    res.Add(new RIntervalData(rPeakUnitValues[i].Time,
+                        rPeakUnitValues[i + 1].Time - rPeakUnitValues[i].Time));
+                }
+            }
+        }
+
+
+        return res;
+    }
+
     public void Dispose()
     {
         _fileStreamPool.Foreach(fs => { fs.Dispose(); });
