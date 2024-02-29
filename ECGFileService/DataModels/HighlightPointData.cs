@@ -25,12 +25,17 @@ public class HighlightPointData : IEquatable<HighlightPointData>
     }
 
 
-    public static bool operator ==(HighlightPointData lhs, HighlightPointData? rhs)
+    public override string ToString()
     {
-        return lhs.Equals(rhs);
+        return $"time {Time}; value: {Value}; id: {Id}";
     }
 
-    public static bool operator !=(HighlightPointData lhs, HighlightPointData? rhs) => !(lhs == rhs);
+    public static bool operator ==(HighlightPointData? lhs, HighlightPointData? rhs)
+    {
+        return lhs?.Equals(rhs) ?? ReferenceEquals(null, rhs);
+    }
+
+    public static bool operator !=(HighlightPointData? lhs, HighlightPointData? rhs) => !(lhs == rhs);
 
     public bool Equals(HighlightPointData? other)
     {

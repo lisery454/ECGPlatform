@@ -134,10 +134,13 @@
                   </i:Interaction.Triggers>
                 </lvc:CartesianChart>
               </Border>
-              <local:HighlightPointGroup HighlightPoints="{Binding HighlightPoints}"
-                                         CartesianChart="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=Children[0].(Border.Child), Converter={x:Static local:UIElementToCartesianChartConverter.Instance}}"
-                                         IsYInProperInterval="{Binding IsYInProperInterval}"
-                                         GetChartCoordY="{Binding GetChartCoordY}" />
+              <Canvas x:Name="HighlightPointCanvas" />
+              <!--  <local:HighlightPointGroup HighlightPoints="{Binding HighlightPoints}"  -->
+              <!--  CartesianChart="{Binding RelativeSource={RelativeSource AncestorType=Grid}, Path=Children[0].(Border.Child), Converter={x:Static local:UIElementToCartesianChartConverter.Instance}}"  -->
+              <!--  IsYInProperInterval="{Binding IsYInProperInterval}"  -->
+              <!--  GetChartCoordY="{Binding GetChartCoordY}"  -->
+              <!--  HighlightPointData="{Binding HighlightPointData}"  -->
+              <!--  ClickedCommand="{Binding HighlightPointPointClickedCommand}" />  -->
             </Grid>
           </ScrollViewer>
         </Border>

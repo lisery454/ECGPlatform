@@ -5,6 +5,10 @@ public partial class ShowECGWindowViewModel
 {
     private CancellationTokenSource? _updateWaveDataCts;
 
+    /// <summary>
+    /// 加载波形数据
+    /// </summary>
+    /// <param name="cancellationToken"></param>
     private async Task UpdateWaveData(CancellationToken cancellationToken)
     {
         if (_ecgFileManager == null) return;
@@ -34,15 +38,25 @@ public partial class ShowECGWindowViewModel
 
     private CancellationTokenSource? _updateRPeaksDataCts;
 
+    /// <summary>
+    /// 加载R点数据
+    /// </summary>
+    /// <param name="cancellationToken"></param>
     private async Task UpdateRPeaksData(CancellationToken cancellationToken)
     {
+        
+        
         if (_ecgFileManager == null) return;
 
         var result = new List<HighlightPointData>();
 
         try
         {
+            // var stopwatch = new Stopwatch();
+            // stopwatch.Start();
             result = await _ecgFileManager.GetRangedRPeaksAsync(CurrentTime, TimeInterval, cancellationToken);
+            // stopwatch.Start();
+            // $"{stopwatch.ElapsedMilliseconds}".Debug();
         }
         catch (OperationCanceledException)
         {
@@ -54,6 +68,8 @@ public partial class ShowECGWindowViewModel
         }
 
         if (cancellationToken.IsCancellationRequested) return;
-        HighlightPoints = result;
+        
+        
+        RPeakPoints = result;
     }
 }

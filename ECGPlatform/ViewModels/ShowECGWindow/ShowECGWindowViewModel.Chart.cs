@@ -25,12 +25,6 @@ public partial class ShowECGWindowViewModel
     private static SKColor LineColor => GetSKColor("ColorPrimaryAlpha90");
     private static string FontFamily => "Chill Round Gothic Regular";
 
-    [RelayCommand]
-    private async Task ChartUpdated()
-    {
-        await UpdateRPeaksData(CtsUtils.Refresh(ref _updateRPeaksDataCts).Token);
-    }
-
     public void UpdateYAxes(int count)
     {
         YAxes = new ObservableCollection<Axis> { BuildYAxis(count) };
@@ -185,6 +179,16 @@ public partial class ShowECGWindowViewModel
     {
         var color = (Color)Application.Current.FindResource(name)!;
         return new SKColor(color.R, color.G, color.B, color.A);
+    }
+
+    private bool IsYInProperInterval(double y)
+    {
+        return y >= -2 * YLimit - (_ecgFileManager!.WaveCount - 1) * DistanceBetweenSeries * 2 && y <= 0;
+    }
+
+    private double GetChartCoordY(double val, int i)
+    {
+        return val - DistanceBetweenSeries * i - YLimit;
     }
 
     #endregion
