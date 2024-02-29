@@ -16,7 +16,7 @@ public class HighlightPointDataToStrConverter : IValueConverter
         if (highlightPointData == null) return defaultPointDataInfoStr;
 
         var time = TimeFormatter.MircoSecondsToString(highlightPointData.Time);
-        var voltage = highlightPointData.Value.ToFormat(f => (float)Math.Round(f, 4));
+        var voltage = highlightPointData.Values.ToFormat(f => (float)Math.Round(f, 4));
         var label = highlightPointData.Label;
 
         return highlightPointData.PointType switch

@@ -135,7 +135,7 @@
                 CornerRadius="10">
           <ScrollViewer Style="{StaticResource VerticalScrollViewer}">
             <Grid>
-              <Border>
+              <Border x:Name="ChartBorder">
                 <i:Interaction.Triggers>
                   <i:EventTrigger EventName="SizeChanged">
                     <i:InvokeCommandAction Command="{Binding ChartBorderSizeChangedCommand}"
@@ -144,6 +144,18 @@
                   <i:EventTrigger EventName="Loaded">
                     <i:InvokeCommandAction Command="{Binding ChartBorderSizeChangedCommand}"
                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Border}}" />
+                  </i:EventTrigger>
+                  <i:EventTrigger EventName="MouseLeftButtonUp">
+                    <i:InvokeCommandAction Command="{Binding Chart_OnMouseLeftButtonUpCommand}"
+                                           PassEventArgsToCommand="True" />
+                  </i:EventTrigger>
+                  <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding Chart_OnMouseLeftButtonDownCommand}"
+                                           PassEventArgsToCommand="True" />
+                  </i:EventTrigger>
+                  <i:EventTrigger EventName="MouseMove">
+                    <i:InvokeCommandAction Command="{Binding Chart_OnMouseMoveCommand}"
+                                           PassEventArgsToCommand="True" />
                   </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <lvc:CartesianChart Width="{Binding Width}"
@@ -166,7 +178,8 @@
                   </i:Interaction.Triggers>
                 </lvc:CartesianChart>
               </Border>
-              <Canvas x:Name="HighlightPointCanvas" />
+              <Canvas x:Name="RPeakPointCanvas" />
+              <Canvas x:Name="SimplePointCanvas" />
             </Grid>
           </ScrollViewer>
         </Border>

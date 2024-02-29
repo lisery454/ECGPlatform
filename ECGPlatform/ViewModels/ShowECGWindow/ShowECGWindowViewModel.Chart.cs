@@ -186,6 +186,12 @@ public partial class ShowECGWindowViewModel
         return y >= -2 * YLimit - (_ecgFileManager!.WaveCount - 1) * DistanceBetweenSeries * 2 && y <= 0;
     }
 
+    private bool IsXInProperInterval(double x)
+    {
+        return x >= CurrentTime && x < CurrentTime + TimeInterval && x >= 0 && x < AllMilliSeconds;
+    }
+
+
     private double GetChartCoordY(double val, int i)
     {
         return val - DistanceBetweenSeries * i - YLimit;

@@ -102,4 +102,31 @@ public partial class ShowECGWindowViewModel
     private void CreateRPoint()
     {
     }
+
+    [RelayCommand]
+    private void Chart_OnMouseMove(MouseEventArgs e)
+    {
+        if (e.Handled) return;
+        if (!_canMouseMoveToSelectPoint) return;
+        if (e.LeftButton != MouseButtonState.Pressed) return;
+        SetHighlightPointByPixelPosition(e.GetPosition(ChartBorder));
+        e.Handled = true;
+    }
+
+    [RelayCommand]
+    private void Chart_OnMouseLeftButtonUp(MouseButtonEventArgs e)
+    {
+        if (e.Handled) return;
+        _canMouseMoveToSelectPoint = false;
+        e.Handled = true;
+    }
+
+    [RelayCommand]
+    private void Chart_OnMouseLeftButtonDown(MouseButtonEventArgs e)
+    {
+        if (e.Handled) return;
+        _canMouseMoveToSelectPoint = true;
+        SetHighlightPointByPixelPosition(e.GetPosition(ChartBorder));
+        e.Handled = true;
+    }
 }

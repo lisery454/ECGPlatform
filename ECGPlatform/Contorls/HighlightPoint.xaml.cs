@@ -10,7 +10,7 @@ public sealed partial class HighlightPoint
     private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         if (e.Handled) return;
-        ClickedCommand.Execute(HighlightPointData);
+        ClickedCommand?.Execute(HighlightPointData);
         e.Handled = true;
     }
 
@@ -37,9 +37,9 @@ public sealed partial class HighlightPoint
             typeof(HighlightPoint),
             new FrameworkPropertyMetadata(null));
 
-    public IRelayCommand<HighlightPointData> ClickedCommand
+    public IRelayCommand<HighlightPointData>? ClickedCommand
     {
-        get => (IRelayCommand<HighlightPointData>)GetValue(ClickedCommandProperty);
+        get => (IRelayCommand<HighlightPointData>?)GetValue(ClickedCommandProperty);
         set => SetValue(ClickedCommandProperty, value);
     }
 

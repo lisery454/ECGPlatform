@@ -26,23 +26,7 @@ public partial class ShowECGWindowViewModel
 
     partial void OnCurrentHighlightPointDataChanged(HighlightPointData? value)
     {
-        if (value == null)
-        {
-            // TODO 
-            _rPeakPointPool.Value.ForeachNotAvail(rPeakPoint => rPeakPoint.IsSelected = false);
-        }
-        else if (value.PointType == PointType.R_PEAKS_POINT)
-        {
-            // 设置所有P点的选中状态
-            _rPeakPointPool.Value.ForeachNotAvail(rPeakPoint =>
-            {
-                rPeakPoint.IsSelected = rPeakPoint.HighlightPointData == value;
-            });
-        }
-        else if (value.PointType == PointType.SIMPLE_POINT)
-        {
-            // TODO
-        }
+        UpdateHighlightPoint();
     }
 
     partial void OnRPeakPointsChanged(List<HighlightPointData> value)
@@ -56,9 +40,9 @@ public partial class ShowECGWindowViewModel
         foreach (var pointData in RPeakPoints)
         {
             var time = pointData.Time;
-            for (var i = 0; i < pointData.Value.Count; i++)
+            for (var i = 0; i < pointData.Values.Count; i++)
             {
-                var val = pointData.Value[i];
+                var val = pointData.Values[i];
 
                 var lvcPointD = new LvcPointD(time, GetChartCoordY(val, i));
 
@@ -83,5 +67,7 @@ public partial class ShowECGWindowViewModel
                 });
             }
         }
+
+        UpdateHighlightPoint();
     }
 }

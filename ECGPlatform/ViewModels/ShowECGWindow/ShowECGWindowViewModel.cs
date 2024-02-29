@@ -68,6 +68,12 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
     private readonly Animator _currentTimeAnimator;
 
 
+    /// <summary>
+    /// 当前是否可以去点击选中点
+    /// </summary>
+    private bool _canMouseMoveToSelectPoint;
+
+
     public ShowECGWindowViewModel(ILogger logger)
     {
         _isLoadingData = true;
@@ -100,8 +106,19 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
                 {
                     Visibility = Visibility.Hidden
                 };
-                HighlightPointCanvas.Children.Add(highlightPoint);
+                RPeakPointCanvas.Children.Add(highlightPoint);
                 return highlightPoint;
             }, 20));
+
+        _simplePointPool = new Lazy<ObjectPool<HighlightPoint>>(() => new ObjectPool<HighlightPoint>(
+            () =>
+            {
+                var highlightPoint = new HighlightPoint
+                {
+                    Visibility = Visibility.Hidden
+                };
+                SimplePointCanvas.Children.Add(highlightPoint);
+                return highlightPoint;
+            }, 3));
     }
 }

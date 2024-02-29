@@ -3,31 +3,31 @@
 public class HighlightPointData : IEquatable<HighlightPointData>
 {
     public long Time { get; }
-    public List<float> Value { get; }
+    public List<float> Values { get; }
     public int? Id { get; }
 
     public string Letter => Id == null ? "?" : RPeakUnit.FromIdToLetter(Id.Value);
     public string? Label => Id == null ? null : RPeakUnit.FromIdToLabel(Id.Value);
     public PointType PointType => Id == null ? PointType.SIMPLE_POINT : PointType.R_PEAKS_POINT;
 
-    public HighlightPointData(long time, List<float> value, int id)
+    public HighlightPointData(long time, List<float> values, int id)
     {
         Time = time;
-        Value = value;
+        Values = values;
         Id = id;
     }
 
-    public HighlightPointData(long time, List<float> value)
+    public HighlightPointData(long time, List<float> values)
     {
         Time = time;
-        Value = value;
+        Values = values;
         Id = null;
     }
 
 
     public override string ToString()
     {
-        return $"time {Time}; value: {Value}; id: {Id}";
+        return $"time {Time}; value: {Values}; id: {Id}";
     }
 
     public static bool operator ==(HighlightPointData? lhs, HighlightPointData? rhs)
@@ -41,7 +41,7 @@ public class HighlightPointData : IEquatable<HighlightPointData>
     {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
-        return Time == other.Time && Value.Equals(other.Value) && Id == other.Id;
+        return Time == other.Time && Values.Equals(other.Values) && Id == other.Id;
     }
 
     public override bool Equals(object? obj)
@@ -54,6 +54,6 @@ public class HighlightPointData : IEquatable<HighlightPointData>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Time, Value, Id);
+        return HashCode.Combine(Time, Values, Id);
     }
 }
