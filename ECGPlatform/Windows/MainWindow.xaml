@@ -5,8 +5,8 @@
                   xmlns:local="clr-namespace:ECGPlatform"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   Title="{DynamicResource Title}"
-                  Width="1600"
-                  Height="1000"
+                  Width="1100"
+                  Height="800"
                   MinWidth="1000"
                   MinHeight="600"
                   d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
@@ -41,15 +41,22 @@
         </Grid.RowDefinitions>
         <RadioButton Grid.Row="1"
                      Width="100"
-                     IsChecked="{Binding CurrentPageName, Converter={x:Static local:PagesNameToBoolConverter.Instance}, ConverterParameter={x:Static local:PagesName.LocalDataPage}}"
+                     IsChecked="{Binding CurrentPageName, Converter={x:Static local:PagesNameToBoolConverter.Instance}, ConverterParameter={x:Static local:PagesName.LOCAL_DATA_PAGE}}"
                      Margin="0,0,0,15"
                      local:IconHelper.Icon="{StaticResource DataIcon}"
                      Content="{DynamicResource LocalDataTitle}"
                      Style="{StaticResource MenuRadioButtonStyle}" />
+        <RadioButton Grid.Row="2"
+                     Width="100"
+                     IsChecked="{Binding CurrentPageName, Converter={x:Static local:PagesNameToBoolConverter.Instance}, ConverterParameter={x:Static local:PagesName.REMOTE_PAGE}}"
+                     Margin="0,0,0,15"
+                     local:IconHelper.Icon="{StaticResource DataIcon}"
+                     Content="{DynamicResource RemoteTitle}"
+                     Style="{StaticResource MenuRadioButtonStyle}" />
         <RadioButton Grid.Row="7"
                      Width="100"
                      local:IconHelper.Icon="{StaticResource SettingIcon}"
-                     IsChecked="{Binding CurrentPageName, Converter={x:Static local:PagesNameToBoolConverter.Instance}, ConverterParameter={x:Static local:PagesName.SettingPage}}"
+                     IsChecked="{Binding CurrentPageName, Converter={x:Static local:PagesNameToBoolConverter.Instance}, ConverterParameter={x:Static local:PagesName.SETTING_PAGE}}"
                      Content="{DynamicResource SettingTitle}"
                      Style="{StaticResource MenuRadioButtonStyle}" />
       </Grid>

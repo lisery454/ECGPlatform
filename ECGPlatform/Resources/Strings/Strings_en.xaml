@@ -5,6 +5,7 @@
 
   <system:String x:Key="Title">ECG Platform</system:String>
   <system:String x:Key="LocalDataTitle">Local</system:String>
+  <system:String x:Key="RemoteTitle">Remote</system:String>
   <system:String x:Key="SettingTitle">Setting</system:String>
   <system:String x:Key="LocalDataDirPath">Local Data Directory</system:String>
   <system:String x:Key="ChangeStr">Change</system:String>

@@ -9,8 +9,9 @@ public class PagesNameToPageConverter : IValueConverter
         var pagesName = (PagesName)value;
         return pagesName switch
         {
-            PagesName.LocalDataPage => App.Current.Services.GetService<LocalDataPage>()!,
-            PagesName.SettingPage => App.Current.Services.GetService<SettingPage>()!,
+            PagesName.LOCAL_DATA_PAGE => App.Current.Services.GetService<LocalDataPage>()!,
+            PagesName.SETTING_PAGE => App.Current.Services.GetService<SettingPage>()!,
+            PagesName.REMOTE_PAGE => App.Current.Services.GetService<RemotePage>()!,
             _ => throw new ArgumentOutOfRangeException()
         };
     }

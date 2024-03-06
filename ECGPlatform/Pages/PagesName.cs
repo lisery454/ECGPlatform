@@ -2,6 +2,7 @@
 
 public enum PagesName
 {
-    LocalDataPage,
-    SettingPage,
+    LOCAL_DATA_PAGE,
+    SETTING_PAGE,
+    REMOTE_PAGE,
 }

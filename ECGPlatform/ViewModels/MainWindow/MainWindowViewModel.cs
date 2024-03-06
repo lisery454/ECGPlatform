@@ -19,7 +19,7 @@ internal partial class MainWindowViewModel : WindowBaseViewModel
     public MainWindowViewModel(ILogger logger)
     {
         _logger = logger;
-        _currentPageName = PagesName.LocalDataPage;
+        _currentPageName = PagesName.LOCAL_DATA_PAGE;
         _logger.Information($"{typeof(MainWindowViewModel)} Create.");
     }
 
