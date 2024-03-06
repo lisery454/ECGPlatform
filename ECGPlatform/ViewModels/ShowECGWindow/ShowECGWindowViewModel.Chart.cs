@@ -16,10 +16,15 @@ public partial class ShowECGWindowViewModel
 
     private Lazy<ObjectPool<TextBlock>> _waveLabelTextPool;
     private Canvas WaveLabelCanvas => ((ShowECGWindow)BindingWindow!).WaveLabelCanvas;
+    private Canvas LabelTextCanvas => ((ShowECGWindow)BindingWindow!).LabelTextCanvas;
+    private Canvas IntervalTextCanvas => ((ShowECGWindow)BindingWindow!).IntervalTextCanvas;
 
     public const float YLimit = 2;
     public const float GridWidth = 40;
     public const float DistanceBetweenSeries = 1.8f;
+
+    private Lazy<ObjectPool<CharLabel>> _charLabelsPool;
+    private Lazy<ObjectPool<TimeLabel>> _timeLabelsPool;
 
     private static SKColor LabelColor => GetSKColor("ColorPrimaryAlpha90");
     private static SKColor SeparatorColor => GetSKColor("ColorOppositeAlpha40");
@@ -82,6 +87,67 @@ public partial class ShowECGWindowViewModel
                 Canvas.SetLeft(block, lvcPointD.X);
                 Canvas.SetTop(block, lvcPointD.Y);
             });
+        }
+    }
+
+    private void UpdateLabelTextAndIntervalText()
+    {
+        // label text
+        {
+            var chart = CartesianChart;
+            var canvas = LabelTextCanvas;
+            var pool = _charLabelsPool.Value;
+
+            foreach (CharLabel child in canvas.Children)
+                pool.Release(child, charLabel => charLabel.Visibility = Visibility.Hidden);
+
+            foreach (var p in RPeakPoints)
+            {
+                var lvcPointD0 = new LvcPointD(p.Time, p.Values[0]);
+                var point = chart.ScaleDataToPixels(lvcPointD0);
+                pool.Get(charLabel =>
+                {
+                    charLabel.Visibility = Visibility.Visible;
+                    charLabel.Char = p.Letter;
+                    Canvas.SetLeft(charLabel, point.X);
+                });
+            }
+        }
+
+        // interval text
+        {
+            var chart = CartesianChart;
+            var canvas = IntervalTextCanvas;
+            var pool = _timeLabelsPool.Value;
+        
+            foreach (TimeLabel child in canvas.Children)
+                pool.Release(child, timeLabel => timeLabel.Visibility = Visibility.Hidden);
+        
+            long? lastTime = null;
+            double? lastPos = null;
+            foreach (var p in RPeakPoints)
+            {
+                var time = p.Time;
+        
+                var lvcPointD0 = new LvcPointD(time, 0);
+                var point = chart.ScaleDataToPixels(lvcPointD0);
+                var pos = point.X;
+        
+                if (lastTime.HasValue && lastPos.HasValue)
+                {
+                    var l = lastTime.Value;
+                    var d = lastPos.Value;
+                    pool.Get(timeLabel =>
+                    {
+                        timeLabel.Visibility = Visibility.Visible;
+                        timeLabel.TimeInterval = time - l;
+                        Canvas.SetLeft(timeLabel, (pos + d) / 2d);
+                    });
+                }
+        
+                lastTime = time;
+                lastPos = pos;
+            }
         }
     }
 

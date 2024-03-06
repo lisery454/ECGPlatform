@@ -153,56 +153,70 @@
                 Padding="12"
                 Background="{DynamicResource BrushPrimary10OnMain}"
                 CornerRadius="10">
-          <ScrollViewer Style="{StaticResource VerticalScrollViewer}">
-            <Grid>
-              <Border x:Name="ChartBorder">
-                <i:Interaction.Triggers>
-                  <i:EventTrigger EventName="SizeChanged">
-                    <i:InvokeCommandAction Command="{Binding ChartBorderSizeChangedCommand}"
-                                           CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Border}}" />
-                  </i:EventTrigger>
-                  <i:EventTrigger EventName="Loaded">
-                    <i:InvokeCommandAction Command="{Binding ChartBorderSizeChangedCommand}"
-                                           CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Border}}" />
-                  </i:EventTrigger>
-                  <i:EventTrigger EventName="MouseLeftButtonUp">
-                    <i:InvokeCommandAction Command="{Binding Chart_OnMouseLeftButtonUpCommand}"
-                                           PassEventArgsToCommand="True" />
-                  </i:EventTrigger>
-                  <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding Chart_OnMouseLeftButtonDownCommand}"
-                                           PassEventArgsToCommand="True" />
-                  </i:EventTrigger>
-                  <i:EventTrigger EventName="MouseMove">
-                    <i:InvokeCommandAction Command="{Binding Chart_OnMouseMoveCommand}"
-                                           PassEventArgsToCommand="True" />
-                  </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <lvc:CartesianChart Width="{Binding Width}"
-                                    Height="{Binding Height}"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top"
-                                    DrawMarginFrame="{Binding DrawMarginFrame}"
-                                    EasingFunction="{x:Null}"
-                                    Series="{Binding Series}"
-                                    TooltipPosition="Hidden"
-                                    UpdateStartedCommand="{Binding ChartUpdatedCommand}"
-                                    XAxes="{Binding XAxes}"
-                                    YAxes="{Binding YAxes}"
-                                    x:Name="CartesianChart">
+
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="30" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Margin="0,5,0,0">
+              <Canvas x:Name="LabelTextCanvas" />
+              <Canvas x:Name="IntervalTextCanvas" />
+            </Grid>
+
+            <ScrollViewer Grid.Row="1"
+                          Style="{StaticResource VerticalScrollViewer}">
+              <Grid>
+                <Border x:Name="ChartBorder">
                   <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseWheel">
-                      <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ChartMouseWheelCommand}"
+                    <i:EventTrigger EventName="SizeChanged">
+                      <i:InvokeCommandAction Command="{Binding ChartBorderSizeChangedCommand}"
+                                             CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Border}}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Loaded">
+                      <i:InvokeCommandAction Command="{Binding ChartBorderSizeChangedCommand}"
+                                             CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Border}}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                      <i:InvokeCommandAction Command="{Binding Chart_OnMouseLeftButtonUpCommand}"
+                                             PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                      <i:InvokeCommandAction Command="{Binding Chart_OnMouseLeftButtonDownCommand}"
+                                             PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseMove">
+                      <i:InvokeCommandAction Command="{Binding Chart_OnMouseMoveCommand}"
                                              PassEventArgsToCommand="True" />
                     </i:EventTrigger>
                   </i:Interaction.Triggers>
-                </lvc:CartesianChart>
-              </Border>
-              <Canvas x:Name="RPeakPointCanvas" />
-              <Canvas x:Name="SimplePointCanvas" />
-              <Canvas x:Name="WaveLabelCanvas" />
-            </Grid>
-          </ScrollViewer>
+                  <lvc:CartesianChart Width="{Binding Width}"
+                                      Height="{Binding Height}"
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Top"
+                                      DrawMarginFrame="{Binding DrawMarginFrame}"
+                                      EasingFunction="{x:Null}"
+                                      Series="{Binding Series}"
+                                      TooltipPosition="Hidden"
+                                      UpdateStartedCommand="{Binding ChartUpdatedCommand}"
+                                      XAxes="{Binding XAxes}"
+                                      YAxes="{Binding YAxes}"
+                                      x:Name="CartesianChart">
+                    <i:Interaction.Triggers>
+                      <i:EventTrigger EventName="MouseWheel">
+                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ChartMouseWheelCommand}"
+                                               PassEventArgsToCommand="True" />
+                      </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                  </lvc:CartesianChart>
+                </Border>
+                <Canvas x:Name="RPeakPointCanvas" />
+                <Canvas x:Name="SimplePointCanvas" />
+                <Canvas x:Name="WaveLabelCanvas" />
+              </Grid>
+            </ScrollViewer>
+          </Grid>
         </Border>
       </Grid>
 

@@ -71,6 +71,9 @@ public partial class ShowECGWindowViewModel
         }
 
         UpdateHighlightPoint();
+        
+        // 更新顶部的字符和时间间隔
+        UpdateLabelTextAndIntervalText();
     }
 
     partial void OnThumbCurrentTimeChanged(long value)

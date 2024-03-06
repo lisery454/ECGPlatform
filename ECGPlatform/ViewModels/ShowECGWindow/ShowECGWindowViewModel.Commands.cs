@@ -91,6 +91,8 @@ public partial class ShowECGWindowViewModel
     {
         // HideAllRPeakPoints();
         await UpdateRPeaksData(CtsUtils.Refresh(ref _updateRPeaksDataCts).Token);
+
+        // UpdateLabelTextAndIntervalText();
     }
 
     [RelayCommand]

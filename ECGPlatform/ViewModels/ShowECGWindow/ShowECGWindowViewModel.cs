@@ -143,6 +143,33 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
             return textBlock;
         }, 3));
 
+        _charLabelsPool = new Lazy<ObjectPool<CharLabel>>(() => new ObjectPool<CharLabel>(() =>
+        {
+            var charLabel = new CharLabel
+            {
+                Visibility = Visibility.Collapsed,
+                Width = 24,
+                Height = 24,
+                Char = "S",
+            };
+
+            LabelTextCanvas.Children.Add(charLabel);
+            return charLabel;
+        }, 10));
+
+        _timeLabelsPool = new Lazy<ObjectPool<TimeLabel>>(() => new ObjectPool<TimeLabel>(() =>
+        {
+            var timeLabel = new TimeLabel
+            {
+                Visibility = Visibility.Collapsed,
+                Width = 20,
+                Height = 25,
+            };
+
+            IntervalTextCanvas.Children.Add(timeLabel);
+            return timeLabel;
+        }, 10));
+
         _createRPeakLabel = RPeakLabel.NONE;
         _updateRPeakLabel = RPeakLabel.NONE;
 
