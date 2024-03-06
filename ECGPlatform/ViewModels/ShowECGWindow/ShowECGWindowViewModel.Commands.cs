@@ -22,6 +22,7 @@ public partial class ShowECGWindowViewModel
         await UpdateRIntervalData(CtsUtils.Refresh(ref _updateRIntervalDataCts).Token);
 
         IsLoadingData = false;
+        UpdateWaveLabel();
     }
 
     [RelayCommand]

@@ -14,6 +14,9 @@ public partial class ShowECGWindowViewModel
     [ObservableProperty] private float _width;
     [ObservableProperty] private float _height;
 
+    private Lazy<ObjectPool<TextBlock>> _waveLabelTextPool;
+    private Canvas WaveLabelCanvas => ((ShowECGWindow)BindingWindow!).WaveLabelCanvas;
+
     public const float YLimit = 2;
     public const float GridWidth = 40;
     public const float DistanceBetweenSeries = 1.8f;
@@ -25,18 +28,18 @@ public partial class ShowECGWindowViewModel
     private static SKColor LineColor => GetSKColor("ColorPrimaryAlpha90");
     private static string FontFamily => "Chill Round Gothic Regular";
 
-    public void UpdateYAxes(int count)
+    private void UpdateYAxes(int count)
     {
         YAxes = new ObservableCollection<Axis> { BuildYAxis(count) };
     }
 
-    public void UpdateChartSize(long timeInterval, int waveCount)
+    private void UpdateChartSize(long timeInterval, int waveCount)
     {
         Width = timeInterval / XGridValue * GridWidth;
         Height = ((waveCount - 1) * DistanceBetweenSeries + 2 * YLimit) / YGridValue * GridWidth;
     }
 
-    public void UpdateLineSeries(List<List<PointData>> points)
+    private void UpdateLineSeries(List<List<PointData>> points)
     {
         Series.Clear();
         for (var i = 0; i < points.Count; i++)
@@ -45,6 +48,40 @@ public partial class ShowECGWindowViewModel
             var index = i;
             Series.Add(BuildLineSeries(p.Select(data =>
                 new ObservablePoint(data.time, data.value - YLimit - index * DistanceBetweenSeries))));
+        }
+    }
+
+    private void UpdateWaveLabel()
+    {
+        foreach (TextBlock child in WaveLabelCanvas.Children)
+        {
+            if (child.Visibility == Visibility.Visible)
+                _waveLabelTextPool.Value.Release(child);
+        }
+
+        for (var i = 0; i < WaveDataCollection.Count; i++)
+        {
+            var pointD = new LvcPointD(100, GetChartCoordY(WaveDataCollection[i][0].value, i));
+            if (!IsYInProperInterval(pointD.Y)) continue;
+            if (!IsXInProperInterval(pointD.X)) continue;
+
+            var lvcPointD = CartesianChart.ScaleDataToPixels(pointD);
+
+
+            var text = i switch
+            {
+                0 => "I",
+                1 => "II",
+                2 => "III",
+                _ => "i"
+            };
+            _waveLabelTextPool.Value.Get(block =>
+            {
+                block.Visibility = Visibility.Visible;
+                block.Text = text;
+                Canvas.SetLeft(block, lvcPointD.X);
+                Canvas.SetTop(block, lvcPointD.Y);
+            });
         }
     }
 

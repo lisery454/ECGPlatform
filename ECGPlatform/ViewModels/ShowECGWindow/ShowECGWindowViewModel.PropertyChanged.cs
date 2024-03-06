@@ -7,6 +7,7 @@ public partial class ShowECGWindowViewModel
         UpdateChartSize(TimeInterval, WaveDataCollection.Count);
         UpdateYAxes(value.Count);
         UpdateLineSeries(value);
+        UpdateWaveLabel();
     }
 
     partial void OnTimeIntervalChanged(long value)

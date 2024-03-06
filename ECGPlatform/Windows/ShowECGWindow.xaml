@@ -200,6 +200,7 @@
               </Border>
               <Canvas x:Name="RPeakPointCanvas" />
               <Canvas x:Name="SimplePointCanvas" />
+              <Canvas x:Name="WaveLabelCanvas" />
             </Grid>
           </ScrollViewer>
         </Border>

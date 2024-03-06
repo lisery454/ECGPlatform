@@ -132,6 +132,17 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
                 return highlightPoint;
             }, 3));
 
+        _waveLabelTextPool = new Lazy<ObjectPool<TextBlock>>(() => new ObjectPool<TextBlock>(() =>
+        {
+            var textBlock = new TextBlock()
+            {
+                FontSize = 20, Text = "Null", Visibility = Visibility.Hidden
+            };
+
+            WaveLabelCanvas.Children.Add(textBlock);
+            return textBlock;
+        }, 3));
+
         _createRPeakLabel = RPeakLabel.NONE;
         _updateRPeakLabel = RPeakLabel.NONE;
 
@@ -147,6 +158,7 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
         PartThumbs = new[] { BuildRectangularSection() };
         _partTimeDuration = 3000;
         ThumbCurrentTime = 0;
+
         UpdateThumbPos();
         UpdatePartThumbPos();
     }
