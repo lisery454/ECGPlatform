@@ -2,9 +2,9 @@
                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:ecgFile="clr-namespace:ECGFileService;assembly=ECGFileService"
                   xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                   xmlns:local="clr-namespace:ECGPlatform"
-                  xmlns:ecgFile="clr-namespace:ECGFileService;assembly=ECGFileService"
                   xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   Title="{DynamicResource ShowEcgWindowTitle}"
@@ -85,7 +85,23 @@
         <Border Grid.Column="0"
                 Margin="20,0,10,0"
                 Background="{DynamicResource BrushPrimary10OnMain}"
-                CornerRadius="10" />
+                CornerRadius="10">
+          <!--  buttons  -->
+          <StackPanel Orientation="Horizontal">
+
+            <Button Margin="10,0,10,0"
+                    local:IconHelper.Icon="{DynamicResource LeftArrowIcon}"
+                    Style="{StaticResource IconButton}"
+                    Command="{Binding LeftMoveTimeCommand}"
+                    ToolTip="Left" />
+
+            <Button Margin="0,0,10,0"
+                    local:IconHelper.Icon="{DynamicResource RightArrowIcon}"
+                    Style="{StaticResource IconButton}"
+                    Command="{Binding RightMoveTimeCommand}"
+                    ToolTip="Right" />
+          </StackPanel>
+        </Border>
 
         <Border Grid.Column="1"
                 Margin="10,0,20,0"
@@ -97,14 +113,14 @@
               <ColumnDefinition Width="*" />
               <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock FontFamily="{StaticResource ChillRoundGothicRegular}"
+            <TextBlock Margin="5,2"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       FontFamily="{StaticResource ChillRoundGothicRegular}"
                        FontSize="14"
                        Foreground="{DynamicResource BrushOpposite80OnMain}"
-                       HorizontalAlignment="Left"
-                       Margin="5,2"
                        Text="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToStrConverter.Instance}}"
-                       TextAlignment="Center"
-                       VerticalAlignment="Center" />
+                       TextAlignment="Center" />
             <StackPanel Grid.Column="2"
                         Orientation="Horizontal">
               <ComboBox Margin="5,8"
@@ -117,9 +133,9 @@
                   </DataTemplate>
                 </ComboBox.ItemTemplate>
               </ComboBox>
-              <Button Command="{Binding CreateRPointCommand}"
+              <Button Margin="5,8"
+                      Command="{Binding CreateRPointCommand}"
                       Content="{DynamicResource CreateRStr}"
-                      Margin="5,8"
                       Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.SIMPLE_POINT}}" />
               <ComboBox Margin="5,8"
                         ItemsSource="{local:EnumBindingSource EnumType=ecgFile:RPeakLabel}"
@@ -131,13 +147,13 @@
                   </DataTemplate>
                 </ComboBox.ItemTemplate>
               </ComboBox>
-              <Button Command="{Binding UpdateRPointCommand}"
+              <Button Margin="5,8"
+                      Command="{Binding UpdateRPointCommand}"
                       Content="{DynamicResource UpdateRStr}"
-                      Margin="5,8"
                       Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.R_PEAKS_POINT}}" />
-              <Button Command="{Binding DeleteRPointCommand}"
+              <Button Margin="5,8"
+                      Command="{Binding DeleteRPointCommand}"
                       Content="{DynamicResource DeleteRStr}"
-                      Margin="5,8"
                       Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.R_PEAKS_POINT}}" />
             </StackPanel>
           </Grid>
@@ -191,7 +207,8 @@
                                              PassEventArgsToCommand="True" />
                     </i:EventTrigger>
                   </i:Interaction.Triggers>
-                  <lvc:CartesianChart Width="{Binding Width}"
+                  <lvc:CartesianChart x:Name="CartesianChart"
+                                      Width="{Binding Width}"
                                       Height="{Binding Height}"
                                       HorizontalAlignment="Left"
                                       VerticalAlignment="Top"
@@ -201,8 +218,7 @@
                                       TooltipPosition="Hidden"
                                       UpdateStartedCommand="{Binding ChartUpdatedCommand}"
                                       XAxes="{Binding XAxes}"
-                                      YAxes="{Binding YAxes}"
-                                      x:Name="CartesianChart">
+                                      YAxes="{Binding YAxes}">
                     <i:Interaction.Triggers>
                       <i:EventTrigger EventName="MouseWheel">
                         <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ChartMouseWheelCommand}"
@@ -232,30 +248,30 @@
               <RowDefinition Height="Auto" />
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <lvc:CartesianChart XAxes="{Binding PartRIntervalXAxes}"
-                                YAxes="{Binding PartRIntervalYAxes}"
+            <lvc:CartesianChart Height="80"
                                 DrawMarginFrame="{Binding PartRIntervalDrawMarginFrame}"
-                                Sections="{Binding PartThumbs}"
-                                Series="{Binding PartRIntervalSeries}"
+                                EasingFunction="{x:Null}"
                                 PointerMoveCommand="{Binding PartRIntervalPointerMoveCommand}"
                                 PointerPressedCommand="{Binding PartRIntervalPointerDownCommand}"
                                 PointerReleasedCommand="{Binding PartRIntervalPointerUpCommand}"
-                                EasingFunction="{x:Null}"
+                                Sections="{Binding PartThumbs}"
+                                Series="{Binding PartRIntervalSeries}"
+                                TooltipPosition="Hidden"
+                                XAxes="{Binding PartRIntervalXAxes}"
+                                YAxes="{Binding PartRIntervalYAxes}" />
+            <lvc:CartesianChart Grid.Row="1"
                                 Height="80"
-                                TooltipPosition="Hidden" />
-            <lvc:CartesianChart XAxes="{Binding RIntervalXAxes}"
-                                YAxes="{Binding RIntervalYAxes}"
                                 DrawMarginFrame="{Binding RIntervalDrawMarginFrame}"
-                                Sections="{Binding Thumbs}"
-                                Series="{Binding RIntervalSeries}"
+                                EasingFunction="{x:Null}"
                                 PointerMoveCommand="{Binding RIntervalPointerMoveCommand}"
                                 PointerPressedCommand="{Binding RIntervalPointerDownCommand}"
                                 PointerReleasedCommand="{Binding RIntervalPointerUpCommand}"
+                                Sections="{Binding Thumbs}"
+                                Series="{Binding RIntervalSeries}"
+                                TooltipPosition="Hidden"
                                 UpdateStartedCommand="{Binding RIntervalChartUpdatedCommand}"
-                                EasingFunction="{x:Null}"
-                                Grid.Row="1"
-                                Height="80"
-                                TooltipPosition="Hidden" />
+                                XAxes="{Binding RIntervalXAxes}"
+                                YAxes="{Binding RIntervalYAxes}" />
           </Grid>
         </Border>
       </Grid>

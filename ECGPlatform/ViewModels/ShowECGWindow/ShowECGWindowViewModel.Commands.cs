@@ -207,4 +207,21 @@ public partial class ShowECGWindowViewModel
     {
         _isPartDown = false;
     }
+
+
+    [RelayCommand]
+    private void RightMoveTime()
+    {
+        var newTime = CurrentTime + TimeInterval;
+        newTime = Math.Clamp(newTime, 0, AllMilliSeconds - TimeInterval);
+        _currentTimeAnimator.NoAnimateChangeTarget( newTime);
+    }
+
+    [RelayCommand]
+    private void LeftMoveTime()
+    {
+        var newTime = CurrentTime - TimeInterval;
+        newTime = Math.Clamp(newTime, 0, AllMilliSeconds - TimeInterval); 
+        _currentTimeAnimator.NoAnimateChangeTarget( newTime);
+    }
 }
