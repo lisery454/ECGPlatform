@@ -4,11 +4,14 @@ public partial class ShowECGWindowViewModel
 {
     partial void OnWaveDataCollectionChanged(List<List<PointData>> value)
     {
-        UpdateChartSize(TimeInterval, WaveDataCollection.Count);
-        UpdateYAxes(value.Count);
-        UpdateLineSeries(value);
-        UpdateWaveLabel();
+        UpdateMainChartUI();
     }
+
+    partial void OnShowECGWaveModeChanged(ShowECGWaveMode value)
+    {
+        UpdateMainChartUI();
+    }
+
 
     partial void OnTimeIntervalChanged(long value)
     {
@@ -39,14 +42,55 @@ public partial class ShowECGWindowViewModel
         HideAllRPeakPoints();
 
         // 显示当前要显示的点
-        foreach (var pointData in RPeakPoints)
+        if (ShowECGWaveMode == ShowECGWaveMode.ALL)
         {
-            var time = pointData.Time;
-            for (var i = 0; i < pointData.Values.Count; i++)
+            foreach (var pointData in RPeakPoints)
             {
-                var val = pointData.Values[i];
+                var time = pointData.Time;
 
-                var lvcPointD = new LvcPointD(time, GetChartCoordY(val, i));
+                for (var i = 0; i < pointData.Values.Count; i++)
+                {
+                    var val = pointData.Values[i];
+
+                    var lvcPointD = new LvcPointD(time, GetChartCoordY(val, i));
+
+                    if (!IsYInProperInterval(lvcPointD.Y)) continue;
+
+                    var point = CartesianChart.ScaleDataToPixels(lvcPointD);
+
+                    highLightPointPool.Get(highlightPoint =>
+                    {
+                        highlightPoint.Visibility = Visibility.Visible;
+                        highlightPoint.HighlightPointData = pointData;
+
+                        highlightPoint.Binding(HighlightPoint.ClickedCommandProperty).To(this,
+                            new PropertyPath(nameof(HighlightPointPointClickedCommand)));
+
+                        highlightPoint.IsSelected = CurrentHighlightPointData != null &&
+                                                    highlightPoint.HighlightPointData.Time ==
+                                                    CurrentHighlightPointData.Time;
+
+                        Canvas.SetLeft(highlightPoint, point.X);
+                        Canvas.SetTop(highlightPoint, point.Y);
+                    });
+                }
+            }
+        }
+        else
+        {
+            var j = ShowECGWaveMode switch
+            {
+                ShowECGWaveMode.I => 0,
+                ShowECGWaveMode.II => 1,
+                ShowECGWaveMode.III => 2,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+            foreach (var pointData in RPeakPoints)
+            {
+                var time = pointData.Time;
+                var val = pointData.Values[j];
+
+                var lvcPointD = new LvcPointD(time, GetChartCoordY(val, 0));
 
                 if (!IsYInProperInterval(lvcPointD.Y)) continue;
 
@@ -71,7 +115,7 @@ public partial class ShowECGWindowViewModel
         }
 
         UpdateHighlightPoint();
-        
+
         // 更新顶部的字符和时间间隔
         UpdateLabelTextAndIntervalText();
     }

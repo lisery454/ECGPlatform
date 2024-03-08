@@ -84,6 +84,11 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
     /// </summary>
     [ObservableProperty] private RPeakLabel _updateRPeakLabel;
 
+    /// <summary>
+    /// 当前的波形展示模式
+    /// </summary>
+    [ObservableProperty] private ShowECGWaveMode _showECGWaveMode;
+
 
     public ShowECGWindowViewModel(ILogger logger)
     {

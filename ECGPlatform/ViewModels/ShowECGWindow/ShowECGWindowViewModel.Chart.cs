@@ -33,6 +33,16 @@ public partial class ShowECGWindowViewModel
     private static SKColor LineColor => GetSKColor("ColorPrimaryAlpha90");
     private static string FontFamily => "Chill Round Gothic Regular";
 
+    private void UpdateMainChartUI()
+    {
+        var count = ShowECGWaveMode == ShowECGWaveMode.ALL ? 3 : 1;
+        if (WaveDataCollection.Count < count) count = WaveDataCollection.Count;
+        UpdateChartSize(TimeInterval, count);
+        UpdateYAxes(count);
+        UpdateLineSeries(WaveDataCollection);
+        UpdateWaveLabel();
+    }
+
     private void UpdateYAxes(int count)
     {
         YAxes = new ObservableCollection<Axis> { BuildYAxis(count) };
@@ -47,12 +57,28 @@ public partial class ShowECGWindowViewModel
     private void UpdateLineSeries(List<List<PointData>> points)
     {
         Series.Clear();
-        for (var i = 0; i < points.Count; i++)
+
+        if (ShowECGWaveMode == ShowECGWaveMode.ALL)
+            for (var i = 0; i < points.Count; i++)
+            {
+                var p = points[i];
+                var index = i;
+                Series.Add(BuildLineSeries(p.Select(data =>
+                    new ObservablePoint(data.time, data.value - YLimit - index * DistanceBetweenSeries))));
+            }
+        else
         {
-            var p = points[i];
-            var index = i;
+            var j = ShowECGWaveMode switch
+            {
+                ShowECGWaveMode.I => 0,
+                ShowECGWaveMode.II => 1,
+                ShowECGWaveMode.III => 2,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            var p = points[j];
             Series.Add(BuildLineSeries(p.Select(data =>
-                new ObservablePoint(data.time, data.value - YLimit - index * DistanceBetweenSeries))));
+                new ObservablePoint(data.time, data.value - YLimit))));
         }
     }
 
@@ -61,24 +87,59 @@ public partial class ShowECGWindowViewModel
         foreach (TextBlock child in WaveLabelCanvas.Children)
         {
             if (child.Visibility == Visibility.Visible)
-                _waveLabelTextPool.Value.Release(child);
+                _waveLabelTextPool.Value.Release(child, block => block.Visibility = Visibility.Hidden);
         }
 
-        for (var i = 0; i < WaveDataCollection.Count; i++)
+        if (ShowECGWaveMode == ShowECGWaveMode.ALL)
         {
-            var pointD = new LvcPointD(100, GetChartCoordY(WaveDataCollection[i][0].value, i));
-            if (!IsYInProperInterval(pointD.Y)) continue;
-            if (!IsXInProperInterval(pointD.X)) continue;
+            for (var i = 0; i < WaveDataCollection.Count; i++)
+            {
+                var pointD = new LvcPointD(100, GetChartCoordY(WaveDataCollection[i][0].value, i));
+                if (!IsYInProperInterval(pointD.Y)) continue;
+                if (!IsXInProperInterval(pointD.X)) continue;
+
+                var lvcPointD = CartesianChart.ScaleDataToPixels(pointD);
+
+
+                var text = i switch
+                {
+                    0 => "I",
+                    1 => "II",
+                    2 => "III",
+                    _ => "i"
+                };
+                _waveLabelTextPool.Value.Get(block =>
+                {
+                    block.Visibility = Visibility.Visible;
+                    block.Text = text;
+                    Canvas.SetLeft(block, lvcPointD.X);
+                    Canvas.SetTop(block, lvcPointD.Y);
+                });
+            }
+        }
+        else
+        {
+            var j = ShowECGWaveMode switch
+            {
+                ShowECGWaveMode.I => 0,
+                ShowECGWaveMode.II => 1,
+                ShowECGWaveMode.III => 2,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            var pointD = new LvcPointD(100, GetChartCoordY(WaveDataCollection[j][0].value, 0));
+            if (!IsYInProperInterval(pointD.Y)) return;
+            if (!IsXInProperInterval(pointD.X)) return;
 
             var lvcPointD = CartesianChart.ScaleDataToPixels(pointD);
 
 
-            var text = i switch
+            var text = j switch
             {
                 0 => "I",
                 1 => "II",
                 2 => "III",
-                _ => "i"
+                _ => throw new ArgumentOutOfRangeException()
             };
             _waveLabelTextPool.Value.Get(block =>
             {
@@ -119,20 +180,20 @@ public partial class ShowECGWindowViewModel
             var chart = CartesianChart;
             var canvas = IntervalTextCanvas;
             var pool = _timeLabelsPool.Value;
-        
+
             foreach (TimeLabel child in canvas.Children)
                 pool.Release(child, timeLabel => timeLabel.Visibility = Visibility.Hidden);
-        
+
             long? lastTime = null;
             double? lastPos = null;
             foreach (var p in RPeakPoints)
             {
                 var time = p.Time;
-        
+
                 var lvcPointD0 = new LvcPointD(time, 0);
                 var point = chart.ScaleDataToPixels(lvcPointD0);
                 var pos = point.X;
-        
+
                 if (lastTime.HasValue && lastPos.HasValue)
                 {
                     var l = lastTime.Value;
@@ -144,7 +205,7 @@ public partial class ShowECGWindowViewModel
                         Canvas.SetLeft(timeLabel, (pos + d) / 2d);
                     });
                 }
-        
+
                 lastTime = time;
                 lastPos = pos;
             }
@@ -286,7 +347,8 @@ public partial class ShowECGWindowViewModel
 
     private bool IsYInProperInterval(double y)
     {
-        return y >= -2 * YLimit - (_ecgFileManager!.WaveCount - 1) * DistanceBetweenSeries * 2 && y <= 0;
+        var count = ShowECGWaveMode.ALL == ShowECGWaveMode ? _ecgFileManager!.WaveCount : 1;
+        return y >= -2 * YLimit - (count - 1) * DistanceBetweenSeries * 2 && y <= 0;
     }
 
     private bool IsXInProperInterval(double x)
