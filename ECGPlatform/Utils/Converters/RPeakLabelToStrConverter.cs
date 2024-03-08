@@ -4,6 +4,13 @@ public class RPeakLabelToStrConverter : IValueConverter
 {
     public static readonly RPeakLabelToStrConverter Instance = new();
 
+    public string Convert(RPeakLabel value)
+    {
+        return (string)Convert(value,
+            typeof(string),
+            null, CultureInfo.CurrentCulture);
+    }
+
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value == null) return "null";
@@ -16,10 +23,12 @@ public class RPeakLabelToStrConverter : IValueConverter
             RPeakLabel.PREMATURE_VENTRICULAR_CONTRACTIONS => GetStr("RPeakLabel.PrematureVentricularContractions"),
             RPeakLabel.ATRIAL_FIBRILLATION => GetStr("RPeakLabel.AtrialFibrillation"),
             RPeakLabel.ATRIAL_FLUTTER => GetStr("RPeakLabel.AtrialFlutter"),
-            RPeakLabel.VENTRICULAR_FLUTTER_VENTRICULAR_FIBRILLATION => GetStr("RPeakLabel.VentricularFlutterVentricularFibrillation"),
+            RPeakLabel.VENTRICULAR_FLUTTER_VENTRICULAR_FIBRILLATION => GetStr(
+                "RPeakLabel.VentricularFlutterVentricularFibrillation"),
             RPeakLabel.ATRIOVENTRICULAR_BLOCK => GetStr("RPeakLabel.AtrioventricularBlock"),
             RPeakLabel.NOISE => GetStr("RPeakLabel.Noise"),
-            RPeakLabel.PAROXYSMAL_SUPRAVENTRICULAR_TACHYCARDIA => GetStr("RPeakLabel.ParoxysmalSupraventricularTachycardia"),
+            RPeakLabel.PAROXYSMAL_SUPRAVENTRICULAR_TACHYCARDIA => GetStr(
+                "RPeakLabel.ParoxysmalSupraventricularTachycardia"),
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, null)
         };
     }
