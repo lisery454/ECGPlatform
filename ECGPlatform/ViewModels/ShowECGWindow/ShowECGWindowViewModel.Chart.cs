@@ -14,7 +14,7 @@ public partial class ShowECGWindowViewModel
     [ObservableProperty] private float _width;
     [ObservableProperty] private float _height;
 
-    private Lazy<ObjectPool<TextBlock>> _waveLabelTextPool;
+    private readonly Lazy<ObjectPool<TextBlock>> _waveLabelTextPool;
     private Canvas WaveLabelCanvas => ((ShowECGWindow)BindingWindow!).WaveLabelCanvas;
     private Canvas LabelTextCanvas => ((ShowECGWindow)BindingWindow!).LabelTextCanvas;
     private Canvas IntervalTextCanvas => ((ShowECGWindow)BindingWindow!).IntervalTextCanvas;
@@ -23,8 +23,8 @@ public partial class ShowECGWindowViewModel
     public const float GridWidth = 40;
     public const float DistanceBetweenSeries = 1.8f;
 
-    private Lazy<ObjectPool<CharLabel>> _charLabelsPool;
-    private Lazy<ObjectPool<TimeLabel>> _timeLabelsPool;
+    private readonly Lazy<ObjectPool<CharLabel>> _charLabelsPool;
+    private readonly Lazy<ObjectPool<TimeLabel>> _timeLabelsPool;
 
     private static SKColor LabelColor => GetSKColor("ColorPrimaryAlpha90");
     private static SKColor SeparatorColor => GetSKColor("ColorOppositeAlpha40");

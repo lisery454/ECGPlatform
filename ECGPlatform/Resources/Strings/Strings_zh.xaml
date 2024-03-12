@@ -34,5 +34,6 @@
   <system:String x:Key="RPeakLabel.AtrioventricularBlock">房室传导阻滞</system:String>
   <system:String x:Key="RPeakLabel.Noise">噪声</system:String>
   <system:String x:Key="RPeakLabel.ParoxysmalSupraventricularTachycardia">阵发性室上性心动过速</system:String>
+  <system:String x:Key="UserLoginTitle">用户注册登录</system:String>
 
 </ResourceDictionary>

@@ -73,6 +73,18 @@ public partial class App
             return showECGWindow;
         });
         
+        services.AddTransient<LoginWindowViewModel>();
+        services.AddTransient<LoginWindow>(sp =>
+        {
+            var loginWindowViewModel = sp.GetService<LoginWindowViewModel>()!;
+            var loginWindow = new LoginWindow
+            {
+                DataContext = loginWindowViewModel
+            };
+            loginWindowViewModel.BindingWindow = loginWindow;
+            return loginWindow;
+        });
+        
 
         return services.BuildServiceProvider();
     }

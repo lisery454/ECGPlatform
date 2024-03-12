@@ -7,15 +7,30 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       Title="{DynamicResource RemoteTitle}"
       d:Background="White"
-      d:DataContext="{d:DesignInstance Type=local:SettingPageViewModel}"
-      d:Height="1000 "
+      d:DataContext="{d:DesignInstance Type=local:RemotePageViewModel}"
+      d:Height="1000"
       d:Width="2000"
       Style="{StaticResource BasePageStyle}"
       mc:Ignorable="d">
+  <i:Interaction.Triggers>
+    <i:EventTrigger EventName="Loaded">
+      <i:InvokeCommandAction Command="{Binding InitCommand}" />
+    </i:EventTrigger>
+  </i:Interaction.Triggers>
 
   <StackPanel>
     <TextBlock Style="{StaticResource TitleTextStyle}"
                Text="{DynamicResource RemoteTitle}" />
+    <StackPanel Orientation="Horizontal">
+      <TextBlock Text="请先登录"
+                 FontSize="20"
+                 Margin="100,10,10,10" />
+      <Button Content="登录或注册"
+              Margin="10"
+              Width="200"
+              Command="{Binding OpenLoginWindowCommand}" />
+    </StackPanel>
+
 
   </StackPanel>
 </Page>
