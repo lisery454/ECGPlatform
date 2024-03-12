@@ -5,6 +5,8 @@ public partial class ShowECGWindowViewModel
     [RelayCommand]
     private async Task LoadData()
     {
+        ShowECGWaveMode = ShowECGWaveMode.ALL;
+
         // 加载文件
         _ecgFileManager?.Dispose();
         _ecgFileManager = new ECGFileManager(EcgIndex!);
@@ -21,8 +23,27 @@ public partial class ShowECGWindowViewModel
         // 加载R点间隔数据
         await UpdateRIntervalData(CtsUtils.Refresh(ref _updateRIntervalDataCts).Token);
 
+        // 加载搜索R点的数据
+        UpdateSearchRPointData(CtsUtils.Refresh(ref _updateSearchRPointDataCts).Token).AwaitThrow();
+
         IsLoadingData = false;
         UpdateWaveLabel();
+    }
+
+    [RelayCommand]
+    private void SelectRPoint(HighlightPointData highlightPointData)
+    {
+    }
+
+    [RelayCommand]
+    private void ShowSearchPart()
+    {
+        SearchPartVisibility = SearchPartVisibility switch
+        {
+            Visibility.Visible => Visibility.Collapsed,
+            Visibility.Collapsed => Visibility.Visible,
+            _ => Visibility.Visible
+        };
     }
 
     [RelayCommand]
@@ -214,14 +235,14 @@ public partial class ShowECGWindowViewModel
     {
         var newTime = CurrentTime + TimeInterval;
         newTime = Math.Clamp(newTime, 0, AllMilliSeconds - TimeInterval);
-        _currentTimeAnimator.NoAnimateChangeTarget( newTime);
+        _currentTimeAnimator.NoAnimateChangeTarget(newTime);
     }
 
     [RelayCommand]
     private void LeftMoveTime()
     {
         var newTime = CurrentTime - TimeInterval;
-        newTime = Math.Clamp(newTime, 0, AllMilliSeconds - TimeInterval); 
-        _currentTimeAnimator.NoAnimateChangeTarget( newTime);
+        newTime = Math.Clamp(newTime, 0, AllMilliSeconds - TimeInterval);
+        _currentTimeAnimator.NoAnimateChangeTarget(newTime);
     }
 }

@@ -5,7 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:ECGPlatform"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-      d:Height="1000 " d:Width="2000"
+      d:Height="1000 "
+      d:Width="2000"
       d:DataContext="{d:DesignInstance Type=local:LocalDataPageViewModel}"
       Style="{StaticResource BasePageStyle}"
       mc:Ignorable="d"
@@ -21,7 +22,8 @@
       <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
-    <TextBlock Style="{StaticResource TitleTextStyle}" Text="{DynamicResource LocalDataTitle}" />
+    <TextBlock Style="{StaticResource TitleTextStyle}"
+               Text="{DynamicResource LocalDataTitle}" />
 
     <ScrollViewer Margin="20,0"
                   Style="{StaticResource VerticalScrollViewer}"
@@ -29,11 +31,14 @@
       <i:Interaction.Behaviors>
         <local:ScrollViewerMouseWheelBehavior />
       </i:Interaction.Behaviors>
-      <ListBox Style="{StaticResource ListBoxStyle}" ItemsSource="{Binding LocalData}">
+      <ListBox Style="{StaticResource LocalDataListBoxStyle}"
+               ItemsSource="{Binding LocalData}">
         <i:Interaction.Triggers>
           <i:EventTrigger EventName="SelectionChanged">
-            <i:InvokeCommandAction Command="{Binding OpenLocalDataCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=SelectedItem}" />
-            <i:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType=ListBox}}" MethodName="UnselectAll" />
+            <i:InvokeCommandAction Command="{Binding OpenLocalDataCommand}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=SelectedItem}" />
+            <i:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                MethodName="UnselectAll" />
           </i:EventTrigger>
         </i:Interaction.Triggers>
       </ListBox>

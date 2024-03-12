@@ -66,361 +66,459 @@
         <TranslateTransform x:Name="TranslateTransform" />
       </Grid.RenderTransform>
 
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="*" />
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
-      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
 
-      <!--  row = 0  -->
-      <Grid Grid.Row="0"
-            Height="50"
-            Margin="0,16,0,12">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+      <Grid Grid.Column="0">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="*" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-        <Border Grid.Column="0"
-                Margin="20,0,10,0"
+        <!--  row = 0  -->
+        <Grid Grid.Row="0"
+              Height="50"
+              Margin="0,16,0,12">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <Border Grid.Column="0"
+                  Margin="20,0,10,0"
+                  Background="{DynamicResource BrushPrimary10OnMain}"
+                  CornerRadius="10">
+            <!--  buttons  -->
+            <StackPanel Orientation="Horizontal">
+
+              <Button Margin="10,0,10,0"
+                      local:IconHelper.Icon="{DynamicResource LeftArrowIcon}"
+                      Style="{StaticResource IconButton}"
+                      Command="{Binding LeftMoveTimeCommand}"
+                      ToolTip="Left" />
+
+              <Button Margin="0,0,10,0"
+                      local:IconHelper.Icon="{DynamicResource RightArrowIcon}"
+                      Style="{StaticResource IconButton}"
+                      Command="{Binding RightMoveTimeCommand}"
+                      ToolTip="Right" />
+
+              <Button Margin="0,0,10,0"
+                      local:IconHelper.Icon="{DynamicResource SearchIcon}"
+                      Style="{StaticResource IconButton}"
+                      Command="{Binding ShowSearchPartCommand}"
+                      ToolTip="Search" />
+
+              <ComboBox Margin="0,10,10,10"
+                        Width="30"
+                        ItemsSource="{local:EnumBindingSource EnumType=local:ShowECGWaveMode}"
+                        SelectedItem="{Binding ShowECGWaveMode}" />
+            </StackPanel>
+          </Border>
+
+          <Border Grid.Column="1"
+                  Margin="10,0,20,0"
+                  Background="{DynamicResource BrushPrimary10OnMain}"
+                  CornerRadius="10">
+            <Grid Margin="10,0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+              <TextBlock Margin="5,2"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Center"
+                         FontFamily="{StaticResource ChillRoundGothicRegular}"
+                         FontSize="14"
+                         Foreground="{DynamicResource BrushOpposite80OnMain}"
+                         Text="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToStrConverter.Instance}}"
+                         TextAlignment="Center" />
+              <StackPanel Grid.Column="2"
+                          Orientation="Horizontal">
+                <ComboBox Margin="5,8"
+                          ItemsSource="{local:EnumBindingSource EnumType=ecgFile:RPeakLabel}"
+                          SelectedItem="{Binding CreateRPeakLabel}"
+                          Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.SIMPLE_POINT}}">
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                      <TextBlock Text="{Binding ., Converter={x:Static local:RPeakLabelToStrConverter.Instance}}" />
+                    </DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button Margin="5,8"
+                        Command="{Binding CreateRPointCommand}"
+                        Content="{DynamicResource CreateRStr}"
+                        Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.SIMPLE_POINT}}" />
+                <ComboBox Margin="5,8"
+                          ItemsSource="{local:EnumBindingSource EnumType=ecgFile:RPeakLabel}"
+                          SelectedItem="{Binding UpdateRPeakLabel}"
+                          Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.R_PEAKS_POINT}}">
+                  <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                      <TextBlock Text="{Binding ., Converter={x:Static local:RPeakLabelToStrConverter.Instance}}" />
+                    </DataTemplate>
+                  </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button Margin="5,8"
+                        Command="{Binding UpdateRPointCommand}"
+                        Content="{DynamicResource UpdateRStr}"
+                        Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.R_PEAKS_POINT}}" />
+                <Button Margin="5,8"
+                        Command="{Binding DeleteRPointCommand}"
+                        Content="{DynamicResource DeleteRStr}"
+                        Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.R_PEAKS_POINT}}" />
+              </StackPanel>
+            </Grid>
+          </Border>
+
+        </Grid>
+
+        <!--  row = 1  -->
+        <Grid Grid.Row="1"
+              Margin="0,0,0,12">
+          <Border Grid.Column="0"
+                  Margin="20,0,20,0"
+                  Padding="12"
+                  Background="{DynamicResource BrushPrimary10OnMain}"
+                  CornerRadius="10">
+
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+
+              <Grid Margin="0,5,0,0">
+                <Canvas x:Name="LabelTextCanvas" />
+                <Canvas x:Name="IntervalTextCanvas" />
+              </Grid>
+
+              <ScrollViewer Grid.Row="1"
+                            Style="{StaticResource VerticalScrollViewer}">
+                <Grid>
+                  <Border x:Name="ChartBorder">
+                    <i:Interaction.Triggers>
+                      <i:EventTrigger EventName="SizeChanged">
+                        <i:InvokeCommandAction Command="{Binding ChartBorderSizeChangedCommand}"
+                                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Border}}" />
+                      </i:EventTrigger>
+                      <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding ChartBorderSizeChangedCommand}"
+                                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Border}}" />
+                      </i:EventTrigger>
+                      <i:EventTrigger EventName="MouseLeftButtonUp">
+                        <i:InvokeCommandAction Command="{Binding Chart_OnMouseLeftButtonUpCommand}"
+                                               PassEventArgsToCommand="True" />
+                      </i:EventTrigger>
+                      <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <i:InvokeCommandAction Command="{Binding Chart_OnMouseLeftButtonDownCommand}"
+                                               PassEventArgsToCommand="True" />
+                      </i:EventTrigger>
+                      <i:EventTrigger EventName="MouseMove">
+                        <i:InvokeCommandAction Command="{Binding Chart_OnMouseMoveCommand}"
+                                               PassEventArgsToCommand="True" />
+                      </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <lvc:CartesianChart x:Name="CartesianChart"
+                                        Width="{Binding Width}"
+                                        Height="{Binding Height}"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        DrawMarginFrame="{Binding DrawMarginFrame}"
+                                        EasingFunction="{x:Null}"
+                                        Series="{Binding Series}"
+                                        TooltipPosition="Hidden"
+                                        UpdateStartedCommand="{Binding ChartUpdatedCommand}"
+                                        XAxes="{Binding XAxes}"
+                                        YAxes="{Binding YAxes}">
+                      <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseWheel">
+                          <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ChartMouseWheelCommand}"
+                                                 PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                      </i:Interaction.Triggers>
+                    </lvc:CartesianChart>
+                  </Border>
+                  <Canvas x:Name="RPeakPointCanvas" />
+                  <Canvas x:Name="SimplePointCanvas" />
+                  <Canvas x:Name="WaveLabelCanvas" />
+                </Grid>
+              </ScrollViewer>
+            </Grid>
+          </Border>
+        </Grid>
+
+        <!--  row = 2  -->
+        <Grid Grid.Row="2"
+              Margin="0,0,0,12">
+          <Border Grid.Column="0"
+                  Margin="20,0,20,0"
+                  Background="{DynamicResource BrushPrimary10OnMain}"
+                  CornerRadius="10">
+            <Grid Margin="20,0">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+              <lvc:CartesianChart Height="80"
+                                  DrawMarginFrame="{Binding PartRIntervalDrawMarginFrame}"
+                                  EasingFunction="{x:Null}"
+                                  PointerMoveCommand="{Binding PartRIntervalPointerMoveCommand}"
+                                  PointerPressedCommand="{Binding PartRIntervalPointerDownCommand}"
+                                  PointerReleasedCommand="{Binding PartRIntervalPointerUpCommand}"
+                                  Sections="{Binding PartThumbs}"
+                                  Series="{Binding PartRIntervalSeries}"
+                                  TooltipPosition="Hidden"
+                                  XAxes="{Binding PartRIntervalXAxes}"
+                                  YAxes="{Binding PartRIntervalYAxes}" />
+              <lvc:CartesianChart Grid.Row="1"
+                                  Height="80"
+                                  DrawMarginFrame="{Binding RIntervalDrawMarginFrame}"
+                                  EasingFunction="{x:Null}"
+                                  PointerMoveCommand="{Binding RIntervalPointerMoveCommand}"
+                                  PointerPressedCommand="{Binding RIntervalPointerDownCommand}"
+                                  PointerReleasedCommand="{Binding RIntervalPointerUpCommand}"
+                                  Sections="{Binding Thumbs}"
+                                  Series="{Binding RIntervalSeries}"
+                                  TooltipPosition="Hidden"
+                                  UpdateStartedCommand="{Binding RIntervalChartUpdatedCommand}"
+                                  XAxes="{Binding RIntervalXAxes}"
+                                  YAxes="{Binding RIntervalYAxes}" />
+            </Grid>
+          </Border>
+        </Grid>
+
+        <!--  row = 3  -->
+        <Border Grid.Row="3"
+                Height="50"
+                Margin="20,0,20,20"
                 Background="{DynamicResource BrushPrimary10OnMain}"
                 CornerRadius="10">
-          <!--  buttons  -->
-          <StackPanel Orientation="Horizontal">
-
-            <Button Margin="10,0,10,0"
-                    local:IconHelper.Icon="{DynamicResource LeftArrowIcon}"
-                    Style="{StaticResource IconButton}"
-                    Command="{Binding LeftMoveTimeCommand}"
-                    ToolTip="Left" />
-
-            <Button Margin="0,0,10,0"
-                    local:IconHelper.Icon="{DynamicResource RightArrowIcon}"
-                    Style="{StaticResource IconButton}"
-                    Command="{Binding RightMoveTimeCommand}"
-                    ToolTip="Right" />
-
-            <ComboBox Margin="0,10,10,10"
-                      Width="30"
-                      ItemsSource="{local:EnumBindingSource EnumType=local:ShowECGWaveMode}"
-                      SelectedItem="{Binding ShowECGWaveMode}" />
-          </StackPanel>
-        </Border>
-
-        <Border Grid.Column="1"
-                Margin="10,0,20,0"
-                Background="{DynamicResource BrushPrimary10OnMain}"
-                CornerRadius="10">
-          <Grid Margin="10,0">
+          <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="*" />
               <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock Margin="5,2"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       FontFamily="{StaticResource ChillRoundGothicRegular}"
-                       FontSize="14"
-                       Foreground="{DynamicResource BrushOpposite80OnMain}"
-                       Text="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToStrConverter.Instance}}"
-                       TextAlignment="Center" />
-            <StackPanel Grid.Column="2"
-                        Orientation="Horizontal">
-              <ComboBox Margin="5,8"
-                        ItemsSource="{local:EnumBindingSource EnumType=ecgFile:RPeakLabel}"
-                        SelectedItem="{Binding CreateRPeakLabel}"
-                        Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.SIMPLE_POINT}}">
-                <ComboBox.ItemTemplate>
-                  <DataTemplate>
-                    <TextBlock Text="{Binding ., Converter={x:Static local:RPeakLabelToStrConverter.Instance}}" />
-                  </DataTemplate>
-                </ComboBox.ItemTemplate>
-              </ComboBox>
-              <Button Margin="5,8"
-                      Command="{Binding CreateRPointCommand}"
-                      Content="{DynamicResource CreateRStr}"
-                      Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.SIMPLE_POINT}}" />
-              <ComboBox Margin="5,8"
-                        ItemsSource="{local:EnumBindingSource EnumType=ecgFile:RPeakLabel}"
-                        SelectedItem="{Binding UpdateRPeakLabel}"
-                        Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.R_PEAKS_POINT}}">
-                <ComboBox.ItemTemplate>
-                  <DataTemplate>
-                    <TextBlock Text="{Binding ., Converter={x:Static local:RPeakLabelToStrConverter.Instance}}" />
-                  </DataTemplate>
-                </ComboBox.ItemTemplate>
-              </ComboBox>
-              <Button Margin="5,8"
-                      Command="{Binding UpdateRPointCommand}"
-                      Content="{DynamicResource UpdateRStr}"
-                      Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.R_PEAKS_POINT}}" />
-              <Button Margin="5,8"
-                      Command="{Binding DeleteRPointCommand}"
-                      Content="{DynamicResource DeleteRStr}"
-                      Visibility="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToVisibilityConverter.Instance}, ConverterParameter={x:Static ecgFile:PointType.R_PEAKS_POINT}}" />
-            </StackPanel>
-          </Grid>
-        </Border>
 
-      </Grid>
-
-      <!--  row = 1  -->
-      <Grid Grid.Row="1"
-            Margin="0,0,0,12">
-        <Border Grid.Column="0"
-                Margin="20,0,20,0"
-                Padding="12"
-                Background="{DynamicResource BrushPrimary10OnMain}"
-                CornerRadius="10">
-
-          <Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="30" />
-              <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <Grid Margin="0,5,0,0">
-              <Canvas x:Name="LabelTextCanvas" />
-              <Canvas x:Name="IntervalTextCanvas" />
-            </Grid>
-
-            <ScrollViewer Grid.Row="1"
-                          Style="{StaticResource VerticalScrollViewer}">
-              <Grid>
-                <Border x:Name="ChartBorder">
+            <!--  current time  -->
+            <Border Height="35"
+                    Margin="8,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    BorderBrush="{DynamicResource BrushPrimary50OnMain}"
+                    BorderThickness="2"
+                    CornerRadius="10">
+              <StackPanel Margin="16,0"
+                          Orientation="Horizontal">
+                <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontFamily="{StaticResource ChillRoundGothicRegular}"
+                           FontSize="14"
+                           Foreground="{DynamicResource BrushOpposite90OnMain}"
+                           Text="{DynamicResource CurrentTimeTitle}"
+                           TextAlignment="Center" />
+                <TextBlock Margin="10,0"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontFamily="{StaticResource ChillRoundGothicRegular}"
+                           FontSize="14"
+                           Foreground="{DynamicResource BrushOpposite90OnMain}"
+                           Text=": "
+                           TextAlignment="Center" />
+                <TextBox MaxWidth="100"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         Background="Transparent"
+                         BorderBrush="Transparent"
+                         BorderThickness="0"
+                         CaretBrush="{DynamicResource BrushOpposite80OnMain}"
+                         ContextMenu="{x:Null}"
+                         FontFamily="{StaticResource ChillRoundGothicRegular}"
+                         FontSize="14"
+                         Foreground="{DynamicResource BrushOpposite90OnMain}"
+                         SelectionBrush="{DynamicResource BrushPrimaryAlpha50}"
+                         Text="{Binding TextBoxInputCurrentTimeStr, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         TextAlignment="Center">
                   <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SizeChanged">
-                      <i:InvokeCommandAction Command="{Binding ChartBorderSizeChangedCommand}"
-                                             CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Border}}" />
+                    <i:EventTrigger EventName="LostKeyboardFocus">
+                      <i:InvokeCommandAction Command="{Binding CurrentTimeTextBox_OnLostKeyboardFocusCommand}" />
                     </i:EventTrigger>
-                    <i:EventTrigger EventName="Loaded">
-                      <i:InvokeCommandAction Command="{Binding ChartBorderSizeChangedCommand}"
-                                             CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Border}}" />
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="MouseLeftButtonUp">
-                      <i:InvokeCommandAction Command="{Binding Chart_OnMouseLeftButtonUpCommand}"
-                                             PassEventArgsToCommand="True" />
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="MouseLeftButtonDown">
-                      <i:InvokeCommandAction Command="{Binding Chart_OnMouseLeftButtonDownCommand}"
-                                             PassEventArgsToCommand="True" />
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="MouseMove">
-                      <i:InvokeCommandAction Command="{Binding Chart_OnMouseMoveCommand}"
+                    <i:EventTrigger EventName="PreviewTextInput">
+                      <i:InvokeCommandAction Command="{Binding CurrentTimeTextBox_OnTextInputCommand}"
                                              PassEventArgsToCommand="True" />
                     </i:EventTrigger>
                   </i:Interaction.Triggers>
-                  <lvc:CartesianChart x:Name="CartesianChart"
-                                      Width="{Binding Width}"
-                                      Height="{Binding Height}"
-                                      HorizontalAlignment="Left"
-                                      VerticalAlignment="Top"
-                                      DrawMarginFrame="{Binding DrawMarginFrame}"
-                                      EasingFunction="{x:Null}"
-                                      Series="{Binding Series}"
-                                      TooltipPosition="Hidden"
-                                      UpdateStartedCommand="{Binding ChartUpdatedCommand}"
-                                      XAxes="{Binding XAxes}"
-                                      YAxes="{Binding YAxes}">
-                    <i:Interaction.Triggers>
-                      <i:EventTrigger EventName="MouseWheel">
-                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ChartMouseWheelCommand}"
-                                               PassEventArgsToCommand="True" />
-                      </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                  </lvc:CartesianChart>
-                </Border>
-                <Canvas x:Name="RPeakPointCanvas" />
-                <Canvas x:Name="SimplePointCanvas" />
-                <Canvas x:Name="WaveLabelCanvas" />
-              </Grid>
-            </ScrollViewer>
+                </TextBox>
+                <TextBlock Margin="10,0"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontFamily="{StaticResource ChillRoundGothicRegular}"
+                           FontSize="14"
+                           Foreground="{DynamicResource BrushOpposite90OnMain}"
+                           Text="-"
+                           TextAlignment="Center" />
+                <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           d:Text="0:0:1.234"
+                           FontFamily="{StaticResource ChillRoundGothicRegular}"
+                           FontSize="14"
+                           Foreground="{DynamicResource BrushOpposite90OnMain}"
+                           TextAlignment="Center">
+                  <TextBlock.Text>
+                    <MultiBinding Converter="{x:Static local:CurrentTimeIntervalConverter.Instance}">
+                      <Binding Path="CurrentTime" />
+                      <Binding Path="TimeInterval" />
+                    </MultiBinding>
+                  </TextBlock.Text>
+                </TextBlock>
+              </StackPanel>
+            </Border>
+            <!--  slider  -->
+            <Slider Grid.Column="1"
+                    Margin="20,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Delay="20"
+                    Maximum="{Binding AllMilliSeconds}"
+                    Minimum="0"
+                    Style="{StaticResource HorizontalSlider}">
+              <i:Interaction.Triggers>
+                <i:EventTrigger EventName="ValueChanged">
+                  <i:InvokeCommandAction Command="{Binding SliderValueChangedCommand}"
+                                         PassEventArgsToCommand="True" />
+                </i:EventTrigger>
+              </i:Interaction.Triggers>
+            </Slider>
+            <!--  all Time  -->
+            <Border Grid.Column="2"
+                    Height="35"
+                    Margin="8,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    BorderBrush="{DynamicResource BrushPrimary50OnMain}"
+                    BorderThickness="2"
+                    CornerRadius="10">
+              <StackPanel Margin="16,0"
+                          Orientation="Horizontal">
+                <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontFamily="{StaticResource ChillRoundGothicRegular}"
+                           FontSize="14"
+                           Foreground="{DynamicResource BrushOpposite90OnMain}"
+                           Text="{DynamicResource AllTimeTitle}"
+                           TextAlignment="Center" />
+                <TextBlock Margin="10,0"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontFamily="{StaticResource ChillRoundGothicRegular}"
+                           FontSize="14"
+                           Foreground="{DynamicResource BrushOpposite90OnMain}"
+                           Text=": "
+                           TextAlignment="Center" />
+                <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontFamily="{StaticResource ChillRoundGothicRegular}"
+                           FontSize="14"
+                           Foreground="{DynamicResource BrushOpposite90OnMain}"
+                           Text="{Binding AllMilliSeconds, Converter={x:Static local:LongTimeToStringConverter.Instance}}"
+                           TextAlignment="Center" />
+              </StackPanel>
+            </Border>
           </Grid>
         </Border>
       </Grid>
 
-      <!--  row = 2  -->
-      <Grid Grid.Row="2"
-            Margin="0,0,0,12">
-        <Border Grid.Column="0"
-                Margin="20,0,20,0"
+      <Grid Grid.Column="1"
+            Width="500"
+            Visibility="{Binding SearchPartVisibility}">
+        <Border Margin="0,16,20,16"
                 Background="{DynamicResource BrushPrimary10OnMain}"
                 CornerRadius="10">
-          <Grid Margin="20,0">
+          <Grid Margin="15,15">
             <Grid.RowDefinitions>
               <RowDefinition Height="Auto" />
-              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <lvc:CartesianChart Height="80"
-                                DrawMarginFrame="{Binding PartRIntervalDrawMarginFrame}"
-                                EasingFunction="{x:Null}"
-                                PointerMoveCommand="{Binding PartRIntervalPointerMoveCommand}"
-                                PointerPressedCommand="{Binding PartRIntervalPointerDownCommand}"
-                                PointerReleasedCommand="{Binding PartRIntervalPointerUpCommand}"
-                                Sections="{Binding PartThumbs}"
-                                Series="{Binding PartRIntervalSeries}"
-                                TooltipPosition="Hidden"
-                                XAxes="{Binding PartRIntervalXAxes}"
-                                YAxes="{Binding PartRIntervalYAxes}" />
-            <lvc:CartesianChart Grid.Row="1"
-                                Height="80"
-                                DrawMarginFrame="{Binding RIntervalDrawMarginFrame}"
-                                EasingFunction="{x:Null}"
-                                PointerMoveCommand="{Binding RIntervalPointerMoveCommand}"
-                                PointerPressedCommand="{Binding RIntervalPointerDownCommand}"
-                                PointerReleasedCommand="{Binding RIntervalPointerUpCommand}"
-                                Sections="{Binding Thumbs}"
-                                Series="{Binding RIntervalSeries}"
-                                TooltipPosition="Hidden"
-                                UpdateStartedCommand="{Binding RIntervalChartUpdatedCommand}"
-                                XAxes="{Binding RIntervalXAxes}"
-                                YAxes="{Binding RIntervalYAxes}" />
-          </Grid>
-        </Border>
-      </Grid>
 
-      <!--  row = 3  -->
-      <Border Grid.Row="3"
-              Height="50"
-              Margin="20,0,20,20"
-              Background="{DynamicResource BrushPrimary10OnMain}"
-              CornerRadius="10">
-        <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-          </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
 
-          <!--  current time  -->
-          <Border Height="35"
-                  Margin="8,0"
-                  HorizontalAlignment="Left"
-                  VerticalAlignment="Center"
-                  BorderBrush="{DynamicResource BrushPrimary50OnMain}"
-                  BorderThickness="2"
-                  CornerRadius="10">
-            <StackPanel Margin="16,0"
-                        Orientation="Horizontal">
-              <TextBlock HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         FontFamily="{StaticResource ChillRoundGothicRegular}"
-                         FontSize="14"
-                         Foreground="{DynamicResource BrushOpposite90OnMain}"
-                         Text="{DynamicResource CurrentTimeTitle}"
-                         TextAlignment="Center" />
-              <TextBlock Margin="10,0"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         FontFamily="{StaticResource ChillRoundGothicRegular}"
-                         FontSize="14"
-                         Foreground="{DynamicResource BrushOpposite90OnMain}"
-                         Text=": "
-                         TextAlignment="Center" />
-              <TextBox MaxWidth="100"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Background="Transparent"
-                       BorderBrush="Transparent"
-                       BorderThickness="0"
-                       CaretBrush="{DynamicResource BrushOpposite80OnMain}"
-                       ContextMenu="{x:Null}"
-                       FontFamily="{StaticResource ChillRoundGothicRegular}"
-                       FontSize="14"
-                       Foreground="{DynamicResource BrushOpposite90OnMain}"
-                       SelectionBrush="{DynamicResource BrushPrimaryAlpha50}"
-                       Text="{Binding TextBoxInputCurrentTimeStr, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                       TextAlignment="Center">
-                <i:Interaction.Triggers>
-                  <i:EventTrigger EventName="LostKeyboardFocus">
-                    <i:InvokeCommandAction Command="{Binding CurrentTimeTextBox_OnLostKeyboardFocusCommand}" />
-                  </i:EventTrigger>
-                  <i:EventTrigger EventName="PreviewTextInput">
-                    <i:InvokeCommandAction Command="{Binding CurrentTimeTextBox_OnTextInputCommand}"
-                                           PassEventArgsToCommand="True" />
-                  </i:EventTrigger>
-                </i:Interaction.Triggers>
-              </TextBox>
-              <TextBlock Margin="10,0"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         FontFamily="{StaticResource ChillRoundGothicRegular}"
-                         FontSize="14"
-                         Foreground="{DynamicResource BrushOpposite90OnMain}"
-                         Text="-"
-                         TextAlignment="Center" />
-              <TextBlock HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         d:Text="0:0:1.234"
-                         FontFamily="{StaticResource ChillRoundGothicRegular}"
-                         FontSize="14"
-                         Foreground="{DynamicResource BrushOpposite90OnMain}"
-                         TextAlignment="Center">
+              <TextBlock Grid.Row="0"
+                         Grid.Column="0"
+                         Margin="0,0,10,0"
+                         Text="{DynamicResource SearchLabelStr}"
+                         FontSize="15" />
+
+              <ComboBox Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="10,0"
+                        ItemsSource="{local:EnumBindingSource EnumType=ecgFile:RPeakLabel}"
+                        SelectedItem="{Binding SearchRPeakLabel}">
+                <ComboBox.ItemTemplate>
+                  <DataTemplate>
+                    <TextBlock Text="{Binding ., Converter={x:Static local:RPeakLabelToStrConverter.Instance}}" />
+                  </DataTemplate>
+                </ComboBox.ItemTemplate>
+              </ComboBox>
+
+              <TextBlock Grid.Row="1"
+                         Grid.Column="0"
+                         Margin="0,5,10,5"
+                         Text="{DynamicResource LabelNumStr}"
+                         FontSize="15" />
+
+              <TextBlock Grid.Row="1"
+                         Grid.Column="1"
+                         Margin="10,5"
+                         FontSize="15">
                 <TextBlock.Text>
-                  <MultiBinding Converter="{x:Static local:CurrentTimeIntervalConverter.Instance}">
-                    <Binding Path="CurrentTime" />
-                    <Binding Path="TimeInterval" />
+                  <MultiBinding Converter="{x:Static local:SearchLabelCountConverter.Instance}">
+                    <Binding Path="CurrentSearchLabelCount" />
+                    <Binding Path="TotalSearchLabelCount" />
                   </MultiBinding>
                 </TextBlock.Text>
               </TextBlock>
-            </StackPanel>
-          </Border>
-          <!--  slider  -->
-          <Slider Grid.Column="1"
-                  Margin="20,0"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="Center"
-                  Delay="20"
-                  Maximum="{Binding AllMilliSeconds}"
-                  Minimum="0"
-                  Style="{StaticResource HorizontalSlider}">
-            <i:Interaction.Triggers>
-              <i:EventTrigger EventName="ValueChanged">
-                <i:InvokeCommandAction Command="{Binding SliderValueChangedCommand}"
-                                       PassEventArgsToCommand="True" />
-              </i:EventTrigger>
-            </i:Interaction.Triggers>
-          </Slider>
-          <!--  all Time  -->
-          <Border Grid.Column="2"
-                  Height="35"
-                  Margin="8,0"
-                  HorizontalAlignment="Right"
-                  VerticalAlignment="Center"
-                  BorderBrush="{DynamicResource BrushPrimary50OnMain}"
-                  BorderThickness="2"
-                  CornerRadius="10">
-            <StackPanel Margin="16,0"
-                        Orientation="Horizontal">
-              <TextBlock HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         FontFamily="{StaticResource ChillRoundGothicRegular}"
-                         FontSize="14"
-                         Foreground="{DynamicResource BrushOpposite90OnMain}"
-                         Text="{DynamicResource AllTimeTitle}"
-                         TextAlignment="Center" />
-              <TextBlock Margin="10,0"
-                         HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         FontFamily="{StaticResource ChillRoundGothicRegular}"
-                         FontSize="14"
-                         Foreground="{DynamicResource BrushOpposite90OnMain}"
-                         Text=": "
-                         TextAlignment="Center" />
-              <TextBlock HorizontalAlignment="Center"
-                         VerticalAlignment="Center"
-                         FontFamily="{StaticResource ChillRoundGothicRegular}"
-                         FontSize="14"
-                         Foreground="{DynamicResource BrushOpposite90OnMain}"
-                         Text="{Binding AllMilliSeconds, Converter={x:Static local:LongTimeToStringConverter.Instance}}"
-                         TextAlignment="Center" />
-            </StackPanel>
-          </Border>
-        </Grid>
-      </Border>
+            </Grid>
 
+            <Grid Grid.Row="1">
+              <TextBlock FontSize="20"
+                         Text="{DynamicResource IsSearchingStr}"
+                         Visibility="{Binding IsSearching, Converter={x:Static local:BoolToVisibilityConverter.InstanceCollapsedTrueForVisible}}" />
+              <ListBox Visibility="{Binding IsSearching, Converter={x:Static local:BoolToVisibilityConverter.InstanceCollapsedFalseForVisible}}"
+                       Style="{StaticResource HighlightPointDataListBoxStyle}"
+                       ScrollViewer.CanContentScroll="True"
+                       VirtualizingStackPanel.IsVirtualizing="True"
+                       VirtualizingStackPanel.VirtualizationMode="Standard"
+                       ItemsSource="{Binding SearchPartRPointData}">
+                <i:Interaction.Triggers>
+                  <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding SelectRPointCommand}"
+                                           CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=SelectedItem}" />
+                    <i:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                        MethodName="UnselectAll" />
+                  </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+
+              </ListBox>
+            </Grid>
+
+          </Grid>
+        </Border>
+      </Grid>
 
     </Grid>
   </Grid>

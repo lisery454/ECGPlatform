@@ -16,7 +16,7 @@ public class HighlightPointDataToStrConverter : IValueConverter
         if (highlightPointData == null) return defaultPointDataInfoStr;
 
         var time = TimeFormatter.MircoSecondsToString(highlightPointData.Time);
-        var voltage = highlightPointData.Values.ToFormat(f => (float)Math.Round(f, 4));
+        var voltage = highlightPointData.Values.ToFormat(f => Math.Round(f, 4).ToString("0.0000"));
         var label = (string)RPeakLabelToStrConverter.Instance.Convert(highlightPointData.Label, typeof(string), null,
             CultureInfo.CurrentCulture);
 

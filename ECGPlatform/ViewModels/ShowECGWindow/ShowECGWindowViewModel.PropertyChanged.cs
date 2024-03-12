@@ -29,6 +29,18 @@ public partial class ShowECGWindowViewModel
         UpdatePartThumbPos();
     }
 
+    partial void OnSearchPartRPointDataChanged(List<HighlightPointData> value)
+    {
+        TotalSearchLabelCount = value.Count;
+    }
+
+    partial void OnSearchRPeakLabelChanged(RPeakLabel value)
+    {
+        UpdateSearchRPointData(CtsUtils.Refresh(ref _updateSearchRPointDataCts).Token).AwaitThrow();
+    }
+
+    
+
     partial void OnCurrentHighlightPointDataChanged(HighlightPointData? value)
     {
         UpdateHighlightPoint();

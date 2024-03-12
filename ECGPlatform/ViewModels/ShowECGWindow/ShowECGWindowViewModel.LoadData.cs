@@ -98,7 +98,7 @@ public partial class ShowECGWindowViewModel
 
     private CancellationTokenSource? _updatePartRIntervalDataCts;
 
-    
+
     /// <summary>
     /// 加载Thumb的部分R点间隔数据
     /// </summary>
@@ -123,5 +123,35 @@ public partial class ShowECGWindowViewModel
         }
 
         PartRIntervalsData = result;
+    }
+
+    private CancellationTokenSource? _updateSearchRPointDataCts;
+
+    private async Task UpdateSearchRPointData(CancellationToken cancellationToken)
+    {
+        if (_ecgFileManager == null) return;
+        IsSearching = true;
+
+        var result = new List<HighlightPointData>();
+
+        try
+        {
+            result = await _ecgFileManager.GetRangedRPeaksAsync(0, AllMilliSeconds, cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            // 正常取消获取数据操作
+        }
+        catch (Exception e)
+        {
+            _logger.Error(e.ToString());
+        }
+
+        if (cancellationToken.IsCancellationRequested) return;
+
+        
+        SearchPartRPointData = result.Where(data => data.Label == SearchRPeakLabel).ToList();
+        
+        IsSearching = false;
     }
 }

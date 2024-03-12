@@ -35,5 +35,8 @@
   <system:String x:Key="RPeakLabel.Noise">噪声</system:String>
   <system:String x:Key="RPeakLabel.ParoxysmalSupraventricularTachycardia">阵发性室上性心动过速</system:String>
   <system:String x:Key="UserLoginTitle">用户注册登录</system:String>
+  <system:String x:Key="SearchLabelStr">搜索标签</system:String>
+  <system:String x:Key="LabelNumStr">标签数量</system:String>
+  <system:String x:Key="IsSearchingStr">正在搜索...</system:String>
 
 </ResourceDictionary>

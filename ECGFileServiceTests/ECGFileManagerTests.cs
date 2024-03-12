@@ -19,15 +19,11 @@ public class ECGFileManagerTests
     {
         using var ecgFileManager = await GetECGFileManager();
 
-        for (int i = 0; i < 100; i++)
-        {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-            var rangedRPeaksAsync = await ecgFileManager.GetRangedRPeaksAsync(i * 10, 8630 * i);
-            stopwatch.Stop();
-            Console.WriteLine($"time: {stopwatch.ElapsedMilliseconds} ");
-        }
-
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+        var rangedRPeaksAsync = await ecgFileManager.GetRangedRPeaksAsync(0, ecgFileManager.TotalTime);
+        stopwatch.Stop();
+        Console.WriteLine($"time: {stopwatch.ElapsedMilliseconds} ");
 
         Assert.Pass();
     }
@@ -47,7 +43,7 @@ public class ECGFileManagerTests
         var pointData = await ecgFileManager.GetRangedWaveDataAsync(0, 0, 1000);
         Assert.Pass($"{pointData.Count}");
     }
-    
+
     [Test]
     public async Task Test5()
     {

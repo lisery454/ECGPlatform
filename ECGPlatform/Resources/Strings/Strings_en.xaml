@@ -35,5 +35,9 @@
   <system:String x:Key="RPeakLabel.Noise">Noise</system:String>
   <system:String x:Key="RPeakLabel.ParoxysmalSupraventricularTachycardia">Paroxysmal Supraventricular Tachycardia</system:String>
   <system:String x:Key="UserLoginTitle">User Login</system:String>
+  <system:String x:Key="SearchLabelStr">Search Label</system:String>
+  <system:String x:Key="LabelNumStr">Label Count</system:String>
+  <system:String x:Key="IsSearchingStr">Searching...</system:String>
+
 
 </ResourceDictionary>

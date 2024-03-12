@@ -2,7 +2,7 @@
 
 public static class ListExtensions
 {
-    public static string ToFormat<T>(this List<T> list, Func<T, T>? onFormat = null) where T : notnull
+    public static string ToFormat<T>(this List<T> list, Func<T, string>? onFormat = null) where T : notnull
     {
         var res = string.Empty;
         res += "[";
