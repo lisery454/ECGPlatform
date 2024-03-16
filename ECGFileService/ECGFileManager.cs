@@ -33,6 +33,11 @@ public class ECGFileManager : IDisposable
 
     public long TotalTime => _waveDataReaders.First().TotalTime;
 
+    public long FrameToTimeWave(long frame)
+    {
+        return _waveDataReaders[0].FrameToTime(frame);
+    }
+
 
     public async Task<PointData> GetSingleWaveDataAsync(int index, long time,
         CancellationToken cancellationToken = default)

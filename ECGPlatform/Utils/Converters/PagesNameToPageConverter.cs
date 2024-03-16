@@ -12,6 +12,7 @@ public class PagesNameToPageConverter : IValueConverter
             PagesName.LOCAL_DATA_PAGE => App.Current.Services.GetService<LocalDataPage>()!,
             PagesName.SETTING_PAGE => App.Current.Services.GetService<SettingPage>()!,
             PagesName.REMOTE_PAGE => App.Current.Services.GetService<RemotePage>()!,
+            PagesName.TEMPLATE_PAGE => App.Current.Services.GetService<TemplatePage>()!,
             _ => throw new ArgumentOutOfRangeException()
         };
     }

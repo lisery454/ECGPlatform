@@ -53,6 +53,13 @@
                      local:IconHelper.Icon="{StaticResource DataIcon}"
                      Content="{DynamicResource RemoteTitle}"
                      Style="{StaticResource MenuRadioButtonStyle}" />
+        <RadioButton Grid.Row="3"
+                     Width="100"
+                     IsChecked="{Binding CurrentPageName, Converter={x:Static local:PagesNameToBoolConverter.Instance}, ConverterParameter={x:Static local:PagesName.TEMPLATE_PAGE}}"
+                     Margin="0,0,0,15"
+                     local:IconHelper.Icon="{StaticResource DataIcon}"
+                     Content="{DynamicResource TemplateTitle}"
+                     Style="{StaticResource MenuRadioButtonStyle}" />
         <RadioButton Grid.Row="7"
                      Width="100"
                      local:IconHelper.Icon="{StaticResource SettingIcon}"

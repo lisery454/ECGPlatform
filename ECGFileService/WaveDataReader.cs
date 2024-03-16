@@ -49,7 +49,7 @@ public class WaveDataReader : IDisposable
     /// </summary>
     /// <param name="frame">帧数</param>
     /// <returns>帧数对应的时间</returns>
-    private long FrameToTime(long frame)
+    public long FrameToTime(long frame)
     {
         return (long)(frame * 1000f / _frequency);
     }

@@ -54,6 +54,12 @@ public partial class App
         {
             DataContext = sp.GetService<RemotePageViewModel>()
         });
+        
+        services.AddTransient<TemplatePageViewModel>();
+        services.AddTransient<TemplatePage>(sp => new TemplatePage()
+        {
+            DataContext = sp.GetService<TemplatePageViewModel>()
+        });
 
         services.AddTransient<SettingPageViewModel>();
         services.AddTransient<SettingPage>(sp => new SettingPage

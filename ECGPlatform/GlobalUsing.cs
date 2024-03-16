@@ -45,3 +45,5 @@ global using ECGFileService;
 global using System.Reflection;
 global using System.Security.Cryptography;
 global using SimpleUtils;
+global using LiveChartsCore.Measure;
+global using Newtonsoft.Json.Linq;
