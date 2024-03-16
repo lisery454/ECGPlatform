@@ -17,6 +17,13 @@ public class HighlightPointData : IEquatable<HighlightPointData>
         Label = label;
     }
 
+    public HighlightPointData(HighlightPointData highlightPointData)
+    {
+        Time = highlightPointData.Time;
+        Values = new List<float>(highlightPointData.Values);
+        Label = highlightPointData.Label;
+    }
+
     public HighlightPointData(long time, List<float> values)
     {
         Time = time;

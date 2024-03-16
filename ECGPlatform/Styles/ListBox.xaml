@@ -428,7 +428,7 @@
                          HorizontalAlignment="Left"
                          SnapsToDevicePixels="True"
                          TextOptions.TextRenderingMode="ClearType "
-                         Text="{Binding ., Converter={x:Static local:HighlightPointDataToStrConverter.Instance}}" />
+                         Text="{Binding ., Converter={x:Static local:HighlightPointDataToStrConverter.Instance}, ConverterParameter=false}" />
             </Border>
           </Grid>
         </DataTemplate>

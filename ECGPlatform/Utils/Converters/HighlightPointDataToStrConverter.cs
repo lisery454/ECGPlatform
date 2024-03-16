@@ -8,6 +8,8 @@ public class HighlightPointDataToStrConverter : IValueConverter
     {
         var highlightPointData = value as HighlightPointData;
 
+        var isShowLabel = parameter is true;
+
         var defaultPointDataInfoStr = (string)App.Current.FindResource("DefaultPointDataInfoStr")!;
         var timeStr = (string)App.Current.FindResource("TimeStr")!;
         var voltageStr = (string)App.Current.FindResource("VoltageStr")!;
@@ -25,7 +27,9 @@ public class HighlightPointDataToStrConverter : IValueConverter
             PointType.SIMPLE_POINT =>
                 $"{timeStr}: {time}; {voltageStr}: {voltage} mV",
             PointType.R_PEAKS_POINT =>
-                $"{timeStr}: {time}; {voltageStr}:{voltage} mV; {labelStr}: {label} ",
+                isShowLabel
+                    ? $"{timeStr}: {time}; {voltageStr}:{voltage} mV; {labelStr}: {label} "
+                    : $"{timeStr}: {time}; {voltageStr}:{voltage} mV",
             _ => throw new ArgumentOutOfRangeException()
         };
     }

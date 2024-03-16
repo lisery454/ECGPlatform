@@ -7,6 +7,7 @@
                   xmlns:local="clr-namespace:ECGPlatform"
                   xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:system="clr-namespace:System;assembly=System.Runtime"
                   Title="{DynamicResource ShowEcgWindowTitle}"
                   Width="2000"
                   Height="1100"
@@ -130,13 +131,16 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
+              <Grid.Resources>
+                <system:Boolean x:Key="IsShowLabel">True</system:Boolean>
+              </Grid.Resources>
               <TextBlock Margin="5,2"
                          HorizontalAlignment="Left"
                          VerticalAlignment="Center"
                          FontFamily="{StaticResource ChillRoundGothicRegular}"
                          FontSize="14"
                          Foreground="{DynamicResource BrushOpposite80OnMain}"
-                         Text="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToStrConverter.Instance}}"
+                         Text="{Binding CurrentHighlightPointData, Converter={x:Static local:HighlightPointDataToStrConverter.Instance}, ConverterParameter={StaticResource IsShowLabel}}"
                          TextAlignment="Center" />
               <StackPanel Grid.Column="2"
                           Orientation="Horizontal">
@@ -435,7 +439,6 @@
       </Grid>
 
       <Grid Grid.Column="1"
-            Width="500"
             Visibility="{Binding SearchPartVisibility}">
         <Border Margin="0,16,20,16"
                 Background="{DynamicResource BrushPrimary10OnMain}"
@@ -483,14 +486,8 @@
               <TextBlock Grid.Row="1"
                          Grid.Column="1"
                          Margin="10,5"
-                         FontSize="15">
-                <TextBlock.Text>
-                  <MultiBinding Converter="{x:Static local:SearchLabelCountConverter.Instance}">
-                    <Binding Path="CurrentSearchLabelCount" />
-                    <Binding Path="TotalSearchLabelCount" />
-                  </MultiBinding>
-                </TextBlock.Text>
-              </TextBlock>
+                         FontSize="15"
+                         Text="{Binding TotalSearchLabelCount}" />
             </Grid>
 
             <Grid Grid.Row="1">
@@ -507,8 +504,8 @@
                   <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding SelectRPointCommand}"
                                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=SelectedItem}" />
-                    <i:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                        MethodName="UnselectAll" />
+                    <!--  <i:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType=ListBox}}"  -->
+                    <!--  MethodName="UnselectAll" />  -->
                   </i:EventTrigger>
                 </i:Interaction.Triggers>
 

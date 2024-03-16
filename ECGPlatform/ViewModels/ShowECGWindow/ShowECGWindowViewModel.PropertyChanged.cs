@@ -29,7 +29,7 @@ public partial class ShowECGWindowViewModel
         UpdatePartThumbPos();
     }
 
-    partial void OnSearchPartRPointDataChanged(List<HighlightPointData> value)
+    partial void OnSearchPartRPointDataChanged(ObservableCollection<HighlightPointData> value)
     {
         TotalSearchLabelCount = value.Count;
     }

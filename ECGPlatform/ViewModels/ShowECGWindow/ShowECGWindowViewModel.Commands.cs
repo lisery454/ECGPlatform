@@ -33,6 +33,21 @@ public partial class ShowECGWindowViewModel
     [RelayCommand]
     private void SelectRPoint(HighlightPointData highlightPointData)
     {
+        CurrentHighlightPointData = highlightPointData;
+
+        // set current time
+        if (CurrentHighlightPointData != null)
+        {
+            var time = CurrentHighlightPointData.Time;
+            var begin = time - TimeInterval / 2;
+            var end = time + TimeInterval / 2;
+            long result;
+            if (begin < 0) result = 0;
+            else if (end >= AllMilliSeconds) result = AllMilliSeconds - TimeInterval;
+            else result = begin;
+
+            _currentTimeAnimator.NoAnimateChangeTarget(result);
+        }
     }
 
     [RelayCommand]
@@ -119,29 +134,70 @@ public partial class ShowECGWindowViewModel
     [RelayCommand]
     private async Task UpdateRPoint()
     {
+        var oldLabel = CurrentHighlightPointData!.Label!.Value;
+        var newLabel = UpdateRPeakLabel;
+        
         await _ecgFileManager!.UpdateRPeakPointLabel(CurrentHighlightPointData!.Time,
-            CurrentHighlightPointData.Label!.Value,
+            oldLabel,
             UpdateRPeakLabel);
+
+        var oldPointData = new HighlightPointData(CurrentHighlightPointData);
+
         CurrentHighlightPointData = new HighlightPointData(CurrentHighlightPointData!.Time,
             CurrentHighlightPointData!.Values, UpdateRPeakLabel);
         await ChartUpdated();
+
+        if (oldLabel == SearchRPeakLabel)
+        {
+            var indexOf = SearchPartRPointData.IndexOf(oldPointData);
+            SearchPartRPointData.RemoveAt(indexOf);
+            TotalSearchLabelCount = SearchPartRPointData.Count;
+        }
+        
+        if (newLabel == SearchRPeakLabel)
+        {
+            SearchPartRPointData.Add(new HighlightPointData(CurrentHighlightPointData!.Time,
+                CurrentHighlightPointData!.Values, newLabel));
+            TotalSearchLabelCount = SearchPartRPointData.Count;
+        }
     }
 
     [RelayCommand]
     private async Task DeleteRPoint()
     {
+        var oldLabel = CurrentHighlightPointData!.Label!.Value;
+
         await _ecgFileManager!.DeleteRPeak(CurrentHighlightPointData!.Time);
+        var oldPointData = new HighlightPointData(CurrentHighlightPointData);
+
         CurrentHighlightPointData = null;
         await ChartUpdated();
+
+        if (oldLabel == SearchRPeakLabel)
+        {
+            var indexOf = SearchPartRPointData.IndexOf(oldPointData);
+            SearchPartRPointData.RemoveAt(indexOf);
+            TotalSearchLabelCount = SearchPartRPointData.Count;
+        }
     }
 
     [RelayCommand]
     private async Task CreateRPoint()
     {
+        var newLabel = CreateRPeakLabel;
+
         await _ecgFileManager!.AddRPeakPointAsync(CurrentHighlightPointData!.Time, CreateRPeakLabel);
         CurrentHighlightPointData = new HighlightPointData(CurrentHighlightPointData!.Time,
-            CurrentHighlightPointData!.Values, CreateRPeakLabel);
+            CurrentHighlightPointData!.Values, newLabel);
+
         await ChartUpdated();
+
+        if (newLabel == SearchRPeakLabel)
+        {
+            SearchPartRPointData.Add(new HighlightPointData(CurrentHighlightPointData!.Time,
+                CurrentHighlightPointData!.Values, newLabel));
+            TotalSearchLabelCount = SearchPartRPointData.Count;
+        }
     }
 
     [RelayCommand]

@@ -83,7 +83,7 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
     /// 当前要修改标签的点的标签
     /// </summary>
     [ObservableProperty] private RPeakLabel _updateRPeakLabel;
-    
+
     /// <summary>
     /// 当前要搜索标签的点的标签
     /// </summary>
@@ -100,11 +100,6 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
     [ObservableProperty] private Visibility _searchPartVisibility;
 
     /// <summary>
-    /// 当前的搜索标签序号
-    /// </summary>
-    [ObservableProperty] private int _currentSearchLabelCount;
-    
-    /// <summary>
     /// 所有的所有标签数量
     /// </summary>
     [ObservableProperty] private int _totalSearchLabelCount;
@@ -112,7 +107,8 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
     /// <summary>
     /// 当前标签的R点数据
     /// </summary>
-    [ObservableProperty] private List<HighlightPointData> _searchPartRPointData;
+    [ObservableProperty]
+    private ObservableCollection<HighlightPointData> _searchPartRPointData;
 
 
     /// <summary>
@@ -145,9 +141,9 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
             // new EaseOutSquare(1, 4, TimeSpan.FromSeconds(0.1f))
         );
 
-        _searchPartRPointData = new List<HighlightPointData>();
+        _searchPartRPointData = new ObservableCollection<HighlightPointData>();
         _searchPartVisibility = Visibility.Collapsed;
-        
+
         _rPeakPointPool = new Lazy<ObjectPool<HighlightPoint>>(() => new ObjectPool<HighlightPoint>(
             () =>
             {

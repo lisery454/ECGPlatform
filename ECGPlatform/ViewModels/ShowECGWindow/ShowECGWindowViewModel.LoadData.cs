@@ -149,9 +149,10 @@ public partial class ShowECGWindowViewModel
 
         if (cancellationToken.IsCancellationRequested) return;
 
-        
-        SearchPartRPointData = result.Where(data => data.Label == SearchRPeakLabel).ToList();
-        
+
+        SearchPartRPointData =
+            new ObservableCollection<HighlightPointData>(result.Where(data => data.Label == SearchRPeakLabel));
+
         IsSearching = false;
     }
 }
