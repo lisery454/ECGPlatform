@@ -6,17 +6,17 @@ public partial class TemplatePageViewModel : ObservableObject
     [ObservableProperty] private ObservableCollection<Axis> _yAxes1;
     [ObservableProperty] private DrawMarginFrame _drawMarginFrame1;
     [ObservableProperty] private ObservableCollection<ISeries> _series1;
-    
+
     [ObservableProperty] private ObservableCollection<Axis> _xAxes2;
     [ObservableProperty] private ObservableCollection<Axis> _yAxes2;
     [ObservableProperty] private DrawMarginFrame _drawMarginFrame2;
     [ObservableProperty] private ObservableCollection<ISeries> _series2;
-    
+
     [ObservableProperty] private ObservableCollection<Axis> _xAxes3;
     [ObservableProperty] private ObservableCollection<Axis> _yAxes3;
     [ObservableProperty] private DrawMarginFrame _drawMarginFrame3;
     [ObservableProperty] private ObservableCollection<ISeries> _series3;
-    
+
     [ObservableProperty] private ObservableCollection<Axis> _xAxes4;
     [ObservableProperty] private ObservableCollection<Axis> _yAxes4;
     [ObservableProperty] private DrawMarginFrame _drawMarginFrame4;
@@ -33,22 +33,22 @@ public partial class TemplatePageViewModel : ObservableObject
         _yAxes1 = new ObservableCollection<Axis> { BuildYAxis() };
         _drawMarginFrame1 = BuildDrawMarginFrame();
         _series1 = new ObservableCollection<ISeries>();
-        
+
         _xAxes2 = new ObservableCollection<Axis> { BuildXAxis() };
         _yAxes2 = new ObservableCollection<Axis> { BuildYAxis() };
         _drawMarginFrame2 = BuildDrawMarginFrame();
         _series2 = new ObservableCollection<ISeries>();
-        
+
         _xAxes3 = new ObservableCollection<Axis> { BuildXAxis() };
         _yAxes3 = new ObservableCollection<Axis> { BuildYAxis() };
         _drawMarginFrame3 = BuildDrawMarginFrame();
         _series3 = new ObservableCollection<ISeries>();
-        
+
         _xAxes4 = new ObservableCollection<Axis> { BuildXAxis() };
         _yAxes4 = new ObservableCollection<Axis> { BuildYAxis() };
         _drawMarginFrame4 = BuildDrawMarginFrame();
         _series4 = new ObservableCollection<ISeries>();
-        
+
         _ecgFileManager = null;
     }
 
@@ -62,30 +62,64 @@ public partial class TemplatePageViewModel : ObservableObject
         using var streamReader = new StreamReader(templateDataFilePath);
         var allText = await streamReader.ReadToEndAsync();
         var jArray = JArray.Parse(allText);
-        var jArray1 = (JArray)((JObject)((JObject)jArray[1])["室性早搏"]!)["0"]!;
-        var jArray2 = (JArray)((JObject)((JObject)jArray[2])["房性早搏"]!)["0"]!;
-        var jArray3 = (JArray)((JObject)((JObject)jArray[3])["窦性心律"]!)["0"]!;
-        var jArray4 = (JArray)((JObject)((JObject)jArray[4])["噪音"]!)["0"]!;
 
-        var frame1 = (long)jArray1[0][0]!;
-        var time1 = _ecgFileManager.FrameToTimeWave(frame1);
-        var data1 = await _ecgFileManager.GetRangedWaveDataAsync(0, time1 - 1000, 2000);
-        Series1.Add(BuildLineSeries(data1.Select(pointData => new ObservablePoint(pointData.time, pointData.value))));
-        
-        var frame2 = (long)jArray2[0][0]!;
-        var time2 = _ecgFileManager.FrameToTimeWave(frame2);
-        var data2 = await _ecgFileManager.GetRangedWaveDataAsync(0, time2 - 1000, 2000);
-        Series2.Add(BuildLineSeries(data2.Select(pointData => new ObservablePoint(pointData.time, pointData.value))));
-        
-        var frame3 = (long)jArray3[0][0]!;
-        var time3 = _ecgFileManager.FrameToTimeWave(frame3);
-        var data3 = await _ecgFileManager.GetRangedWaveDataAsync(0, time3 - 1000, 2000);
-        Series3.Add(BuildLineSeries(data3.Select(pointData => new ObservablePoint(pointData.time, pointData.value))));
-        
-        var frame4 = (long)jArray4[0][0]!;
-        var time4 = _ecgFileManager.FrameToTimeWave(frame4);
-        var data4 = await _ecgFileManager.GetRangedWaveDataAsync(0, time4 - 1000, 2000);
-        Series4.Add(BuildLineSeries(data4.Select(pointData => new ObservablePoint(pointData.time, pointData.value))));
+        Series1 = await GetSeries("室性早搏", 1, 2000, jArray, _ecgFileManager);
+        Series2 = await GetSeries("房性早搏", 2, 2000, jArray, _ecgFileManager);
+        Series3 = await GetSeries("窦性心律", 3, 2000, jArray, _ecgFileManager);
+        Series4 = await GetSeries("噪音", 4, 2000, jArray, _ecgFileManager);
+
+        async Task<ObservableCollection<ISeries>> GetSeries(string label, int id, long duration, JArray array,
+            ECGFileManager ecgFileManager)
+        {
+            var subArray0 = (JArray)((JObject)((JObject)array[id])[label]!)["0"]!;
+            var subArray1 = (JArray)((JObject)((JObject)array[id])[label]!)["1"]!;
+            var subArray2 = (JArray)((JObject)((JObject)array[id])[label]!)["2"]!;
+
+            var frameList = new List<long>();
+
+            try
+            {
+                var value0 = subArray0[0][0];
+                if (value0 != null) frameList.Add((long)value0);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+
+            try
+            {
+                var value1 = subArray1[0][0];
+                if (value1 != null) frameList.Add((long)value1);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+
+            try
+            {
+                var value2 = subArray2[0][0];
+                if (value2 != null) frameList.Add((long)value2);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+
+
+            var timeList = frameList.Select(frame => ecgFileManager.FrameToTimeWave(frame) - duration / 2).ToList();
+            var result = new ObservableCollection<ISeries>();
+
+            foreach (var time in timeList)
+            {
+                var data = await ecgFileManager.GetRangedWaveDataAsync(0, time, duration);
+                result.Add(BuildLineSeries(
+                    data.Select(pointData => new ObservablePoint(pointData.time - time, pointData.value))));
+            }
+
+            return result;
+        }
     }
 
     [RelayCommand]
