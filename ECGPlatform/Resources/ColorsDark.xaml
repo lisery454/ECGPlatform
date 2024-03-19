@@ -38,6 +38,19 @@
       <Color x:Key="ColorPrimary20OnMain">#ff101f20</Color>
       <Color x:Key="ColorPrimary10OnMain">#ff0c1314</Color>
     </ResourceDictionary>
+    <!--  ColorSecondary  -->
+    <ResourceDictionary>
+      <Color x:Key="ColorSecondary">#4b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha90">#e54b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha80">#cc4b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha70">#b24b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha60">#994b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha50">#5f4b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha40">#664b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha30">#4c4b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha20">#334b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha10">#194b82bd</Color>
+    </ResourceDictionary>
     <!--  ColorError  -->
     <ResourceDictionary>
       <Color x:Key="ColorError">#ffe81123</Color>
@@ -148,6 +161,27 @@
                        Color="{StaticResource ColorPrimary20OnOpposite}" />
       <SolidColorBrush x:Key="BrushPrimary10OnOpposite"
                        Color="{StaticResource ColorPrimary10OnOpposite}" />
+
+      <SolidColorBrush x:Key="BrushSecondary"
+                       Color="{StaticResource ColorSecondary}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha90"
+                       Color="{StaticResource ColorSecondaryAlpha90}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha80"
+                       Color="{StaticResource ColorSecondaryAlpha80}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha70"
+                       Color="{StaticResource ColorSecondaryAlpha70}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha60"
+                       Color="{StaticResource ColorSecondaryAlpha60}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha50"
+                       Color="{StaticResource ColorSecondaryAlpha50}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha40"
+                       Color="{StaticResource ColorSecondaryAlpha40}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha30"
+                       Color="{StaticResource ColorSecondaryAlpha30}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha20"
+                       Color="{StaticResource ColorSecondaryAlpha20}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha10"
+                       Color="{StaticResource ColorSecondaryAlpha10}" />
 
       <SolidColorBrush x:Key="BrushError"
                        Color="{StaticResource ColorError}" />

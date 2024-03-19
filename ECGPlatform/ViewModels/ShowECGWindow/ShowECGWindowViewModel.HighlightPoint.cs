@@ -4,6 +4,7 @@ public partial class ShowECGWindowViewModel
 {
     private readonly Lazy<ObjectPool<HighlightPoint>> _rPeakPointPool;
     private readonly Lazy<ObjectPool<HighlightPoint>> _simplePointPool;
+    private readonly Lazy<ObjectPool<MarkIntervalPoint>> _markIntervalPointPool;
     private Canvas RPeakPointCanvas => ((ShowECGWindow)BindingWindow!).RPeakPointCanvas;
     private Canvas SimplePointCanvas => ((ShowECGWindow)BindingWindow!).SimplePointCanvas;
 
@@ -35,6 +36,32 @@ public partial class ShowECGWindowViewModel
 
         CurrentHighlightPointData =
             new HighlightPointData((long)values[0].X, values.Select(point => (float)point.Y).ToList());
+    }
+
+    private void SetMarkedIntervalPointByPixelPosition(Point position)
+    {
+        var time = (long)CartesianChart.ScalePixelsToData(new LvcPointD(position.X, position.Y)).X;
+        if (time < CurrentTime || time >= CurrentTime + TimeInterval || WaveDataCollection.Count <= 0) return;
+
+        var values = new List<Point>();
+        for (var i = 0; i < WaveDataCollection.Count; i++)
+        {
+            values.Add(FindMinDistancePoint(i, time));
+        }
+
+        var highlightPointData =
+            new HighlightPointData((long)values[0].X, values.Select(point => (float)point.Y).ToList());
+
+        if (_isMark0)
+        {
+            MarkIntervalPointsData0 = highlightPointData;
+            _isMark0 = false;
+        }
+        else
+        {
+            MarkIntervalPointsData1 = highlightPointData;
+            _isMark0 = true;
+        }
     }
 
     private Point FindMinDistancePoint(int id, long time)
@@ -123,6 +150,56 @@ public partial class ShowECGWindowViewModel
         {
             SetSelectSimplePoint();
             UnSelectRPeaksPoint();
+        }
+    }
+
+    private void UpdateMarkIntervalPointDisplay()
+    {
+        foreach (MarkIntervalPoint child in MarkIntervalPointCanvas.Children)
+        {
+            _markIntervalPointPool.Value.Release(child, p => p.Visibility = Visibility.Hidden);
+        }
+
+        if (MarkIntervalPointsData0 != null)
+        {
+            var time = MarkIntervalPointsData0.Time;
+            var values = MarkIntervalPointsData0.Values;
+
+            for (var i = 0; i < values.Count; i++)
+            {
+                var pointD = new LvcPointD(time, GetChartCoordY(values[i], i));
+                if (!IsYInProperInterval(pointD.Y)) continue;
+                if (!IsXInProperInterval(pointD.X)) continue;
+
+                var lvcPointD = CartesianChart.ScaleDataToPixels(pointD);
+                _markIntervalPointPool.Value.Get(point =>
+                {
+                    point.Visibility = Visibility.Visible;
+                    Canvas.SetLeft(point, lvcPointD.X);
+                    Canvas.SetTop(point, lvcPointD.Y);
+                });
+            }
+        }
+
+        if (MarkIntervalPointsData1 != null)
+        {
+            var time = MarkIntervalPointsData1.Time;
+            var values = MarkIntervalPointsData1.Values;
+
+            for (var i = 0; i < values.Count; i++)
+            {
+                var pointD = new LvcPointD(time, GetChartCoordY(values[i], i));
+                if (!IsYInProperInterval(pointD.Y)) continue;
+                if (!IsXInProperInterval(pointD.X)) continue;
+
+                var lvcPointD = CartesianChart.ScaleDataToPixels(pointD);
+                _markIntervalPointPool.Value.Get(point =>
+                {
+                    point.Visibility = Visibility.Visible;
+                    Canvas.SetLeft(point, lvcPointD.X);
+                    Canvas.SetTop(point, lvcPointD.Y);
+                });
+            }
         }
     }
 }

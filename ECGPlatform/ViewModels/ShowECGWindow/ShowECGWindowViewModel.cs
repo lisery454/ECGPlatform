@@ -107,14 +107,36 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
     /// <summary>
     /// 当前标签的R点数据
     /// </summary>
-    [ObservableProperty]
-    private ObservableCollection<HighlightPointData> _searchPartRPointData;
+    [ObservableProperty] private ObservableCollection<HighlightPointData> _searchPartRPointData;
 
 
     /// <summary>
     /// 是否正在搜索R点
     /// </summary>
     [ObservableProperty] private bool _isSearching;
+
+    /// <summary>
+    /// 标记区间的点
+    /// </summary>
+    [ObservableProperty] private HighlightPointData? _markIntervalPointsData0;
+
+    [ObservableProperty] private HighlightPointData? _markIntervalPointsData1;
+
+    /// <summary>
+    /// 当前要标记的是0这个mark点吗？
+    /// </summary>
+    private bool _isMark0 = true;
+
+    /// <summary>
+    /// 是否两个mark点都不是null，即可以标记
+    /// </summary>
+    [ObservableProperty] private bool _isMarkable;
+
+
+    /// <summary>
+    /// 当前的区间标记label
+    /// </summary>
+    [ObservableProperty] private MarkIntervalLabel _markIntervalLabel;
 
 
     public ShowECGWindowViewModel(ILogger logger)
@@ -165,6 +187,17 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
                 SimplePointCanvas.Children.Add(highlightPoint);
                 return highlightPoint;
             }, 3));
+
+        _markIntervalPointPool = new Lazy<ObjectPool<MarkIntervalPoint>>(() => new ObjectPool<MarkIntervalPoint>(
+            () =>
+            {
+                var markIntervalPoint = new MarkIntervalPoint
+                {
+                    Visibility = Visibility.Hidden
+                };
+                MarkIntervalPointCanvas.Children.Add(markIntervalPoint);
+                return markIntervalPoint;
+            }, 6));
 
         _waveLabelTextPool = new Lazy<ObjectPool<TextBlock>>(() => new ObjectPool<TextBlock>(() =>
         {

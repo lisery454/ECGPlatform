@@ -24,6 +24,7 @@
   <system:String x:Key="CreateRStr">创建R点</system:String>
   <system:String x:Key="DeleteRStr">删除R点</system:String>
   <system:String x:Key="UpdateRStr">更新R点标签</system:String>
+  <system:String x:Key="CreateIntervalStr">创建区间</system:String>
   <system:String x:Key="RPeakLabel.None">无标签</system:String>
   <system:String x:Key="RPeakLabel.SinusRhythm">窦性心律</system:String>
   <system:String x:Key="RPeakLabel.VentricularPreexcitation">心室预激</system:String>
@@ -39,5 +40,9 @@
   <system:String x:Key="SearchLabelStr">搜索标签</system:String>
   <system:String x:Key="LabelNumStr">标签数量</system:String>
   <system:String x:Key="IsSearchingStr">正在搜索...</system:String>
+
+  <system:String x:Key="MarkIntervalLabel.AtrialFibrillation">房颤</system:String>
+  <system:String x:Key="MarkIntervalLabel.Noise">噪声</system:String>
+
 
 </ResourceDictionary>

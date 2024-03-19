@@ -16,6 +16,7 @@ public partial class ShowECGWindowViewModel
 
     private readonly Lazy<ObjectPool<TextBlock>> _waveLabelTextPool;
     private Canvas WaveLabelCanvas => ((ShowECGWindow)BindingWindow!).WaveLabelCanvas;
+    private Canvas MarkIntervalPointCanvas => ((ShowECGWindow)BindingWindow!).MarkIntervalPointCanvas;
     private Canvas LabelTextCanvas => ((ShowECGWindow)BindingWindow!).LabelTextCanvas;
     private Canvas IntervalTextCanvas => ((ShowECGWindow)BindingWindow!).IntervalTextCanvas;
 

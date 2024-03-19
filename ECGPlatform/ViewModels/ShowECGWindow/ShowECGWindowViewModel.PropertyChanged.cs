@@ -39,7 +39,22 @@ public partial class ShowECGWindowViewModel
         UpdateSearchRPointData(CtsUtils.Refresh(ref _updateSearchRPointDataCts).Token).AwaitThrow();
     }
 
+    partial void OnMarkIntervalPointsData0Changed(HighlightPointData? value)
+    {
+        UpdateMarkIntervalPointDisplay();
+
+        if (MarkIntervalPointsData0 != null && MarkIntervalPointsData1 != null) IsMarkable = true;
+        else IsMarkable = false;
+    }
     
+    partial void OnMarkIntervalPointsData1Changed(HighlightPointData? value)
+    {
+        UpdateMarkIntervalPointDisplay();
+
+        if (MarkIntervalPointsData0 != null && MarkIntervalPointsData1 != null) IsMarkable = true;
+        else IsMarkable = false;
+    }
+
 
     partial void OnCurrentHighlightPointDataChanged(HighlightPointData? value)
     {

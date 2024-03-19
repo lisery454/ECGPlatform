@@ -120,6 +120,10 @@ public partial class ShowECGWindowViewModel
     {
         // 设置当前的高亮点为这个点
         CurrentHighlightPointData = data;
+
+        MarkIntervalPointsData0 = null;
+        MarkIntervalPointsData1 = null;
+        _isMark0 = false;
     }
 
     [RelayCommand]
@@ -128,6 +132,7 @@ public partial class ShowECGWindowViewModel
         // HideAllRPeakPoints();
         await UpdateRPeaksData(CtsUtils.Refresh(ref _updateRPeaksDataCts).Token);
 
+        UpdateMarkIntervalPointDisplay();
         // UpdateLabelTextAndIntervalText();
     }
 
@@ -136,7 +141,7 @@ public partial class ShowECGWindowViewModel
     {
         var oldLabel = CurrentHighlightPointData!.Label!.Value;
         var newLabel = UpdateRPeakLabel;
-        
+
         await _ecgFileManager!.UpdateRPeakPointLabel(CurrentHighlightPointData!.Time,
             oldLabel,
             UpdateRPeakLabel);
@@ -153,7 +158,7 @@ public partial class ShowECGWindowViewModel
             SearchPartRPointData.RemoveAt(indexOf);
             TotalSearchLabelCount = SearchPartRPointData.Count;
         }
-        
+
         if (newLabel == SearchRPeakLabel)
         {
             SearchPartRPointData.Add(new HighlightPointData(CurrentHighlightPointData!.Time,
@@ -224,6 +229,30 @@ public partial class ShowECGWindowViewModel
         if (e.Handled) return;
         _canMouseMoveToSelectPoint = true;
         SetHighlightPointByPixelPosition(e.GetPosition(ChartBorder));
+
+        _isMark0 = true;
+        MarkIntervalPointsData0 = null;
+        MarkIntervalPointsData1 = null;
+
+        e.Handled = true;
+    }
+
+    [RelayCommand]
+    private void Chart_OnMouseRightButtonUp(MouseButtonEventArgs e)
+    {
+        // if (e.Handled) return;
+
+        // e.Handled = true;
+    }
+
+    [RelayCommand]
+    private void Chart_OnMouseRightButtonDown(MouseButtonEventArgs e)
+    {
+        if (e.Handled) return;
+        SetMarkedIntervalPointByPixelPosition(e.GetPosition(ChartBorder));
+
+        CurrentHighlightPointData = null;
+
         e.Handled = true;
     }
 

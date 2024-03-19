@@ -24,6 +24,7 @@
   <system:String x:Key="CreateRStr">Create R</system:String>
   <system:String x:Key="DeleteRStr">Delete R</system:String>
   <system:String x:Key="UpdateRStr">Update R Label</system:String>
+  <system:String x:Key="CreateIntervalStr">Create Interval</system:String>
   <system:String x:Key="RPeakLabel.None">None</system:String>
   <system:String x:Key="RPeakLabel.SinusRhythm">Sinus Rhythm</system:String>
   <system:String x:Key="RPeakLabel.VentricularPreexcitation">Ventricular Preexcitation</system:String>
@@ -40,5 +41,7 @@
   <system:String x:Key="LabelNumStr">Label Count</system:String>
   <system:String x:Key="IsSearchingStr">Searching...</system:String>
 
+  <system:String x:Key="MarkIntervalLabel.AtrialFibrillation">Atrial Fibrillation</system:String>
+  <system:String x:Key="MarkIntervalLabel.Noise">Noise</system:String>
 
 </ResourceDictionary>

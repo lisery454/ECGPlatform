@@ -1,167 +1,271 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-	<ResourceDictionary.MergedDictionaries>
-		<!--  ColorPrimary  -->
-		<ResourceDictionary>
-			<Color x:Key="ColorPrimary">#ff317c83</Color>
-			<Color x:Key="ColorPrimaryAlpha90">#e5317c83</Color>
-			<Color x:Key="ColorPrimaryAlpha80">#cc317c83</Color>
-			<Color x:Key="ColorPrimaryAlpha70">#b2317c83</Color>
-			<Color x:Key="ColorPrimaryAlpha60">#99317c83</Color>
-			<Color x:Key="ColorPrimaryAlpha50">#5f317c83</Color>
-			<Color x:Key="ColorPrimaryAlpha40">#66317c83</Color>
-			<Color x:Key="ColorPrimaryAlpha30">#4c317c83</Color>
-			<Color x:Key="ColorPrimaryAlpha20">#33317c83</Color>
-			<Color x:Key="ColorPrimaryAlpha10">#19317c83</Color>
-		</ResourceDictionary>
-		<!--  ColorPrimaryOnMain  -->
-		<ResourceDictionary>
-			<Color x:Key="ColorPrimary90OnMain">#ff44888e</Color>
-			<Color x:Key="ColorPrimary80OnMain">#ff589499</Color>
-			<Color x:Key="ColorPrimary70OnMain">#ff6ba0a5</Color>
-			<Color x:Key="ColorPrimary60OnMain">#ff7eacb0</Color>
-			<Color x:Key="ColorPrimary50OnMain">#ffabc7c9</Color>
-			<Color x:Key="ColorPrimary40OnMain">#ffa6c4c6</Color>
-			<Color x:Key="ColorPrimary30OnMain">#ffb9d0d2</Color>
-			<Color x:Key="ColorPrimary20OnMain">#ffcddcdd</Color>
-			<Color x:Key="ColorPrimary10OnMain">#ffe0e8e8</Color>
-		</ResourceDictionary>
-		<!--  ColorPrimaryOnOpposite  -->
-		<ResourceDictionary>
-			<Color x:Key="ColorPrimary90OnOpposite">#ff2c7076</Color>
-			<Color x:Key="ColorPrimary80OnOpposite">#ff28646a</Color>
-			<Color x:Key="ColorPrimary70OnOpposite">#ff24595e</Color>
-			<Color x:Key="ColorPrimary60OnOpposite">#ff204d51</Color>
-			<Color x:Key="ColorPrimary50OnOpposite">#ff1c4245</Color>
-			<Color x:Key="ColorPrimary40OnOpposite">#ff183639</Color>
-			<Color x:Key="ColorPrimary30OnOpposite">#ff142a2c</Color>
-			<Color x:Key="ColorPrimary20OnOpposite">#ff101f20</Color>
-			<Color x:Key="ColorPrimary10OnOpposite">#ff0c1314</Color>
-		</ResourceDictionary>
-		<!--  ColorError  -->
-		<ResourceDictionary>
-			<Color x:Key="ColorError">#ffe81123</Color>
-			<Color x:Key="ColorOnError">#fffffefe</Color>
-		</ResourceDictionary>
-		<!--  ColorOpposite  -->
-		<ResourceDictionary>
-			<Color x:Key="ColorOpposite">#ff080808</Color>
-			<Color x:Key="ColorOppositeAlpha90">#e5080808</Color>
-			<Color x:Key="ColorOppositeAlpha80">#cc080808</Color>
-			<Color x:Key="ColorOppositeAlpha70">#b2080808</Color>
-			<Color x:Key="ColorOppositeAlpha60">#99080808</Color>
-			<Color x:Key="ColorOppositeAlpha50">#5f080808</Color>
-			<Color x:Key="ColorOppositeAlpha40">#66080808</Color>
-			<Color x:Key="ColorOppositeAlpha30">#4c080808</Color>
-			<Color x:Key="ColorOppositeAlpha20">#33080808</Color>
-			<Color x:Key="ColorOppositeAlpha10">#19080808</Color>
-			<Color x:Key="ColorOpposite90OnMain">#ff1f1f1f</Color>
-			<Color x:Key="ColorOpposite80OnMain">#ff373737</Color>
-			<Color x:Key="ColorOpposite70OnMain">#ff4e4e4e</Color>
-			<Color x:Key="ColorOpposite60OnMain">#ff666666</Color>
-			<Color x:Key="ColorOpposite50OnMain">#ff7e7e7e</Color>
-			<Color x:Key="ColorOpposite40OnMain">#ff959595</Color>
-			<Color x:Key="ColorOpposite30OnMain">#ffadadad</Color>
-			<Color x:Key="ColorOpposite20OnMain">#ffc4c4c4</Color>
-			<Color x:Key="ColorOpposite10OnMain">#ffdcdcdc</Color>
-		</ResourceDictionary>
-		<!--  ColorMain  -->
-		<ResourceDictionary>
-			<Color x:Key="ColorMain">#fff4f4f4</Color>
-			<Color x:Key="ColorMainAlpha90">#e5f4f4f4</Color>
-			<Color x:Key="ColorMainAlpha80">#ccf4f4f4</Color>
-			<Color x:Key="ColorMainAlpha70">#b2f4f4f4</Color>
-			<Color x:Key="ColorMainAlpha60">#99f4f4f4</Color>
-			<Color x:Key="ColorMainAlpha50">#5ff4f4f4</Color>
-			<Color x:Key="ColorMainAlpha40">#66f4f4f4</Color>
-			<Color x:Key="ColorMainAlpha30">#4cf4f4f4</Color>
-			<Color x:Key="ColorMainAlpha20">#33f4f4f4</Color>
-			<Color x:Key="ColorMainAlpha10">#19f4f4f4</Color>
-			<Color x:Key="ColorMain90OnOpposite">#ffdcdcdc</Color>
-			<Color x:Key="ColorMain80OnOpposite">#ffc4c4c4</Color>
-			<Color x:Key="ColorMain70OnOpposite">#ffadadad</Color>
-			<Color x:Key="ColorMain60OnOpposite">#ff959595</Color>
-			<Color x:Key="ColorMain50OnOpposite">#ff7e7e7e</Color>
-			<Color x:Key="ColorMain40OnOpposite">#ff666666</Color>
-			<Color x:Key="ColorMain30OnOpposite">#ff4e4e4e</Color>
-			<Color x:Key="ColorMain20OnOpposite">#ff373737</Color>
-			<Color x:Key="ColorMain10OnOpposite">#ff1f1f1f</Color>
-		</ResourceDictionary>
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ResourceDictionary.MergedDictionaries>
+    <!--  ColorPrimary  -->
+    <ResourceDictionary>
+      <Color x:Key="ColorPrimary">#ff317c83</Color>
+      <Color x:Key="ColorPrimaryAlpha90">#e5317c83</Color>
+      <Color x:Key="ColorPrimaryAlpha80">#cc317c83</Color>
+      <Color x:Key="ColorPrimaryAlpha70">#b2317c83</Color>
+      <Color x:Key="ColorPrimaryAlpha60">#99317c83</Color>
+      <Color x:Key="ColorPrimaryAlpha50">#5f317c83</Color>
+      <Color x:Key="ColorPrimaryAlpha40">#66317c83</Color>
+      <Color x:Key="ColorPrimaryAlpha30">#4c317c83</Color>
+      <Color x:Key="ColorPrimaryAlpha20">#33317c83</Color>
+      <Color x:Key="ColorPrimaryAlpha10">#19317c83</Color>
+    </ResourceDictionary>
+    <!--  ColorPrimaryOnMain  -->
+    <ResourceDictionary>
+      <Color x:Key="ColorPrimary90OnMain">#ff44888e</Color>
+      <Color x:Key="ColorPrimary80OnMain">#ff589499</Color>
+      <Color x:Key="ColorPrimary70OnMain">#ff6ba0a5</Color>
+      <Color x:Key="ColorPrimary60OnMain">#ff7eacb0</Color>
+      <Color x:Key="ColorPrimary50OnMain">#ffabc7c9</Color>
+      <Color x:Key="ColorPrimary40OnMain">#ffa6c4c6</Color>
+      <Color x:Key="ColorPrimary30OnMain">#ffb9d0d2</Color>
+      <Color x:Key="ColorPrimary20OnMain">#ffcddcdd</Color>
+      <Color x:Key="ColorPrimary10OnMain">#ffe0e8e8</Color>
+    </ResourceDictionary>
+    <!--  ColorPrimaryOnOpposite  -->
+    <ResourceDictionary>
+      <Color x:Key="ColorPrimary90OnOpposite">#ff2c7076</Color>
+      <Color x:Key="ColorPrimary80OnOpposite">#ff28646a</Color>
+      <Color x:Key="ColorPrimary70OnOpposite">#ff24595e</Color>
+      <Color x:Key="ColorPrimary60OnOpposite">#ff204d51</Color>
+      <Color x:Key="ColorPrimary50OnOpposite">#ff1c4245</Color>
+      <Color x:Key="ColorPrimary40OnOpposite">#ff183639</Color>
+      <Color x:Key="ColorPrimary30OnOpposite">#ff142a2c</Color>
+      <Color x:Key="ColorPrimary20OnOpposite">#ff101f20</Color>
+      <Color x:Key="ColorPrimary10OnOpposite">#ff0c1314</Color>
+    </ResourceDictionary>
 
-		<!--  Brush  -->
-		<ResourceDictionary>
-			<SolidColorBrush x:Key="BrushPrimary" Color="{StaticResource ColorPrimary}" />
-			<SolidColorBrush x:Key="BrushPrimaryAlpha90" Color="{StaticResource ColorPrimaryAlpha90}" />
-			<SolidColorBrush x:Key="BrushPrimaryAlpha80" Color="{StaticResource ColorPrimaryAlpha80}" />
-			<SolidColorBrush x:Key="BrushPrimaryAlpha70" Color="{StaticResource ColorPrimaryAlpha70}" />
-			<SolidColorBrush x:Key="BrushPrimaryAlpha60" Color="{StaticResource ColorPrimaryAlpha60}" />
-			<SolidColorBrush x:Key="BrushPrimaryAlpha50" Color="{StaticResource ColorPrimaryAlpha50}" />
-			<SolidColorBrush x:Key="BrushPrimaryAlpha40" Color="{StaticResource ColorPrimaryAlpha40}" />
-			<SolidColorBrush x:Key="BrushPrimaryAlpha30" Color="{StaticResource ColorPrimaryAlpha30}" />
-			<SolidColorBrush x:Key="BrushPrimaryAlpha20" Color="{StaticResource ColorPrimaryAlpha20}" />
-			<SolidColorBrush x:Key="BrushPrimaryAlpha10" Color="{StaticResource ColorPrimaryAlpha10}" />
+    <!--  ColorSecondary  -->
+    <ResourceDictionary>
+      <Color x:Key="ColorSecondary">#4b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha90">#e54b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha80">#cc4b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha70">#b24b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha60">#994b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha50">#5f4b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha40">#664b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha30">#4c4b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha20">#334b82bd</Color>
+      <Color x:Key="ColorSecondaryAlpha10">#194b82bd</Color>
+    </ResourceDictionary>
+    <!--  ColorError  -->
+    <ResourceDictionary>
+      <Color x:Key="ColorError">#ffe81123</Color>
+      <Color x:Key="ColorOnError">#fffffefe</Color>
+    </ResourceDictionary>
+    <!--  ColorOpposite  -->
+    <ResourceDictionary>
+      <Color x:Key="ColorOpposite">#ff080808</Color>
+      <Color x:Key="ColorOppositeAlpha90">#e5080808</Color>
+      <Color x:Key="ColorOppositeAlpha80">#cc080808</Color>
+      <Color x:Key="ColorOppositeAlpha70">#b2080808</Color>
+      <Color x:Key="ColorOppositeAlpha60">#99080808</Color>
+      <Color x:Key="ColorOppositeAlpha50">#5f080808</Color>
+      <Color x:Key="ColorOppositeAlpha40">#66080808</Color>
+      <Color x:Key="ColorOppositeAlpha30">#4c080808</Color>
+      <Color x:Key="ColorOppositeAlpha20">#33080808</Color>
+      <Color x:Key="ColorOppositeAlpha10">#19080808</Color>
+      <Color x:Key="ColorOpposite90OnMain">#ff1f1f1f</Color>
+      <Color x:Key="ColorOpposite80OnMain">#ff373737</Color>
+      <Color x:Key="ColorOpposite70OnMain">#ff4e4e4e</Color>
+      <Color x:Key="ColorOpposite60OnMain">#ff666666</Color>
+      <Color x:Key="ColorOpposite50OnMain">#ff7e7e7e</Color>
+      <Color x:Key="ColorOpposite40OnMain">#ff959595</Color>
+      <Color x:Key="ColorOpposite30OnMain">#ffadadad</Color>
+      <Color x:Key="ColorOpposite20OnMain">#ffc4c4c4</Color>
+      <Color x:Key="ColorOpposite10OnMain">#ffdcdcdc</Color>
+    </ResourceDictionary>
+    <!--  ColorMain  -->
+    <ResourceDictionary>
+      <Color x:Key="ColorMain">#fff4f4f4</Color>
+      <Color x:Key="ColorMainAlpha90">#e5f4f4f4</Color>
+      <Color x:Key="ColorMainAlpha80">#ccf4f4f4</Color>
+      <Color x:Key="ColorMainAlpha70">#b2f4f4f4</Color>
+      <Color x:Key="ColorMainAlpha60">#99f4f4f4</Color>
+      <Color x:Key="ColorMainAlpha50">#5ff4f4f4</Color>
+      <Color x:Key="ColorMainAlpha40">#66f4f4f4</Color>
+      <Color x:Key="ColorMainAlpha30">#4cf4f4f4</Color>
+      <Color x:Key="ColorMainAlpha20">#33f4f4f4</Color>
+      <Color x:Key="ColorMainAlpha10">#19f4f4f4</Color>
+      <Color x:Key="ColorMain90OnOpposite">#ffdcdcdc</Color>
+      <Color x:Key="ColorMain80OnOpposite">#ffc4c4c4</Color>
+      <Color x:Key="ColorMain70OnOpposite">#ffadadad</Color>
+      <Color x:Key="ColorMain60OnOpposite">#ff959595</Color>
+      <Color x:Key="ColorMain50OnOpposite">#ff7e7e7e</Color>
+      <Color x:Key="ColorMain40OnOpposite">#ff666666</Color>
+      <Color x:Key="ColorMain30OnOpposite">#ff4e4e4e</Color>
+      <Color x:Key="ColorMain20OnOpposite">#ff373737</Color>
+      <Color x:Key="ColorMain10OnOpposite">#ff1f1f1f</Color>
+    </ResourceDictionary>
 
-			<SolidColorBrush x:Key="BrushPrimary90OnMain" Color="{StaticResource ColorPrimary90OnMain}" />
-			<SolidColorBrush x:Key="BrushPrimary80OnMain" Color="{StaticResource ColorPrimary80OnMain}" />
-			<SolidColorBrush x:Key="BrushPrimary70OnMain" Color="{StaticResource ColorPrimary70OnMain}" />
-			<SolidColorBrush x:Key="BrushPrimary60OnMain" Color="{StaticResource ColorPrimary60OnMain}" />
-			<SolidColorBrush x:Key="BrushPrimary50OnMain" Color="{StaticResource ColorPrimary50OnMain}" />
-			<SolidColorBrush x:Key="BrushPrimary40OnMain" Color="{StaticResource ColorPrimary40OnMain}" />
-			<SolidColorBrush x:Key="BrushPrimary30OnMain" Color="{StaticResource ColorPrimary30OnMain}" />
-			<SolidColorBrush x:Key="BrushPrimary20OnMain" Color="{StaticResource ColorPrimary20OnMain}" />
-			<SolidColorBrush x:Key="BrushPrimary10OnMain" Color="{StaticResource ColorPrimary10OnMain}" />
+    <!--  Brush  -->
+    <ResourceDictionary>
+      <SolidColorBrush x:Key="BrushPrimary"
+                       Color="{StaticResource ColorPrimary}" />
+      <SolidColorBrush x:Key="BrushPrimaryAlpha90"
+                       Color="{StaticResource ColorPrimaryAlpha90}" />
+      <SolidColorBrush x:Key="BrushPrimaryAlpha80"
+                       Color="{StaticResource ColorPrimaryAlpha80}" />
+      <SolidColorBrush x:Key="BrushPrimaryAlpha70"
+                       Color="{StaticResource ColorPrimaryAlpha70}" />
+      <SolidColorBrush x:Key="BrushPrimaryAlpha60"
+                       Color="{StaticResource ColorPrimaryAlpha60}" />
+      <SolidColorBrush x:Key="BrushPrimaryAlpha50"
+                       Color="{StaticResource ColorPrimaryAlpha50}" />
+      <SolidColorBrush x:Key="BrushPrimaryAlpha40"
+                       Color="{StaticResource ColorPrimaryAlpha40}" />
+      <SolidColorBrush x:Key="BrushPrimaryAlpha30"
+                       Color="{StaticResource ColorPrimaryAlpha30}" />
+      <SolidColorBrush x:Key="BrushPrimaryAlpha20"
+                       Color="{StaticResource ColorPrimaryAlpha20}" />
+      <SolidColorBrush x:Key="BrushPrimaryAlpha10"
+                       Color="{StaticResource ColorPrimaryAlpha10}" />
 
-			<SolidColorBrush x:Key="BrushPrimary90OnOpposite" Color="{StaticResource ColorPrimary90OnOpposite}" />
-			<SolidColorBrush x:Key="BrushPrimary80OnOpposite" Color="{StaticResource ColorPrimary80OnOpposite}" />
-			<SolidColorBrush x:Key="BrushPrimary70OnOpposite" Color="{StaticResource ColorPrimary70OnOpposite}" />
-			<SolidColorBrush x:Key="BrushPrimary60OnOpposite" Color="{StaticResource ColorPrimary60OnOpposite}" />
-			<SolidColorBrush x:Key="BrushPrimary50OnOpposite" Color="{StaticResource ColorPrimary50OnOpposite}" />
-			<SolidColorBrush x:Key="BrushPrimary40OnOpposite" Color="{StaticResource ColorPrimary40OnOpposite}" />
-			<SolidColorBrush x:Key="BrushPrimary30OnOpposite" Color="{StaticResource ColorPrimary30OnOpposite}" />
-			<SolidColorBrush x:Key="BrushPrimary20OnOpposite" Color="{StaticResource ColorPrimary20OnOpposite}" />
-			<SolidColorBrush x:Key="BrushPrimary10OnOpposite" Color="{StaticResource ColorPrimary10OnOpposite}" />
+      <SolidColorBrush x:Key="BrushPrimary90OnMain"
+                       Color="{StaticResource ColorPrimary90OnMain}" />
+      <SolidColorBrush x:Key="BrushPrimary80OnMain"
+                       Color="{StaticResource ColorPrimary80OnMain}" />
+      <SolidColorBrush x:Key="BrushPrimary70OnMain"
+                       Color="{StaticResource ColorPrimary70OnMain}" />
+      <SolidColorBrush x:Key="BrushPrimary60OnMain"
+                       Color="{StaticResource ColorPrimary60OnMain}" />
+      <SolidColorBrush x:Key="BrushPrimary50OnMain"
+                       Color="{StaticResource ColorPrimary50OnMain}" />
+      <SolidColorBrush x:Key="BrushPrimary40OnMain"
+                       Color="{StaticResource ColorPrimary40OnMain}" />
+      <SolidColorBrush x:Key="BrushPrimary30OnMain"
+                       Color="{StaticResource ColorPrimary30OnMain}" />
+      <SolidColorBrush x:Key="BrushPrimary20OnMain"
+                       Color="{StaticResource ColorPrimary20OnMain}" />
+      <SolidColorBrush x:Key="BrushPrimary10OnMain"
+                       Color="{StaticResource ColorPrimary10OnMain}" />
 
-			<SolidColorBrush x:Key="BrushError" Color="{StaticResource ColorError}" />
-			<SolidColorBrush x:Key="BrushOnError" Color="{StaticResource ColorOnError}" />
+      <SolidColorBrush x:Key="BrushPrimary90OnOpposite"
+                       Color="{StaticResource ColorPrimary90OnOpposite}" />
+      <SolidColorBrush x:Key="BrushPrimary80OnOpposite"
+                       Color="{StaticResource ColorPrimary80OnOpposite}" />
+      <SolidColorBrush x:Key="BrushPrimary70OnOpposite"
+                       Color="{StaticResource ColorPrimary70OnOpposite}" />
+      <SolidColorBrush x:Key="BrushPrimary60OnOpposite"
+                       Color="{StaticResource ColorPrimary60OnOpposite}" />
+      <SolidColorBrush x:Key="BrushPrimary50OnOpposite"
+                       Color="{StaticResource ColorPrimary50OnOpposite}" />
+      <SolidColorBrush x:Key="BrushPrimary40OnOpposite"
+                       Color="{StaticResource ColorPrimary40OnOpposite}" />
+      <SolidColorBrush x:Key="BrushPrimary30OnOpposite"
+                       Color="{StaticResource ColorPrimary30OnOpposite}" />
+      <SolidColorBrush x:Key="BrushPrimary20OnOpposite"
+                       Color="{StaticResource ColorPrimary20OnOpposite}" />
+      <SolidColorBrush x:Key="BrushPrimary10OnOpposite"
+                       Color="{StaticResource ColorPrimary10OnOpposite}" />
 
-			<SolidColorBrush x:Key="BrushOpposite" Color="{StaticResource ColorOpposite}" />
-			<SolidColorBrush x:Key="BrushOppositeAlpha90" Color="{StaticResource ColorOppositeAlpha90}" />
-			<SolidColorBrush x:Key="BrushOppositeAlpha80" Color="{StaticResource ColorOppositeAlpha80}" />
-			<SolidColorBrush x:Key="BrushOppositeAlpha70" Color="{StaticResource ColorOppositeAlpha70}" />
-			<SolidColorBrush x:Key="BrushOppositeAlpha60" Color="{StaticResource ColorOppositeAlpha60}" />
-			<SolidColorBrush x:Key="BrushOppositeAlpha50" Color="{StaticResource ColorOppositeAlpha50}" />
-			<SolidColorBrush x:Key="BrushOppositeAlpha40" Color="{StaticResource ColorOppositeAlpha40}" />
-			<SolidColorBrush x:Key="BrushOppositeAlpha30" Color="{StaticResource ColorOppositeAlpha30}" />
-			<SolidColorBrush x:Key="BrushOppositeAlpha20" Color="{StaticResource ColorOppositeAlpha20}" />
-			<SolidColorBrush x:Key="BrushOppositeAlpha10" Color="{StaticResource ColorOppositeAlpha10}" />
-			<SolidColorBrush x:Key="BrushOpposite90OnMain" Color="{StaticResource ColorOpposite90OnMain}" />
-			<SolidColorBrush x:Key="BrushOpposite80OnMain" Color="{StaticResource ColorOpposite80OnMain}" />
-			<SolidColorBrush x:Key="BrushOpposite70OnMain" Color="{StaticResource ColorOpposite70OnMain}" />
-			<SolidColorBrush x:Key="BrushOpposite60OnMain" Color="{StaticResource ColorOpposite60OnMain}" />
-			<SolidColorBrush x:Key="BrushOpposite50OnMain" Color="{StaticResource ColorOpposite50OnMain}" />
-			<SolidColorBrush x:Key="BrushOpposite40OnMain" Color="{StaticResource ColorOpposite40OnMain}" />
-			<SolidColorBrush x:Key="BrushOpposite30OnMain" Color="{StaticResource ColorOpposite30OnMain}" />
-			<SolidColorBrush x:Key="BrushOpposite20OnMain" Color="{StaticResource ColorOpposite20OnMain}" />
-			<SolidColorBrush x:Key="BrushOpposite10OnMain" Color="{StaticResource ColorOpposite10OnMain}" />
+      <SolidColorBrush x:Key="BrushSecondary"
+                       Color="{StaticResource ColorSecondary}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha90"
+                       Color="{StaticResource ColorSecondaryAlpha90}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha80"
+                       Color="{StaticResource ColorSecondaryAlpha80}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha70"
+                       Color="{StaticResource ColorSecondaryAlpha70}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha60"
+                       Color="{StaticResource ColorSecondaryAlpha60}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha50"
+                       Color="{StaticResource ColorSecondaryAlpha50}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha40"
+                       Color="{StaticResource ColorSecondaryAlpha40}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha30"
+                       Color="{StaticResource ColorSecondaryAlpha30}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha20"
+                       Color="{StaticResource ColorSecondaryAlpha20}" />
+      <SolidColorBrush x:Key="BrushSecondaryAlpha10"
+                       Color="{StaticResource ColorSecondaryAlpha10}" />
 
-			<SolidColorBrush x:Key="BrushMain" Color="{StaticResource ColorMain}" />
-			<SolidColorBrush x:Key="BrushMainAlpha90" Color="{StaticResource ColorMainAlpha90}" />
-			<SolidColorBrush x:Key="BrushMainAlpha80" Color="{StaticResource ColorMainAlpha80}" />
-			<SolidColorBrush x:Key="BrushMainAlpha70" Color="{StaticResource ColorMainAlpha70}" />
-			<SolidColorBrush x:Key="BrushMainAlpha60" Color="{StaticResource ColorMainAlpha60}" />
-			<SolidColorBrush x:Key="BrushMainAlpha50" Color="{StaticResource ColorMainAlpha50}" />
-			<SolidColorBrush x:Key="BrushMainAlpha40" Color="{StaticResource ColorMainAlpha40}" />
-			<SolidColorBrush x:Key="BrushMainAlpha30" Color="{StaticResource ColorMainAlpha30}" />
-			<SolidColorBrush x:Key="BrushMainAlpha20" Color="{StaticResource ColorMainAlpha20}" />
-			<SolidColorBrush x:Key="BrushMainAlpha10" Color="{StaticResource ColorMainAlpha10}" />
-			<SolidColorBrush x:Key="BrushMain90OnOpposite" Color="{StaticResource ColorMain90OnOpposite}" />
-			<SolidColorBrush x:Key="BrushMain80OnOpposite" Color="{StaticResource ColorMain80OnOpposite}" />
-			<SolidColorBrush x:Key="BrushMain70OnOpposite" Color="{StaticResource ColorMain70OnOpposite}" />
-			<SolidColorBrush x:Key="BrushMain60OnOpposite" Color="{StaticResource ColorMain60OnOpposite}" />
-			<SolidColorBrush x:Key="BrushMain50OnOpposite" Color="{StaticResource ColorMain50OnOpposite}" />
-			<SolidColorBrush x:Key="BrushMain40OnOpposite" Color="{StaticResource ColorMain40OnOpposite}" />
-			<SolidColorBrush x:Key="BrushMain30OnOpposite" Color="{StaticResource ColorMain30OnOpposite}" />
-			<SolidColorBrush x:Key="BrushMain20OnOpposite" Color="{StaticResource ColorMain20OnOpposite}" />
-			<SolidColorBrush x:Key="BrushMain10OnOpposite" Color="{StaticResource ColorMain10OnOpposite}" />
-		</ResourceDictionary>
-	</ResourceDictionary.MergedDictionaries>
+      <SolidColorBrush x:Key="BrushError"
+                       Color="{StaticResource ColorError}" />
+      <SolidColorBrush x:Key="BrushOnError"
+                       Color="{StaticResource ColorOnError}" />
+
+      <SolidColorBrush x:Key="BrushOpposite"
+                       Color="{StaticResource ColorOpposite}" />
+      <SolidColorBrush x:Key="BrushOppositeAlpha90"
+                       Color="{StaticResource ColorOppositeAlpha90}" />
+      <SolidColorBrush x:Key="BrushOppositeAlpha80"
+                       Color="{StaticResource ColorOppositeAlpha80}" />
+      <SolidColorBrush x:Key="BrushOppositeAlpha70"
+                       Color="{StaticResource ColorOppositeAlpha70}" />
+      <SolidColorBrush x:Key="BrushOppositeAlpha60"
+                       Color="{StaticResource ColorOppositeAlpha60}" />
+      <SolidColorBrush x:Key="BrushOppositeAlpha50"
+                       Color="{StaticResource ColorOppositeAlpha50}" />
+      <SolidColorBrush x:Key="BrushOppositeAlpha40"
+                       Color="{StaticResource ColorOppositeAlpha40}" />
+      <SolidColorBrush x:Key="BrushOppositeAlpha30"
+                       Color="{StaticResource ColorOppositeAlpha30}" />
+      <SolidColorBrush x:Key="BrushOppositeAlpha20"
+                       Color="{StaticResource ColorOppositeAlpha20}" />
+      <SolidColorBrush x:Key="BrushOppositeAlpha10"
+                       Color="{StaticResource ColorOppositeAlpha10}" />
+      <SolidColorBrush x:Key="BrushOpposite90OnMain"
+                       Color="{StaticResource ColorOpposite90OnMain}" />
+      <SolidColorBrush x:Key="BrushOpposite80OnMain"
+                       Color="{StaticResource ColorOpposite80OnMain}" />
+      <SolidColorBrush x:Key="BrushOpposite70OnMain"
+                       Color="{StaticResource ColorOpposite70OnMain}" />
+      <SolidColorBrush x:Key="BrushOpposite60OnMain"
+                       Color="{StaticResource ColorOpposite60OnMain}" />
+      <SolidColorBrush x:Key="BrushOpposite50OnMain"
+                       Color="{StaticResource ColorOpposite50OnMain}" />
+      <SolidColorBrush x:Key="BrushOpposite40OnMain"
+                       Color="{StaticResource ColorOpposite40OnMain}" />
+      <SolidColorBrush x:Key="BrushOpposite30OnMain"
+                       Color="{StaticResource ColorOpposite30OnMain}" />
+      <SolidColorBrush x:Key="BrushOpposite20OnMain"
+                       Color="{StaticResource ColorOpposite20OnMain}" />
+      <SolidColorBrush x:Key="BrushOpposite10OnMain"
+                       Color="{StaticResource ColorOpposite10OnMain}" />
+
+      <SolidColorBrush x:Key="BrushMain"
+                       Color="{StaticResource ColorMain}" />
+      <SolidColorBrush x:Key="BrushMainAlpha90"
+                       Color="{StaticResource ColorMainAlpha90}" />
+      <SolidColorBrush x:Key="BrushMainAlpha80"
+                       Color="{StaticResource ColorMainAlpha80}" />
+      <SolidColorBrush x:Key="BrushMainAlpha70"
+                       Color="{StaticResource ColorMainAlpha70}" />
+      <SolidColorBrush x:Key="BrushMainAlpha60"
+                       Color="{StaticResource ColorMainAlpha60}" />
+      <SolidColorBrush x:Key="BrushMainAlpha50"
+                       Color="{StaticResource ColorMainAlpha50}" />
+      <SolidColorBrush x:Key="BrushMainAlpha40"
+                       Color="{StaticResource ColorMainAlpha40}" />
+      <SolidColorBrush x:Key="BrushMainAlpha30"
+                       Color="{StaticResource ColorMainAlpha30}" />
+      <SolidColorBrush x:Key="BrushMainAlpha20"
+                       Color="{StaticResource ColorMainAlpha20}" />
+      <SolidColorBrush x:Key="BrushMainAlpha10"
+                       Color="{StaticResource ColorMainAlpha10}" />
+      <SolidColorBrush x:Key="BrushMain90OnOpposite"
+                       Color="{StaticResource ColorMain90OnOpposite}" />
+      <SolidColorBrush x:Key="BrushMain80OnOpposite"
+                       Color="{StaticResource ColorMain80OnOpposite}" />
+      <SolidColorBrush x:Key="BrushMain70OnOpposite"
+                       Color="{StaticResource ColorMain70OnOpposite}" />
+      <SolidColorBrush x:Key="BrushMain60OnOpposite"
+                       Color="{StaticResource ColorMain60OnOpposite}" />
+      <SolidColorBrush x:Key="BrushMain50OnOpposite"
+                       Color="{StaticResource ColorMain50OnOpposite}" />
+      <SolidColorBrush x:Key="BrushMain40OnOpposite"
+                       Color="{StaticResource ColorMain40OnOpposite}" />
+      <SolidColorBrush x:Key="BrushMain30OnOpposite"
+                       Color="{StaticResource ColorMain30OnOpposite}" />
+      <SolidColorBrush x:Key="BrushMain20OnOpposite"
+                       Color="{StaticResource ColorMain20OnOpposite}" />
+      <SolidColorBrush x:Key="BrushMain10OnOpposite"
+                       Color="{StaticResource ColorMain10OnOpposite}" />
+    </ResourceDictionary>
+  </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
