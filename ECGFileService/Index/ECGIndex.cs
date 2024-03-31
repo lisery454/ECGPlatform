@@ -15,4 +15,6 @@ public class ECGIndex
     public int RPeaksFrequency { get; set; }
 
     public string RPeaksModificationPath { get; set; } = string.Empty;
+
+    public string IntervalFilePath { get; set; } = string.Empty;
 }

@@ -13,10 +13,13 @@ public class RPeaksDataReader : IDisposable
     private readonly Dictionary<int, RPeakUnit> _cache;
     private readonly string _modificationPath;
     private readonly List<IRPeaksModifyEntry> _entries;
+    private readonly string _intervalPath;
+    private readonly List<IntervalEntry> _intervalEntries;
 
     private int AllRPeaksNum { get; }
 
-    public RPeaksDataReader(string rPeaksPath, int frequency, int rPeaksWidth, string modificationPath)
+    public RPeaksDataReader(string rPeaksPath, int frequency, int rPeaksWidth, string modificationPath,
+        string intervalPath)
     {
         _rPeaksPath = rPeaksPath;
         _frequency = frequency;
@@ -27,9 +30,14 @@ public class RPeaksDataReader : IDisposable
         _rPeaksWidth = rPeaksWidth;
         AllRPeaksNum = GetAllRPeaksNum();
         _cache = new Dictionary<int, RPeakUnit>();
+        _intervalPath = intervalPath;
         _entries = new List<IRPeaksModifyEntry>();
-        InitEntries();
+        _intervalEntries = new List<IntervalEntry>();
+
+        InitIntervalEntries();
+        InitRPeaksModifyEntries();
     }
+
 
     public async Task<List<RPeakUnit>> GetDataAsync(long beginTime, long lastTime,
         CancellationToken cancellationToken = default)
@@ -37,6 +45,13 @@ public class RPeaksDataReader : IDisposable
         var result = await GetOriginalDataAsync(beginTime, lastTime, cancellationToken);
         return GetAfterModifyData(beginTime, lastTime, result);
     }
+
+    public void AddInterval(long beginTime, long endTime, MarkIntervalLabel label)
+    {
+        _intervalEntries.Add(new IntervalEntry(beginTime, endTime, label));
+        SaveIntervalEntries();
+    }
+
 
     private async Task<List<RPeakUnit>> GetOriginalDataAsync(long beginTime, long lastTime,
         CancellationToken cancellationToken = default)
@@ -171,7 +186,7 @@ public class RPeaksDataReader : IDisposable
         return time * _frequency / 1000;
     }
 
-    private void InitEntries()
+    private void InitRPeaksModifyEntries()
     {
         using var modificationFileStream =
             new FileStream(_modificationPath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
@@ -210,6 +225,37 @@ public class RPeaksDataReader : IDisposable
             }
         }
     }
+
+    private void InitIntervalEntries()
+    {
+        using var fileStream = new StreamReader(
+            new FileStream(_intervalPath, FileMode.OpenOrCreate, FileAccess.ReadWrite));
+
+        while (fileStream.ReadLine() is { } line)
+        {
+            var strings = line.Split(';');
+            if (strings.Length != 3) throw new Exception();
+            var start = long.Parse(strings[0]);
+            var end = long.Parse(strings[1]);
+            var label = (MarkIntervalLabel)int.Parse(strings[2]);
+            _intervalEntries.Add(new IntervalEntry(start, end, label));
+        }
+    }
+
+    private void SaveIntervalEntries()
+    {
+        var result = string.Empty;
+
+        foreach (var intervalEntry in _intervalEntries)
+        {
+            result +=
+                $"{intervalEntry.startTime};{intervalEntry.endTime};{(int)intervalEntry.markIntervalLabel}\n";
+        }
+
+
+        File.WriteAllText(_intervalPath, result);
+    }
+
 
     public async Task AddRPeakPointAsync(long time, RPeakLabel label)
     {
@@ -322,6 +368,7 @@ public class RPeaksDataReader : IDisposable
 
     public void Dispose()
     {
+        SaveIntervalEntries();
         _fileStreamPool.Foreach(fs => { fs.Dispose(); });
     }
 }

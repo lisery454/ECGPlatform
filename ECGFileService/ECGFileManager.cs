@@ -21,7 +21,7 @@ public class ECGFileManager : IDisposable
         }
 
         _rPeaksDataReader = new RPeaksDataReader(Index.RPeaksPath, Index.RPeaksFrequency, Index.RPeaksWidth,
-            Index.RPeaksModificationPath);
+            Index.RPeaksModificationPath, Index.IntervalFilePath);
     }
 
     public void Dispose()
@@ -45,7 +45,8 @@ public class ECGFileManager : IDisposable
         return await _waveDataReaders[index].ValueAtAsync(time, cancellationToken);
     }
 
-    public async Task<List<PointData>> GetRangedWaveDataAsync(int index, long beginTime, long lastTime, int threadCount = 10,
+    public async Task<List<PointData>> GetRangedWaveDataAsync(int index, long beginTime, long lastTime,
+        int threadCount = 10,
         CancellationToken cancellationToken = default)
     {
         return await _waveDataReaders[index].GetDataParallelAsync(beginTime, lastTime, threadCount, cancellationToken);
@@ -70,6 +71,12 @@ public class ECGFileManager : IDisposable
 
         return result;
     }
+
+    public void AddInterval(long beginTime, long endTime, MarkIntervalLabel label)
+    {
+        _rPeaksDataReader.AddInterval(beginTime, endTime, label);
+    }
+
 
     public async Task AddRPeakPointAsync(long time, RPeakLabel label)
     {

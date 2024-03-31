@@ -266,9 +266,20 @@ public partial class ShowECGWindowViewModel
     [RelayCommand]
     private void CreateMarkInterval()
     {
-        // TODO Create Interval for 
-        // MarkIntervalPointsData0 to MarkIntervalPointsData1
-        // label: MarkIntervalLabel
+        if (MarkIntervalPointsData0 != null && MarkIntervalPointsData1 != null)
+        {
+            var time0 = MarkIntervalPointsData0.Time;
+            var time1 = MarkIntervalPointsData1.Time;
+            var label = MarkIntervalLabel;
+
+            var beginTime = time0 > time1 ? time1 : time0;
+            var endTime = time0 <= time1 ? time1 : time0;
+
+            _ecgFileManager?.AddInterval(beginTime, endTime, label);
+
+            MarkIntervalPointsData0 = null;
+            MarkIntervalPointsData1 = null;
+        }
     }
 
 

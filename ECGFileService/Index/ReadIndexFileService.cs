@@ -31,6 +31,7 @@ public class ReadIndexFileService
             ecgIndex.WaveDataPaths.Select(path => Path.Combine(indexFileDirectoryPath, path)).ToList();
         ecgIndex.RPeaksPath = Path.Combine(indexFileDirectoryPath, ecgIndex.RPeaksPath);
         ecgIndex.RPeaksModificationPath = Path.Combine(indexFileDirectoryPath, ecgIndex.RPeaksModificationPath);
+        ecgIndex.IntervalFilePath = Path.Combine(indexFileDirectoryPath, ecgIndex.IntervalFilePath);
 
         return ecgIndex;
     }
