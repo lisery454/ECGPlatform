@@ -44,4 +44,7 @@
   <system:String x:Key="MarkIntervalLabel.AtrialFibrillation">Atrial Fibrillation</system:String>
   <system:String x:Key="MarkIntervalLabel.Noise">Noise</system:String>
 
+  <system:String x:Key="ShowModeStr">Show Mode</system:String>
+  <system:String x:Key="TimePerGridStr">Time Per Grid</system:String>
+
 </ResourceDictionary>

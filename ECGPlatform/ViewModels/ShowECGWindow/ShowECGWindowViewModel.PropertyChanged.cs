@@ -12,6 +12,22 @@ public partial class ShowECGWindowViewModel
         UpdateMainChartUI();
     }
 
+    partial void OnXGridValueEnumChanged(XGridValue value)
+    {
+        XGridValue = value switch
+        {
+            ECGPlatform.XGridValue._400_ => 400,
+            ECGPlatform.XGridValue._200_ => 200,
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, null)
+        };
+    }
+
+    partial void OnXGridValueChanged(float value)
+    {
+        ChartBorderSizeChanged(ChartBorder);
+        UpdateMainChartUI();
+    }
+    
 
     partial void OnTimeIntervalChanged(long value)
     {

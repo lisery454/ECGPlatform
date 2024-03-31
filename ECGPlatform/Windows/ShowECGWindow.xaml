@@ -114,10 +114,27 @@
                       Command="{Binding ShowSearchPartCommand}"
                       ToolTip="Search" />
 
+              <Button Margin="0,0,10,0"
+                      local:IconHelper.Icon="{DynamicResource RPointIcon}"
+                      Style="{StaticResource IconButton}"
+                      Command="{Binding ShowRPointCommand}"
+                      ToolTip="Show R Point" />
+
+              <TextBlock Text="{DynamicResource ShowModeStr}"
+                         Margin="5,0" />
+
               <ComboBox Margin="0,10,10,10"
-                        Width="30"
+                        Width="20"
                         ItemsSource="{local:EnumBindingSource EnumType=local:ShowECGWaveMode}"
                         SelectedItem="{Binding ShowECGWaveMode}" />
+
+              <TextBlock Text="{DynamicResource TimePerGridStr}"
+                         Margin="5,0" />
+
+              <ComboBox Margin="0,10,10,10"
+                        Width="20"
+                        ItemsSource="{local:EnumBindingSource EnumType=local:XGridValue}"
+                        SelectedItem="{Binding XGridValueEnum}" />
             </StackPanel>
           </Border>
 
@@ -306,7 +323,8 @@
                       </i:Interaction.Triggers>
                     </lvc:CartesianChart>
                   </Border>
-                  <Canvas x:Name="RPeakPointCanvas" />
+                  <Canvas x:Name="RPeakPointCanvas"
+                          Visibility="{Binding ShowRPointVisibility}" />
                   <Canvas x:Name="SimplePointCanvas" />
                   <Canvas x:Name="WaveLabelCanvas" />
                   <Canvas x:Name="MarkIntervalPointCanvas" />

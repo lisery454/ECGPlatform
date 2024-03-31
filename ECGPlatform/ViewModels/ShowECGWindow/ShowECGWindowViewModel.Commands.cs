@@ -246,6 +246,12 @@ public partial class ShowECGWindowViewModel
     }
 
     [RelayCommand]
+    private void ShowRPoint()
+    {
+        ShowRPointVisibility = ShowRPointVisibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
+    }
+
+    [RelayCommand]
     private void Chart_OnMouseRightButtonDown(MouseButtonEventArgs e)
     {
         if (e.Handled) return;
@@ -254,6 +260,15 @@ public partial class ShowECGWindowViewModel
         CurrentHighlightPointData = null;
 
         e.Handled = true;
+    }
+
+
+    [RelayCommand]
+    private void CreateMarkInterval()
+    {
+        // TODO Create Interval for 
+        // MarkIntervalPointsData0 to MarkIntervalPointsData1
+        // label: MarkIntervalLabel
     }
 
 

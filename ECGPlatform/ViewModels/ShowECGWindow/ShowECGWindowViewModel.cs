@@ -138,6 +138,11 @@ public partial class ShowECGWindowViewModel : WindowBaseViewModel
     /// </summary>
     [ObservableProperty] private MarkIntervalLabel _markIntervalLabel;
 
+    /// <summary>
+    /// 是否显示R点
+    /// </summary>
+    [ObservableProperty] private Visibility _showRPointVisibility;
+
 
     public ShowECGWindowViewModel(ILogger logger)
     {

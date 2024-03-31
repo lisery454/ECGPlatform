@@ -1,6 +1,4 @@
-﻿using LiveChartsCore.Measure;
-
-namespace ECGPlatform;
+﻿namespace ECGPlatform;
 
 public partial class ShowECGWindowViewModel
 {
@@ -10,6 +8,7 @@ public partial class ShowECGWindowViewModel
     [ObservableProperty] private ObservableCollection<ISeries> _series;
     [ObservableProperty] private float _yGridValue = 0.5f;
     [ObservableProperty] private float _xGridValue = 200;
+    [ObservableProperty] private XGridValue _xGridValueEnum = ECGPlatform.XGridValue._200_;
 
     [ObservableProperty] private float _width;
     [ObservableProperty] private float _height;

@@ -43,6 +43,8 @@
 
   <system:String x:Key="MarkIntervalLabel.AtrialFibrillation">房颤</system:String>
   <system:String x:Key="MarkIntervalLabel.Noise">噪声</system:String>
+  <system:String x:Key="ShowModeStr">显示导联</system:String>
+  <system:String x:Key="TimePerGridStr">每个格子时间</system:String>
 
 
 </ResourceDictionary>
