@@ -6,14 +6,14 @@ public partial class LocalDataPageViewModel : ObservableObject
 
     private readonly ILogger _logger;
     private readonly ISettingManager _settingManager;
-    private readonly ReadIndexFileService _readIndexFileService;
+    private readonly IndexFileService _indexFileService;
 
     public LocalDataPageViewModel(ILogger logger, ISettingManager settingManager,
-        ReadIndexFileService readIndexFileService)
+        IndexFileService indexFileService)
     {
         _logger = logger;
         _settingManager = settingManager;
-        _readIndexFileService = readIndexFileService;
+        _indexFileService = indexFileService;
         LocalData = new ObservableCollection<LocalECGDataItem>();
         logger.Information("Local Data Page ViewModel Create.");
     }
@@ -37,7 +37,7 @@ public partial class LocalDataPageViewModel : ObservableObject
                 try
                 {
                     var indexFilePath = fileInfos[0].FullName;
-                    var ecgIndex = await _readIndexFileService.Read(indexFilePath);
+                    var ecgIndex = await _indexFileService.Read(indexFilePath);
                     LocalData.Add(new LocalECGDataItem(ecgIndex, indexFilePath, ecgIndex.Title));
                     _logger.Information($"Load local file {indexFilePath} success.");
                 }

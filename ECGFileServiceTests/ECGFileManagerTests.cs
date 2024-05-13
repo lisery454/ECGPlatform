@@ -72,7 +72,7 @@ public class ECGFileManagerTests
     private async Task<ECGFileManager> GetECGFileManager()
     {
         const string filePath = @"E:\Data\毕业设计\data\data_1\index.yaml";
-        var index = await new ReadIndexFileService(new Deserializer()).Read(filePath);
+        var index = await new IndexFileService(new Deserializer(), new Serializer()).Read(filePath);
         return new ECGFileManager(index);
     }
 }

@@ -2,13 +2,24 @@
 
 namespace ECGFileService;
 
-public class ReadIndexFileService
+public class IndexFileService
 {
     private readonly IDeserializer _deserializer;
+    private readonly ISerializer _serializer;
 
-    public ReadIndexFileService(IDeserializer deserializer)
+    public IndexFileService(IDeserializer deserializer, ISerializer serializer)
     {
         _deserializer = deserializer;
+        _serializer = serializer;
+    }
+
+    public async Task Write(ECGIndex index, string indexFilePath)
+    {
+        var text = _serializer.Serialize(index);
+        await using var streamWriter =
+            new StreamWriter(new FileStream(indexFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite));
+
+        await streamWriter.WriteAsync(text);
     }
 
     /// <summary>

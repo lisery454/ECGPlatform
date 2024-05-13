@@ -95,7 +95,7 @@
                      FontSize="25"
                      Foreground="{DynamicResource BrushOpposite80OnMain}"
                      SelectionBrush="{DynamicResource BrushPrimaryAlpha20}"
-                     Text="Lisery" />
+                     Text="{Binding Username}" />
 
           </Border>
 
@@ -116,32 +116,23 @@
                      FontSize="25"
                      Foreground="{DynamicResource BrushOpposite80OnMain}"
                      SelectionBrush="{DynamicResource BrushPrimaryAlpha20}"
-                     Text="123456" />
+                     Text="{Binding Password}" />
 
           </Border>
         </Grid>
 
-        <Grid Margin="0,20">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-          </Grid.ColumnDefinitions>
+        <TextBlock Margin="10,10"
+                   HorizontalAlignment="Center"
+                   FontSize="13"
+                   Foreground="{DynamicResource BrushMain20OnOpposite}"
+                   Text="{Binding InfoStr}" />
 
-          <Button Grid.Column="0"
-                  MinWidth="100"
-                  HorizontalAlignment="Center"
-                  Command="{Binding CancelCommand}"
-                  Content="取消"
-                  FontSize="18" />
-
-          <Button Grid.Column="1"
-                  MinWidth="100"
-                  HorizontalAlignment="Center"
-                  Command="{Binding LoginCommand}"
-                  Content="登录"
-                  FontSize="18" />
-
-        </Grid>
+        <Button MinWidth="100"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Command="{Binding LoginCommand}"
+                Content="登录"
+                FontSize="18" />
 
 
       </StackPanel>

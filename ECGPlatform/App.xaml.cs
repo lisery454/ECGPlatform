@@ -24,12 +24,14 @@ public partial class App
         services.AddSingleton<ISerializer, Serializer>();
         services.AddSingleton<IDeserializer, Deserializer>();
 
-        services.AddSingleton<ReadIndexFileService>();
+        services.AddSingleton<IndexFileService>();
 
         services.AddSingleton<ISettingManager, SettingManager>();
 
         services.AddSingleton<ILanguageManager, LanguageManager>();
         services.AddSingleton<IThemeManager, ThemeManager>();
+
+        services.AddSingleton<IHttpManager, HttpManager>();
 
         services.AddSingleton<MainWindowViewModel>();
         services.AddSingleton<MainWindow>(sp =>
@@ -102,7 +104,7 @@ public partial class App
         _ = Services.GetService<ILanguageManager>();
         _ = Services.GetService<IThemeManager>();
 
-        var mainWindow = Services.GetService<MainWindow>();
-        mainWindow!.Show();
+        var loginWindow = Services.GetService<LoginWindow>();
+        loginWindow!.Show();
     }
 }

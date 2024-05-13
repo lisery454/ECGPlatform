@@ -1,29 +1,36 @@
-﻿using System.Net.Http;
-
-namespace ECGPlatform;
+﻿namespace ECGPlatform;
 
 public partial class LoginWindowViewModel : WindowBaseViewModel
 {
-    [RelayCommand]
-    private void Cancel()
+    [ObservableProperty] private string _username = "patient2";
+    [ObservableProperty] private string _password = "654321";
+    [ObservableProperty] private string _infoStr = string.Empty;
+
+    private readonly IHttpManager _httpManager;
+
+    public LoginWindowViewModel(IHttpManager httpManager)
     {
-        BindingWindow!.DialogResult = false;
-        BindingWindow!.Close();
+        _httpManager = httpManager;
     }
 
     [RelayCommand]
     private async Task Login()
     {
-        // TODO 执行一些登录操作，如果登录成功，保存登录状态
-        var httpClient = new HttpClient { BaseAddress = new Uri("https://catfact.ninja") };
-        httpClient.Timeout = TimeSpan.FromSeconds(5);
-        
-        var httpResponseMessage = await httpClient.GetAsync("fact");
-        httpResponseMessage.Debug();
-        var result = await httpResponseMessage.Content.ReadAsStringAsync();
-        result.Debug();
-        
-        BindingWindow!.DialogResult = true;
-        BindingWindow!.Close();
+        try
+        {
+            InfoStr = "登录中...";
+            await _httpManager.AccountLogin(Username, Password);
+
+            BindingWindow!.Closing += (_, _) =>
+            {
+                var mainWindow = App.Current.Services.GetService<MainWindow>()!;
+                mainWindow.Show();
+            };
+            BindingWindow?.Close();
+        }
+        catch (Exception)
+        {
+            InfoStr = "登录失败";
+        }
     }
 }

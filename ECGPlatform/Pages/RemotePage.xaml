@@ -8,29 +8,83 @@
       Title="{DynamicResource RemoteTitle}"
       d:Background="White"
       d:DataContext="{d:DesignInstance Type=local:RemotePageViewModel}"
-      d:Height="1000"
-      d:Width="2000"
+      d:Height="800"
+      d:Width="1200"
       Style="{StaticResource BasePageStyle}"
       mc:Ignorable="d">
-  <i:Interaction.Triggers>
-    <i:EventTrigger EventName="Loaded">
-      <i:InvokeCommandAction Command="{Binding InitCommand}" />
-    </i:EventTrigger>
-  </i:Interaction.Triggers>
 
-  <StackPanel>
-    <TextBlock Style="{StaticResource TitleTextStyle}"
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <TextBlock Margin="50,50,50,20"
+               Style="{StaticResource TitleTextStyle}"
                Text="{DynamicResource RemoteTitle}" />
-    <StackPanel Orientation="Horizontal">
-      <TextBlock Text="请先登录"
-                 FontSize="20"
-                 Margin="100,10,10,10" />
-      <Button Content="登录或注册"
+
+    <Button Grid.Row="1"
+            Width="100"
+            Margin="55,0"
+            HorizontalAlignment="Left"
+            Command="{Binding GetTaskListWindowCommand}"
+            Content="获取任务" />
+
+    <Grid Grid.Row="2"
+          Margin="0,20">
+
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+
+      <Border Margin="10"
+              BorderBrush="{DynamicResource BrushPrimary40OnMain}"
+              BorderThickness="3"
+              CornerRadius="10">
+        <ScrollViewer Margin="15,0"
+                      Style="{StaticResource VerticalScrollViewer}">
+          <i:Interaction.Behaviors>
+            <local:ScrollViewerMouseWheelBehavior />
+          </i:Interaction.Behaviors>
+          <ListBox ItemsSource="{Binding TaskData}"
+                   Style="{StaticResource RemoteTaskListBoxStyle}">
+            <i:Interaction.Triggers>
+              <i:EventTrigger EventName="SelectionChanged">
+                <i:InvokeCommandAction Command="{Binding ShowFragmentCommand}"
+                                       CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=SelectedItem}" />
+              </i:EventTrigger>
+            </i:Interaction.Triggers>
+          </ListBox>
+        </ScrollViewer>
+      </Border>
+
+      <Border Grid.Column="1"
               Margin="10"
-              Width="200"
-              Command="{Binding OpenLoginWindowCommand}" />
-    </StackPanel>
+              BorderBrush="{DynamicResource BrushPrimary40OnMain}"
+              BorderThickness="3"
+              CornerRadius="10">
+        <ScrollViewer Margin="15,0"
+                      Style="{StaticResource VerticalScrollViewer}">
+          <i:Interaction.Behaviors>
+            <local:ScrollViewerMouseWheelBehavior />
+          </i:Interaction.Behaviors>
+          <ListBox ItemsSource="{Binding LocalData}"
+                   Style="{StaticResource LocalDataListBoxStyle2}">
+            <i:Interaction.Triggers>
+              <i:EventTrigger EventName="SelectionChanged">
+                <i:InvokeCommandAction Command="{Binding OpenLocalDataCommand}"
+                                       CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=SelectedItem}" />
+                <i:CallMethodAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                    MethodName="UnselectAll" />
+              </i:EventTrigger>
+            </i:Interaction.Triggers>
+          </ListBox>
+        </ScrollViewer>
+      </Border>
 
+    </Grid>
 
-  </StackPanel>
+  </Grid>
 </Page>

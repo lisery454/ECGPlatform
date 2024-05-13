@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using SimpleUtils;
-
-namespace ECGFileService;
+﻿namespace ECGFileService;
 
 public class ECGFileManager : IDisposable
 {

@@ -27,8 +27,11 @@ public partial class TemplatePageViewModel : ObservableObject
 
     private ECGFileManager? _ecgFileManager;
 
-    public TemplatePageViewModel()
+    private IndexFileService _indexFileService;
+
+    public TemplatePageViewModel(IndexFileService indexFileService)
     {
+        _indexFileService = indexFileService;
         _xAxes1 = new ObservableCollection<Axis> { BuildXAxis() };
         _yAxes1 = new ObservableCollection<Axis> { BuildYAxis() };
         _drawMarginFrame1 = BuildDrawMarginFrame();
@@ -55,7 +58,7 @@ public partial class TemplatePageViewModel : ObservableObject
     [RelayCommand]
     private async Task Init()
     {
-        var index = await new ReadIndexFileService(new Deserializer()).Read(@"E:\Data\毕业设计\data\data_1\index.yaml");
+        var index = await _indexFileService.Read(@"E:\Data\毕业设计\data\data_1\index.yaml");
         _ecgFileManager = new ECGFileManager(index);
 
         var templateDataFilePath = @"E:\Data\毕业设计\template_data.json";

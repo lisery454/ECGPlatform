@@ -18,4 +18,6 @@ public class ProgramConstants
     public string LogPath => Path.Combine(ApplicationPath, "log.txt");
     
     public string DefaultLocalDataDirectoryPath => Path.Combine(ApplicationPath, "data");
+
+    public string DefaultRemoteDataDirectoryPath => Path.Combine(ApplicationPath, "remote");
 }

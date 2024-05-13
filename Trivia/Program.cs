@@ -2,8 +2,8 @@
 using Newtonsoft.Json.Linq;
 
 
-using var streamReader = new StreamReader(@"E:\Data\毕业设计\template_data.json");
-var allText = streamReader.ReadToEnd();
+// using var streamReader = new StreamReader(@"E:\Data\毕业设计\template_data.json");
+// var allText = streamReader.ReadToEnd();
 // allText = allText.Replace("\"[", "[");
 // allText = allText.Replace("]\"", "]");
 // allText = allText.Replace("\\\"", "\"");
@@ -11,8 +11,9 @@ var allText = streamReader.ReadToEnd();
 // using var streamWriter = new StreamWriter(@"C:\Users\lxl11\Desktop\new_data.json");
 // streamWriter.Write(allText);
 
-var jArray = JArray.Parse(allText);
+// var jArray = JArray.Parse(allText);
 
-var a = "\u5ba4";
+// var a = "\u5ba4";
 
-Console.WriteLine(a);
+var a = -23;
+Console.WriteLine($"{a,4:000}");
