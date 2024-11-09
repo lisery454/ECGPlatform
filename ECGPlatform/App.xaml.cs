@@ -104,7 +104,9 @@ public partial class App
         _ = Services.GetService<ILanguageManager>();
         _ = Services.GetService<IThemeManager>();
 
-        var loginWindow = Services.GetService<LoginWindow>();
-        loginWindow!.Show();
+        // var loginWindow = Services.GetService<LoginWindow>();
+        // loginWindow!.Show();
+        var mainWindow = Services.GetService<MainWindow>();
+        mainWindow!.Show();
     }
 }
